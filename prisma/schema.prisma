@@ -1,0 +1,507 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LoadType {
+  FCL
+  LCL
+}
+
+enum ChargeAppliesTo {
+  FCL
+  LCL
+  ALL
+}
+
+enum Direction {
+  EXPORT
+  IMPORT
+}
+
+enum WorkOrderStatus {
+  OPEN
+  COST_CHECKED
+  COST_APPROVED
+  CLOSED
+  CANCELLED
+}
+
+enum WorkOrderItemStatus {
+  DRAFT
+  ACTIVE
+  CANCELLED
+}
+
+enum CashAdvanceType {
+  OPERATIONAL // cashbon biaya operasional / pengurusan
+  DRIVER_ALLOWANCE // uang jalan
+}
+
+// PAID = dana cair dan ada di tangan operasional (sedang diurus di lapangan).
+// LPJ (REPORT_SUBMITTED) hanya boleh dimulai dari PAID.
+enum CashAdvanceStatus {
+  DRAFT
+  CHECKED
+  APPROVED
+  PAID
+  REPORT_SUBMITTED
+  REPORT_APPROVED
+  SETTLED
+  REJECTED
+  CANCELLED
+}
+
+enum AdvanceReturnStatus {
+  DRAFT
+  RECEIVED
+  CANCELLED
+}
+
+enum ApprovalDocType {
+  WORK_ORDER_COST
+  CASH_ADVANCE
+  ADVANCE_RETURN
+}
+
+enum ApprovalStep {
+  CHECK
+  APPROVE
+  PAY
+  REPORT_SUBMIT
+  REPORT_APPROVE
+  RECEIVE
+}
+
+enum ApprovalAction {
+  DONE
+  REJECT
+  REVERT
+}
+
+enum AttachmentOwnerType {
+  CASH_ADVANCE
+  CASH_ADVANCE_ITEM
+  ADVANCE_RETURN
+  WORK_ORDER_ITEM
+}
+
+enum AttachmentKind {
+  RECEIPT
+  PHOTO
+  PDF
+}
+
+enum AccountingEventStatus {
+  PENDING
+  POSTED
+  FAILED
+}
+
+// ---------------------------------------------------------------------
+// 1. AKSES (RBAC dinamis)
+//    Permission dibuat developer (dicek di kode); admin mengatur role,
+//    isi permission tiap role, dan role tiap user lewat UI.
+// ---------------------------------------------------------------------
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String?  @unique
+  fullName     String   @map("full_name")
+  passwordHash String   @map("password_hash")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  roles UserRole[]
+
+  createdWorkOrders     WorkOrder[]       @relation("WorkOrderCreatedBy")
+  createdPlannedCosts   PlannedCost[]     @relation("PlannedCostCreatedBy")
+  createdCashAdvances   CashAdvance[]     @relation("CashAdvanceCreatedBy")
+  heldCashAdvances      CashAdvance[]     @relation("CashAdvanceHolder")
+  createdAdvanceReturns AdvanceReturn[]   @relation("AdvanceReturnCreatedBy")
+  approvalActions       ApprovalHistory[]
+  uploadedAttachments   Attachment[]
+
+  @@map("users")
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique // mis. DIRECTOR, COMMISSIONER
+  name        String // nama tampilan: "Direktur"
+  description String?
+  isSystem    Boolean  @default(false) @map("is_system") // role bawaan, tidak boleh dihapus
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  permissions RolePermission[]
+  users       UserRole[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          Int    @id @default(autoincrement())
+  code        String @unique // format resource:action, mis. cash_advance:approve
+  module      String // untuk pengelompokan di UI
+  description String
+
+  roles RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       Int        @map("role_id")
+  permissionId Int        @map("permission_id")
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserRole {
+  userId Int  @map("user_id")
+  roleId Int  @map("role_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([roleId])
+  @@map("user_roles")
+}
+
+// ---------------------------------------------------------------------
+// 2. DATA MASTER
+// ---------------------------------------------------------------------
+model Customer {
+  id               Int     @id @default(autoincrement())
+  code             String  @unique
+  name             String
+  invoiceName      String? @map("invoice_name")
+  paymentTermsDays Int     @default(0) @map("payment_terms_days")
+  entityCode       String  @default("AGS") @map("entity_code")
+  isActive         Boolean @default(true) @map("is_active")
+
+  workOrders WorkOrder[]
+
+  @@map("customers")
+}
+
+// Jenis biaya/tarif. Mengendalikan perilaku costing.
+model ChargeType {
+  id             Int             @id @default(autoincrement())
+  code           String          @unique
+  name           String
+  category       String? // TRUCKING, LOLO, HANDLING, ADD PEB, CONTAINER, UANG_JALAN, dst
+  appliesTo      ChargeAppliesTo @default(ALL) @map("applies_to")
+  useActualCost  Boolean         @default(false) @map("use_actual_cost") // true: biaya dihitung dari realisasi LPJ
+  isTrucking     Boolean         @default(false) @map("is_trucking")
+  isHidden       Boolean         @default(false) @map("is_hidden") // tarif sembunyi, butuh izin khusus
+  sortOrder      Int             @default(0) @map("sort_order")
+  defaultCost    Decimal         @default(0) @map("default_cost") @db.Decimal(18, 2)
+  defaultPrice   Decimal         @default(0) @map("default_price") @db.Decimal(18, 2)
+  revenueAccount String?         @map("revenue_account")
+  costAccount    String?         @map("cost_account")
+  isActive       Boolean         @default(true) @map("is_active")
+
+  plannedCosts    PlannedCost[]
+  billableCharges BillableCharge[]
+
+  @@map("charge_types")
+}
+
+model Vehicle {
+  id         Int     @id @default(autoincrement())
+  plateNo    String  @unique @map("plate_no")
+  ownerCode  String? @map("owner_code")
+  isInternal Boolean @default(false) @map("is_internal")
+
+  workOrderItems WorkOrderItem[]
+
+  @@map("vehicles")
+}
+
+model Driver {
+  id   Int    @id @default(autoincrement())
+  code String @unique
+  name String
+
+  workOrderItems WorkOrderItem[]
+
+  @@map("drivers")
+}
+
+model CashAccount {
+  id   Int    @id @default(autoincrement())
+  code String @unique
+  name String
+
+  cashAdvances   CashAdvance[]
+  advanceReturns AdvanceReturn[]
+
+  @@map("cash_accounts")
+}
+
+// ---------------------------------------------------------------------
+// 3. WORK ORDER
+// ---------------------------------------------------------------------
+model WorkOrder {
+  id          Int             @id @default(autoincrement())
+  number      String          @unique
+  orderDate   DateTime        @map("order_date") @db.Date
+  customerId  Int             @map("customer_id")
+  brand       String?
+  project     String?
+  entityCode  String          @default("AGS") @map("entity_code")
+  isDummy     Boolean         @default(false) @map("is_dummy")
+  status      WorkOrderStatus @default(OPEN)
+  costNote    String?         @map("cost_note")
+  createdById Int?            @map("created_by")
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  customer  Customer @relation(fields: [customerId], references: [id])
+  createdBy User?    @relation("WorkOrderCreatedBy", fields: [createdById], references: [id])
+
+  items        WorkOrderItem[]
+  cashAdvances CashAdvance[]
+
+  @@index([orderDate, customerId])
+  @@map("work_orders")
+}
+
+// Satu baris = satu trip / kontainer / truk dalam WO
+model WorkOrderItem {
+  id            Int                 @id @default(autoincrement())
+  workOrderId   Int                 @map("work_order_id")
+  lineNo        Int                 @map("line_no")
+  direction     Direction?
+  referenceNo   String?             @map("reference_no")
+  loadType      LoadType            @default(FCL) @map("load_type")
+  containerSize String?             @map("container_size")
+  containerNo   String?             @map("container_no")
+  sealNo        String?             @map("seal_no")
+  vehicleId     Int?                @map("vehicle_id")
+  driverId      Int?                @map("driver_id")
+  origin        String?
+  destination   String?
+  status        WorkOrderItemStatus @default(DRAFT)
+
+  workOrder WorkOrder @relation(fields: [workOrderId], references: [id])
+  vehicle   Vehicle?  @relation(fields: [vehicleId], references: [id])
+  driver    Driver?   @relation(fields: [driverId], references: [id])
+
+  plannedCosts    PlannedCost[]
+  billableCharges BillableCharge[]
+  extraCosts      CashAdvanceExtraCost[]
+
+  @@unique([workOrderId, lineNo])
+  @@index([containerNo])
+  @@index([vehicleId])
+  @@map("work_order_items")
+}
+
+// ---------------------------------------------------------------------
+// 4. BIAYA RENCANA & TARIF TAGIH
+//    totalCost / totalPrice diisi service layer = round(quantity * unit, 2)
+// ---------------------------------------------------------------------
+model PlannedCost {
+  id              Int      @id @default(autoincrement())
+  workOrderItemId Int      @map("work_order_item_id")
+  chargeTypeId    Int      @map("charge_type_id")
+  quantity        Decimal  @default(1) @db.Decimal(18, 4)
+  unitCost        Decimal  @default(0) @map("unit_cost") @db.Decimal(18, 2)
+  totalCost       Decimal  @default(0) @map("total_cost") @db.Decimal(18, 2)
+  note            String?
+  createdById     Int?     @map("created_by")
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
+  chargeType    ChargeType    @relation(fields: [chargeTypeId], references: [id])
+  createdBy     User?         @relation("PlannedCostCreatedBy", fields: [createdById], references: [id])
+
+  advanceItems CashAdvanceItem[]
+
+  @@unique([workOrderItemId, chargeTypeId])
+  @@map("planned_costs")
+}
+
+// Tarif yang akan ditagih ke customer. invoiceId null = belum ditagih.
+model BillableCharge {
+  id              Int     @id @default(autoincrement())
+  workOrderItemId Int     @map("work_order_item_id")
+  chargeTypeId    Int     @map("charge_type_id")
+  quantity        Decimal @default(1) @db.Decimal(18, 4)
+  unitPrice       Decimal @default(0) @map("unit_price") @db.Decimal(18, 2)
+  totalPrice      Decimal @default(0) @map("total_price") @db.Decimal(18, 2)
+  invoiceId       Int?    @map("invoice_id") // relasi ke Invoice ditambahkan di modul invoice
+  note            String?
+
+  workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
+  chargeType    ChargeType    @relation(fields: [chargeTypeId], references: [id])
+
+  @@unique([workOrderItemId, chargeTypeId])
+  @@map("billable_charges")
+}
+
+// ---------------------------------------------------------------------
+// 5. PENGAJUAN DANA (uang jalan & cashbon biaya operasional)
+// ---------------------------------------------------------------------
+model CashAdvance {
+  id            Int               @id @default(autoincrement())
+  number        String            @unique
+  advanceType   CashAdvanceType   @default(OPERATIONAL) @map("advance_type")
+  workOrderId   Int               @map("work_order_id")
+  advanceDate   DateTime          @map("advance_date") @db.Date
+  recipient     String // penerima dana
+  holderId      Int?              @map("holder_user_id") // staf operasional pemegang dana, wajib membuat LPJ
+  cashAccountId Int?              @map("cash_account_id")
+  transferFee   Decimal           @default(0) @map("transfer_fee") @db.Decimal(18, 2)
+  description   String?
+  status        CashAdvanceStatus @default(DRAFT)
+  createdById   Int?              @map("created_by")
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  workOrder   WorkOrder    @relation(fields: [workOrderId], references: [id])
+  holder      User?        @relation("CashAdvanceHolder", fields: [holderId], references: [id])
+  createdBy   User?        @relation("CashAdvanceCreatedBy", fields: [createdById], references: [id])
+  cashAccount CashAccount? @relation(fields: [cashAccountId], references: [id])
+
+  items       CashAdvanceItem[]
+  extraCosts  CashAdvanceExtraCost[]
+  returnItems AdvanceReturnItem[]
+
+  @@index([workOrderId])
+  @@index([status, advanceDate])
+  @@map("cash_advances")
+}
+
+model CashAdvanceItem {
+  id            Int      @id @default(autoincrement())
+  cashAdvanceId Int      @map("cash_advance_id")
+  plannedCostId Int      @map("planned_cost_id")
+  advanceAmount Decimal  @map("advance_amount") @db.Decimal(18, 2) // dana yang diberikan
+  actualAmount  Decimal? @map("actual_amount") @db.Decimal(18, 2) // realisasi LPJ; null = belum dilaporkan
+  note          String?
+
+  cashAdvance CashAdvance @relation(fields: [cashAdvanceId], references: [id], onDelete: Cascade)
+  plannedCost PlannedCost @relation(fields: [plannedCostId], references: [id])
+
+  @@unique([cashAdvanceId, plannedCostId])
+  @@index([plannedCostId])
+  @@map("cash_advance_items")
+}
+
+// Biaya di luar rencana yang dilaporkan saat LPJ (dulu: "tambahan" uang jalan)
+model CashAdvanceExtraCost {
+  id              Int     @id @default(autoincrement())
+  cashAdvanceId   Int     @map("cash_advance_id")
+  workOrderItemId Int     @map("work_order_item_id")
+  description     String
+  amount          Decimal @db.Decimal(18, 2)
+  note            String?
+
+  cashAdvance   CashAdvance   @relation(fields: [cashAdvanceId], references: [id], onDelete: Cascade)
+  workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
+
+  @@index([cashAdvanceId])
+  @@map("cash_advance_extra_costs")
+}
+
+// ---------------------------------------------------------------------
+// 6. PENGEMBALIAN SISA DANA
+// ---------------------------------------------------------------------
+model AdvanceReturn {
+  id            Int                 @id @default(autoincrement())
+  number        String              @unique
+  returnDate    DateTime            @map("return_date") @db.Date
+  returnedBy    String              @map("returned_by")
+  cashAccountId Int?                @map("cash_account_id")
+  status        AdvanceReturnStatus @default(DRAFT)
+  createdById   Int?                @map("created_by")
+  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  cashAccount CashAccount? @relation(fields: [cashAccountId], references: [id])
+  createdBy   User?        @relation("AdvanceReturnCreatedBy", fields: [createdById], references: [id])
+
+  items AdvanceReturnItem[]
+
+  @@map("advance_returns")
+}
+
+model AdvanceReturnItem {
+  id              Int     @id @default(autoincrement())
+  advanceReturnId Int     @map("advance_return_id")
+  cashAdvanceId   Int     @map("cash_advance_id")
+  amount          Decimal @db.Decimal(18, 2)
+
+  advanceReturn AdvanceReturn @relation(fields: [advanceReturnId], references: [id], onDelete: Cascade)
+  cashAdvance   CashAdvance   @relation(fields: [cashAdvanceId], references: [id])
+
+  @@unique([advanceReturnId, cashAdvanceId])
+  @@map("advance_return_items")
+}
+
+// ---------------------------------------------------------------------
+// 7. JEJAK, LAMPIRAN, ANTREAN JURNAL
+//    docId / ownerId sengaja tanpa foreign key (menunjuk ke beberapa tabel,
+//    dibedakan oleh docType / ownerType).
+// ---------------------------------------------------------------------
+model ApprovalHistory {
+  id      Int             @id @default(autoincrement())
+  docType ApprovalDocType @map("doc_type")
+  docId   Int             @map("doc_id")
+  step    ApprovalStep
+  action  ApprovalAction
+  actorId Int             @map("actor_id")
+  actedAt DateTime        @default(now()) @map("acted_at") @db.Timestamptz(6)
+  note    String?
+
+  actor User @relation(fields: [actorId], references: [id])
+
+  @@index([docType, docId, actedAt])
+  @@map("approval_history")
+}
+
+model Attachment {
+  id           Int                 @id @default(autoincrement())
+  ownerType    AttachmentOwnerType @map("owner_type")
+  ownerId      Int                 @map("owner_id")
+  kind         AttachmentKind
+  storageKey   String              @map("storage_key") // path di object storage, bukan BLOB
+  fileName     String?             @map("file_name")
+  uploadedById Int?                @map("uploaded_by")
+  uploadedAt   DateTime            @default(now()) @map("uploaded_at") @db.Timestamptz(6)
+
+  uploadedBy User? @relation(fields: [uploadedById], references: [id])
+
+  @@index([ownerType, ownerId])
+  @@map("attachments")
+}
+
+// Antrean posting jurnal (diisi di modul akuntansi)
+model AccountingEvent {
+  id         Int                   @id @default(autoincrement())
+  eventType  String                @map("event_type") // ADVANCE_PAID, REPORT_APPROVED, RETURN_RECEIVED
+  sourceType String                @map("source_type")
+  sourceId   Int                   @map("source_id")
+  status     AccountingEventStatus @default(PENDING)
+  createdAt  DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+  postedAt   DateTime?             @map("posted_at") @db.Timestamptz(6)
+
+  @@map("accounting_events")
+}
