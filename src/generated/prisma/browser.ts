@@ -127,3 +127,13 @@ export type Attachment = Prisma.AttachmentModel
  * 
  */
 export type AccountingEvent = Prisma.AccountingEventModel
+/**
+ * Model WorkflowSetting
+ * 
+ */
+export type WorkflowSetting = Prisma.WorkflowSettingModel
+/**
+ * Model WorkflowSettingLog
+ * 
+ */
+export type WorkflowSettingLog = Prisma.WorkflowSettingLogModel

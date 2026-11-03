@@ -73,6 +73,7 @@ const ROLES = [
       P.WORK_ORDER_CREATE,
       P.WORK_ORDER_UPDATE,
       P.PLANNED_COST_MANAGE,
+      P.BILLABLE_CHARGE_MANAGE,
       P.CASH_ADVANCE_VIEW,
       P.CASH_ADVANCE_CREATE,
       P.CASH_ADVANCE_SUBMIT_REPORT,
@@ -123,13 +124,49 @@ const USERS = [
 // ---------------------------------------------------------------
 const CHARGE_TYPES = [
   // Komponen uang jalan: biaya dihitung dari realisasi LPJ
-  { code: 'FUEL', name: 'BBM', category: 'UANG_JALAN', useActualCost: true, sortOrder: 1 },
-  { code: 'TOLL', name: 'Tol', category: 'UANG_JALAN', useActualCost: true, sortOrder: 2 },
-  { code: 'LEVY', name: 'Retribusi', category: 'UANG_JALAN', useActualCost: true, sortOrder: 3 },
-  { code: 'MEALS', name: 'Konsumsi', category: 'UANG_JALAN', useActualCost: true, sortOrder: 4 },
+  {
+    code: 'FUEL',
+    name: 'BBM',
+    category: 'UANG_JALAN',
+    useActualCost: true,
+    sortOrder: 1,
+  },
+  {
+    code: 'TOLL',
+    name: 'Tol',
+    category: 'UANG_JALAN',
+    useActualCost: true,
+    sortOrder: 2,
+  },
+  {
+    code: 'LEVY',
+    name: 'Retribusi',
+    category: 'UANG_JALAN',
+    useActualCost: true,
+    sortOrder: 3,
+  },
+  {
+    code: 'MEALS',
+    name: 'Konsumsi',
+    category: 'UANG_JALAN',
+    useActualCost: true,
+    sortOrder: 4,
+  },
   // Biaya dan tarif umum
-  { code: 'TRUCKING', name: 'Trucking', category: 'TRUCKING', isTrucking: true, sortOrder: 10 },
-  { code: 'LOLO', name: 'Lift On/Lift Off', category: 'LOLO', useActualCost: true, sortOrder: 11 },
+  {
+    code: 'TRUCKING',
+    name: 'Trucking',
+    category: 'TRUCKING',
+    isTrucking: true,
+    sortOrder: 10,
+  },
+  {
+    code: 'LOLO',
+    name: 'Lift On/Lift Off',
+    category: 'LOLO',
+    useActualCost: true,
+    sortOrder: 11,
+  },
   { code: 'HANDLING', name: 'Handling', category: 'HANDLING', sortOrder: 12 },
 ];
 
@@ -171,10 +208,15 @@ async function main() {
   for (const u of USERS) {
     const user = await prisma.user.upsert({
       where: { username: u.username },
-      update: { fullName: u.fullName, ...(RESET_PASSWORDS ? { passwordHash } : {}) },
+      update: {
+        fullName: u.fullName,
+        ...(RESET_PASSWORDS ? { passwordHash } : {}),
+      },
       create: { username: u.username, fullName: u.fullName, passwordHash },
     });
-    const role = await prisma.role.findUniqueOrThrow({ where: { code: u.role } });
+    const role = await prisma.role.findUniqueOrThrow({
+      where: { code: u.role },
+    });
     await prisma.userRole.createMany({
       data: [{ userId: user.id, roleId: role.id }],
       skipDuplicates: true,
@@ -193,7 +235,11 @@ async function main() {
     { code: 'KAS', name: 'Kas Besar' },
     { code: 'BANK', name: 'Bank Operasional' },
   ]) {
-    await prisma.cashAccount.upsert({ where: { code: a.code }, update: {}, create: a });
+    await prisma.cashAccount.upsert({
+      where: { code: a.code },
+      update: {},
+      create: a,
+    });
   }
   const customers = await Promise.all(
     [
@@ -201,7 +247,11 @@ async function main() {
       { code: 'CUST-B', name: 'PT Contoh Dua', paymentTermsDays: 14 },
       { code: 'CUST-C', name: 'PT Contoh Tiga', paymentTermsDays: 0 },
     ].map((c) =>
-      prisma.customer.upsert({ where: { code: c.code }, update: {}, create: c }),
+      prisma.customer.upsert({
+        where: { code: c.code },
+        update: {},
+        create: c,
+      }),
     ),
   );
   const vehicles = await Promise.all(
@@ -210,7 +260,11 @@ async function main() {
       { plateNo: 'B 1002 AGS', ownerCode: 'AGS', isInternal: true },
       { plateNo: 'B 9001 VND', ownerCode: 'VENDOR1', isInternal: false },
     ].map((v) =>
-      prisma.vehicle.upsert({ where: { plateNo: v.plateNo }, update: {}, create: v }),
+      prisma.vehicle.upsert({
+        where: { plateNo: v.plateNo },
+        update: {},
+        create: v,
+      }),
     ),
   );
   const drivers = await Promise.all(
@@ -223,7 +277,9 @@ async function main() {
   );
 
   // 5. Work Order contoh untuk demo
-  const ops = await prisma.user.findUniqueOrThrow({ where: { username: 'operasional' } });
+  const ops = await prisma.user.findUniqueOrThrow({
+    where: { username: 'operasional' },
+  });
   const ct = Object.fromEntries(
     (await prisma.chargeType.findMany()).map((c) => [c.code, c.id]),
   );
@@ -249,7 +305,14 @@ async function main() {
       driverId: drivers[0].id,
       origin: 'Pelabuhan Tanjung Priok',
       destination: 'Cikarang',
-      costs: { FUEL: 600000, TOLL: 250000, LEVY: 50000, MEALS: 100000, LOLO: 350000, HANDLING: 150000 },
+      costs: {
+        FUEL: 600000,
+        TOLL: 250000,
+        LEVY: 50000,
+        MEALS: 100000,
+        LOLO: 350000,
+        HANDLING: 150000,
+      },
       prices: { TRUCKING: 2000000, LOLO: 500000, HANDLING: 250000 },
     },
     {
@@ -260,7 +323,14 @@ async function main() {
       driverId: drivers[1].id,
       origin: 'Pelabuhan Tanjung Priok',
       destination: 'Karawang',
-      costs: { FUEL: 800000, TOLL: 300000, LEVY: 70000, MEALS: 100000, LOLO: 450000, HANDLING: 200000 },
+      costs: {
+        FUEL: 800000,
+        TOLL: 300000,
+        LEVY: 70000,
+        MEALS: 100000,
+        LOLO: 450000,
+        HANDLING: 200000,
+      },
       prices: { TRUCKING: 2800000, LOLO: 650000, HANDLING: 300000 },
     },
   ];
@@ -322,9 +392,18 @@ async function main() {
       });
     }
   }
+  for (const step of ['CHECK', 'VERIFY_TRANSFER', 'REPORT_CHECK'] as const) {
+    await prisma.workflowSetting.upsert({
+      where: { docType_step: { docType: 'CASH_ADVANCE', step } },
+      update: {},
+      create: { docType: 'CASH_ADVANCE', step },
+    });
+  }
 
   console.log('Seed selesai.');
-  console.log(`Login demo: username (admin, direktur, operasional, ...) / password "${DEMO_PASSWORD}"`);
+  console.log(
+    `Login demo: username (admin, direktur, operasional, ...) / password "${DEMO_PASSWORD}"`,
+  );
 }
 
 main()

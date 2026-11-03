@@ -34,9 +34,7 @@ const userSelect = {
   createdAt: true,
   updatedAt: true,
   roles: {
-    select: {
-      role: { select: { id: true, code: true, name: true, isSystem: true } },
-    },
+    select: { role: { select: { id: true, code: true, name: true, isSystem: true } } },
   },
 } satisfies Prisma.UserSelect;
 
@@ -81,7 +79,7 @@ export class UserService {
     };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return toView(await this.loadUser(id));
   }
 
@@ -98,21 +96,10 @@ export class UserService {
     const roleIds = [...new Set(dto.roleIds)];
     await this.loadAssignableRoles(actor, roleIds);
 
-    if (
-      await this.prisma.user.findUnique({
-        where: { username: dto.username },
-        select: { id: true },
-      })
-    ) {
+    if (await this.prisma.user.findUnique({ where: { username: dto.username }, select: { id: true } })) {
       throw new ConflictException('Username sudah dipakai');
     }
-    if (
-      dto.email &&
-      (await this.prisma.user.findUnique({
-        where: { email: dto.email },
-        select: { id: true },
-      }))
-    ) {
+    if (dto.email && (await this.prisma.user.findUnique({ where: { email: dto.email }, select: { id: true } }))) {
       throw new ConflictException('Email sudah dipakai');
     }
 
@@ -130,29 +117,23 @@ export class UserService {
       });
       return toView(created);
     } catch (e) {
-      if (isUniqueViolation(e))
-        throw new ConflictException('Username atau email sudah dipakai');
+      if (isUniqueViolation(e)) throw new ConflictException('Username atau email sudah dipakai');
       throw e;
     }
   }
 
-  async update(actor: AuthUser, id: number, dto: UpdateUserDto) {
+  async update(actor: AuthUser, id: string, dto: UpdateUserDto) {
     const target = await this.loadUser(id);
     this.assertCanManage(actor, target);
 
     if (dto.isActive === false) {
       if (actor.id === id) {
-        throw new BadRequestException(
-          'Anda tidak dapat menonaktifkan akun sendiri',
-        );
+        throw new BadRequestException('Anda tidak dapat menonaktifkan akun sendiri');
       }
       await this.assertNotLastSuperAdmin(target);
     }
     if (dto.email && dto.email !== target.email) {
-      const taken = await this.prisma.user.findUnique({
-        where: { email: dto.email },
-        select: { id: true },
-      });
+      const taken = await this.prisma.user.findUnique({ where: { email: dto.email }, select: { id: true } });
       if (taken) throw new ConflictException('Email sudah dipakai');
     }
 
@@ -164,17 +145,14 @@ export class UserService {
       });
       return toView(updated);
     } catch (e) {
-      if (isUniqueViolation(e))
-        throw new ConflictException('Email sudah dipakai');
+      if (isUniqueViolation(e)) throw new ConflictException('Email sudah dipakai');
       throw e;
     }
   }
 
-  async setRoles(actor: AuthUser, id: number, dto: SetUserRolesDto) {
+  async setRoles(actor: AuthUser, id: string, dto: SetUserRolesDto) {
     if (actor.id === id) {
-      throw new ForbiddenException(
-        'Anda tidak dapat mengubah role akun sendiri',
-      );
+      throw new ForbiddenException('Anda tidak dapat mengubah role akun sendiri');
     }
     const target = await this.loadUser(id);
     this.assertCanManage(actor, target);
@@ -182,12 +160,8 @@ export class UserService {
     const roleIds = [...new Set(dto.roleIds)];
     const newRoles = await this.loadAssignableRoles(actor, roleIds);
 
-    const hadSuper = target.roles.some(
-      (r) => r.role.code === SUPER_ADMIN_ROLE_CODE,
-    );
-    const willHaveSuper = newRoles.some(
-      (r) => r.code === SUPER_ADMIN_ROLE_CODE,
-    );
+    const hadSuper = target.roles.some((r) => r.role.code === SUPER_ADMIN_ROLE_CODE);
+    const willHaveSuper = newRoles.some((r) => r.code === SUPER_ADMIN_ROLE_CODE);
     if (hadSuper && !willHaveSuper) await this.assertNotLastSuperAdmin(target);
 
     await this.prisma.$transaction([
@@ -200,11 +174,9 @@ export class UserService {
     return this.findOne(id);
   }
 
-  async resetPassword(actor: AuthUser, id: number, dto: ResetPasswordDto) {
+  async resetPassword(actor: AuthUser, id: string, dto: ResetPasswordDto) {
     if (actor.id === id) {
-      throw new BadRequestException(
-        'Gunakan fitur ganti password untuk akun sendiri',
-      );
+      throw new BadRequestException('Gunakan fitur ganti password untuk akun sendiri');
     }
     const target = await this.loadUser(id);
     this.assertCanManage(actor, target);
@@ -216,63 +188,47 @@ export class UserService {
 
   // ---------------- aturan keamanan ----------------
 
-  private async loadUser(id: number): Promise<UserRow> {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-      select: userSelect,
-    });
+  private async loadUser(id: string): Promise<UserRow> {
+    const user = await this.prisma.user.findUnique({ where: { id }, select: userSelect });
     if (!user) throw new NotFoundException('User tidak ditemukan');
     return user;
   }
 
   // Hanya Super Admin yang boleh mengelola user yang berstatus Super Admin.
   private assertCanManage(actor: AuthUser, target: UserRow) {
-    const targetIsSuper = target.roles.some(
-      (r) => r.role.code === SUPER_ADMIN_ROLE_CODE,
-    );
+    const targetIsSuper = target.roles.some((r) => r.role.code === SUPER_ADMIN_ROLE_CODE);
     if (targetIsSuper && !isSuperAdmin(actor)) {
-      throw new ForbiddenException(
-        'Hanya Super Admin yang dapat mengelola akun Super Admin',
-      );
+      throw new ForbiddenException('Hanya Super Admin yang dapat mengelola akun Super Admin');
     }
   }
 
   // Role harus ada dan aktif. Role bawaan (system) hanya boleh diberikan Super Admin.
-  private async loadAssignableRoles(actor: AuthUser, roleIds: number[]) {
+  private async loadAssignableRoles(actor: AuthUser, roleIds: string[]) {
     if (roleIds.length === 0) return [];
     const roles = await this.prisma.role.findMany({
       where: { id: { in: roleIds } },
       select: { id: true, code: true, isActive: true, isSystem: true },
     });
-    if (roles.length !== roleIds.length)
-      throw new BadRequestException('Ada role yang tidak ditemukan');
-    if (roles.some((r) => !r.isActive))
-      throw new BadRequestException('Ada role yang tidak aktif');
+    if (roles.length !== roleIds.length) throw new BadRequestException('Ada role yang tidak ditemukan');
+    if (roles.some((r) => !r.isActive)) throw new BadRequestException('Ada role yang tidak aktif');
     if (roles.some((r) => r.isSystem) && !isSuperAdmin(actor)) {
-      throw new ForbiddenException(
-        'Hanya Super Admin yang dapat memberikan role bawaan',
-      );
+      throw new ForbiddenException('Hanya Super Admin yang dapat memberikan role bawaan');
     }
     return roles;
   }
 
   // Mencegah sistem terkunci tanpa Super Admin aktif.
   private async assertNotLastSuperAdmin(target: UserRow) {
-    if (!target.roles.some((r) => r.role.code === SUPER_ADMIN_ROLE_CODE))
-      return;
+    if (!target.roles.some((r) => r.role.code === SUPER_ADMIN_ROLE_CODE)) return;
     const others = await this.prisma.user.count({
       where: {
         id: { not: target.id },
         isActive: true,
-        roles: {
-          some: { role: { code: SUPER_ADMIN_ROLE_CODE, isActive: true } },
-        },
+        roles: { some: { role: { code: SUPER_ADMIN_ROLE_CODE, isActive: true } } },
       },
     });
     if (others === 0) {
-      throw new BadRequestException(
-        'Minimal harus ada satu Super Admin yang aktif',
-      );
+      throw new BadRequestException('Minimal harus ada satu Super Admin yang aktif');
     }
   }
 }

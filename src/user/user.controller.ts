@@ -5,12 +5,12 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
+import { ParseIdPipe } from '../common/pipes/parse-id.pipe.js';
 import { CurrentUser } from '../auth/decorators/current-user.decorator.js';
 import { Permissions } from '../auth/decorators/permissions.decorator.js';
 import type { AuthUser } from '../auth/types/auth.types.js';
@@ -36,9 +36,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  list(
-    @Query(new ZodValidationPipe(listUsersQuerySchema)) query: ListUsersQuery,
-  ) {
+  list(@Query(new ZodValidationPipe(listUsersQuerySchema)) query: ListUsersQuery) {
     return this.userService.list(query);
   }
 
@@ -49,7 +47,7 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIdPipe) id: string) {
     return this.userService.findOne(id);
   }
 
@@ -64,7 +62,7 @@ export class UserController {
   @Patch(':id')
   update(
     @CurrentUser() actor: AuthUser,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIdPipe) id: string,
     @Body(new ZodValidationPipe(updateUserSchema)) dto: UpdateUserDto,
   ) {
     return this.userService.update(actor, id, dto);
@@ -73,7 +71,7 @@ export class UserController {
   @Put(':id/roles')
   setRoles(
     @CurrentUser() actor: AuthUser,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIdPipe) id: string,
     @Body(new ZodValidationPipe(setUserRolesSchema)) dto: SetUserRolesDto,
   ) {
     return this.userService.setRoles(actor, id, dto);
@@ -83,7 +81,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   resetPassword(
     @CurrentUser() actor: AuthUser,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIdPipe) id: string,
     @Body(new ZodValidationPipe(resetPasswordSchema)) dto: ResetPasswordDto,
   ) {
     return this.userService.resetPassword(actor, id, dto);

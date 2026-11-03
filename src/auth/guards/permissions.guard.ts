@@ -26,9 +26,7 @@ export class PermissionsGuard implements CanActivate {
     const owned = new Set(user.permissions);
     const allowed = required.every((code) => owned.has(code));
     if (!allowed) {
-      throw new ForbiddenException(
-        'Anda tidak memiliki akses untuk tindakan ini',
-      );
+      throw new ForbiddenException('Anda tidak memiliki akses untuk tindakan ini');
     }
     return true;
   }

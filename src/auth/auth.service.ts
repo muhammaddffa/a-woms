@@ -50,7 +50,7 @@ export class AuthService {
     };
   }
 
-  async changePassword(userId: number, dto: ChangePasswordDto) {
+  async changePassword(userId: string, dto: ChangePasswordDto) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new UnauthorizedException('Akun tidak ditemukan');
 
@@ -67,7 +67,7 @@ export class AuthService {
 
   // Memuat user + role + permission dari database. Mengembalikan null bila
   // user tidak ada atau nonaktif. Hanya role yang aktif yang dihitung.
-  async findActiveAuthUser(userId: number): Promise<AuthUser | null> {
+  async findActiveAuthUser(userId: string): Promise<AuthUser | null> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       select: {
@@ -104,10 +104,7 @@ export class AuthService {
       id: user.id,
       username: user.username,
       fullName: user.fullName,
-      roles: user.roles.map((ur) => ({
-        code: ur.role.code,
-        name: ur.role.name,
-      })),
+      roles: user.roles.map((ur) => ({ code: ur.role.code, name: ur.role.name })),
       permissions: [...permissions].sort(),
     };
   }

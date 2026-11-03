@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { idSchema } from '../../common/dto/id.dto.js';
 
 const usernameSchema = z
   .string()
@@ -11,7 +12,7 @@ const usernameSchema = z
 // bcrypt hanya memakai 72 byte pertama.
 const passwordSchema = z.string().min(10, 'Password minimal 10 karakter').max(72);
 
-const roleIdsSchema = z.array(z.number().int().positive()).max(20);
+const roleIdsSchema = z.array(idSchema).max(20);
 
 export const createUserSchema = z.object({
   username: usernameSchema,

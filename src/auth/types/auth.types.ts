@@ -7,7 +7,7 @@ export interface AuthRole {
 // Diambil dari database di setiap request, sehingga perubahan role/permission
 // dan penonaktifan akun langsung berlaku tanpa menunggu token kedaluwarsa.
 export interface AuthUser {
-  id: number;
+  id: string;
   username: string;
   fullName: string;
   roles: AuthRole[];
@@ -15,7 +15,7 @@ export interface AuthUser {
 }
 
 export interface JwtPayload {
-  sub: number;
+  sub: string;
 }
 
 export interface RequestWithUser {

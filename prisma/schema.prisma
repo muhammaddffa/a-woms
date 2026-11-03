@@ -43,19 +43,46 @@ enum WorkOrderItemStatus {
   CANCELLED
 }
 
+// Cara jenis biaya ditagihkan ke customer.
+//   FIXED   = tarif tetap dari billable_charges (mis. trucking per ritase, harga kesepakatan pabrik)
+//   AT_COST = ditagih sebesar realisasi LPJ yang disetujui (mis. THC, lift on/off, BBM, tol)
+enum BillingMode {
+  FIXED
+  AT_COST
+}
+
+// Siapa yang menanggung suatu komponen biaya. Disalin ke planned_costs saat rencana biaya
+// dibuat, sehingga perubahan kesepakatan vendor tidak mengubah trip yang sudah berjalan.
+//   COMPANY          = ditanggung perusahaan, masuk biaya efektif WO
+//   VENDOR           = ditanggung vendor, tidak ada dana perusahaan yang keluar (tidak boleh di-cashbon)
+//   DEDUCT_FROM_VENDOR = ditalangi perusahaan lalu dipotong dari pembayaran vendor (bukan biaya WO)
+enum CostBearer {
+  COMPANY
+  VENDOR
+  DEDUCT_FROM_VENDOR
+}
+
 enum CashAdvanceType {
   OPERATIONAL // cashbon biaya operasional / pengurusan
   DRIVER_ALLOWANCE // uang jalan
 }
 
-// PAID = dana cair dan ada di tangan operasional (sedang diurus di lapangan).
-// LPJ (REPORT_SUBMITTED) hanya boleh dimulai dari PAID.
+// Alur penuh:
+//   DRAFT -> CHECKED -> APPROVED -> PAID -> TRANSFER_VERIFIED -> REPORT_SUBMITTED
+//         -> REPORT_CHECKED -> REPORT_APPROVED -> SETTLED
+// Langkah CHECKED, TRANSFER_VERIFIED, dan REPORT_CHECKED dapat dilewati bila dinonaktifkan
+// di workflow_settings (daftar langkah yang berlaku disalin ke cash_advances.required_steps).
+// PAID = Keuangan sudah mentransfer dana + bukti transfer.
+// TRANSFER_VERIFIED = Checker memastikan transfer; LPJ hanya boleh dimulai dari status ini
+// (atau dari PAID bila langkah verifikasi transfer dinonaktifkan).
 enum CashAdvanceStatus {
   DRAFT
   CHECKED
   APPROVED
   PAID
+  TRANSFER_VERIFIED
   REPORT_SUBMITTED
+  REPORT_CHECKED
   REPORT_APPROVED
   SETTLED
   REJECTED
@@ -68,6 +95,14 @@ enum AdvanceReturnStatus {
   CANCELLED
 }
 
+// Arah penyelesaian selisih dana dan realisasi LPJ.
+//   RETURN_TO_COMPANY = ada sisa; staf operasional mengembalikan ke perusahaan
+//   REIMBURSE_STAFF   = ada kekurangan; perusahaan mengganti ke staf operasional
+enum AdvanceReturnDirection {
+  RETURN_TO_COMPANY
+  REIMBURSE_STAFF
+}
+
 enum ApprovalDocType {
   WORK_ORDER_COST
   CASH_ADVANCE
@@ -78,7 +113,9 @@ enum ApprovalStep {
   CHECK
   APPROVE
   PAY
+  VERIFY_TRANSFER
   REPORT_SUBMIT
+  REPORT_CHECK
   REPORT_APPROVE
   RECEIVE
 }
@@ -92,6 +129,7 @@ enum ApprovalAction {
 enum AttachmentOwnerType {
   CASH_ADVANCE
   CASH_ADVANCE_ITEM
+  CASH_ADVANCE_EXTRA_COST
   ADVANCE_RETURN
   WORK_ORDER_ITEM
 }
@@ -100,6 +138,7 @@ enum AttachmentKind {
   RECEIPT
   PHOTO
   PDF
+  TRANSFER_PROOF
 }
 
 enum AccountingEventStatus {
@@ -114,7 +153,7 @@ enum AccountingEventStatus {
 //    isi permission tiap role, dan role tiap user lewat UI.
 // ---------------------------------------------------------------------
 model User {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(uuid(7)) @db.Uuid
   username     String   @unique
   email        String?  @unique
   fullName     String   @map("full_name")
@@ -125,19 +164,21 @@ model User {
 
   roles UserRole[]
 
-  createdWorkOrders     WorkOrder[]       @relation("WorkOrderCreatedBy")
-  createdPlannedCosts   PlannedCost[]     @relation("PlannedCostCreatedBy")
-  createdCashAdvances   CashAdvance[]     @relation("CashAdvanceCreatedBy")
-  heldCashAdvances      CashAdvance[]     @relation("CashAdvanceHolder")
-  createdAdvanceReturns AdvanceReturn[]   @relation("AdvanceReturnCreatedBy")
-  approvalActions       ApprovalHistory[]
-  uploadedAttachments   Attachment[]
+  createdWorkOrders       WorkOrder[]          @relation("WorkOrderCreatedBy")
+  createdPlannedCosts     PlannedCost[]        @relation("PlannedCostCreatedBy")
+  createdCashAdvances     CashAdvance[]        @relation("CashAdvanceCreatedBy")
+  heldCashAdvances        CashAdvance[]        @relation("CashAdvanceHolder")
+  createdAdvanceReturns   AdvanceReturn[]      @relation("AdvanceReturnCreatedBy")
+  approvalActions         ApprovalHistory[]
+  uploadedAttachments     Attachment[]
+  updatedWorkflowSettings WorkflowSetting[]    @relation("WorkflowSettingUpdatedBy")
+  workflowSettingLogs     WorkflowSettingLog[] @relation("WorkflowSettingLogChangedBy")
 
   @@map("users")
 }
 
 model Role {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid(7)) @db.Uuid
   code        String   @unique // mis. DIRECTOR, COMMISSIONER
   name        String // nama tampilan: "Direktur"
   description String?
@@ -152,7 +193,7 @@ model Role {
 }
 
 model Permission {
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid(7)) @db.Uuid
   code        String @unique // format resource:action, mis. cash_advance:approve
   module      String // untuk pengelompokan di UI
   description String
@@ -163,8 +204,8 @@ model Permission {
 }
 
 model RolePermission {
-  roleId       Int        @map("role_id")
-  permissionId Int        @map("permission_id")
+  roleId       String     @map("role_id") @db.Uuid
+  permissionId String     @map("permission_id") @db.Uuid
   role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
@@ -173,10 +214,10 @@ model RolePermission {
 }
 
 model UserRole {
-  userId Int  @map("user_id")
-  roleId Int  @map("role_id")
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  userId String @map("user_id") @db.Uuid
+  roleId String @map("role_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([userId, roleId])
   @@index([roleId])
@@ -187,7 +228,7 @@ model UserRole {
 // 2. DATA MASTER
 // ---------------------------------------------------------------------
 model Customer {
-  id               Int     @id @default(autoincrement())
+  id               String  @id @default(uuid(7)) @db.Uuid
   code             String  @unique
   name             String
   invoiceName      String? @map("invoice_name")
@@ -200,14 +241,17 @@ model Customer {
   @@map("customers")
 }
 
-// Jenis biaya/tarif. Mengendalikan perilaku costing.
+// Jenis biaya/tarif. Mengendalikan perilaku costing dan penagihan.
+//   useActualCost = true  -> biaya efektif memakai realisasi LPJ (bukan biaya rencana)
+//   billingMode           -> nilai tagihan: FIXED dari billable_charges, AT_COST dari realisasi LPJ
 model ChargeType {
-  id             Int             @id @default(autoincrement())
+  id             String          @id @default(uuid(7)) @db.Uuid
   code           String          @unique
   name           String
   category       String? // TRUCKING, LOLO, HANDLING, ADD PEB, CONTAINER, UANG_JALAN, dst
   appliesTo      ChargeAppliesTo @default(ALL) @map("applies_to")
-  useActualCost  Boolean         @default(false) @map("use_actual_cost") // true: biaya dihitung dari realisasi LPJ
+  useActualCost  Boolean         @default(false) @map("use_actual_cost")
+  billingMode    BillingMode     @default(FIXED) @map("billing_mode")
   isTrucking     Boolean         @default(false) @map("is_trucking")
   isHidden       Boolean         @default(false) @map("is_hidden") // tarif sembunyi, butuh izin khusus
   sortOrder      Int             @default(0) @map("sort_order")
@@ -219,12 +263,13 @@ model ChargeType {
 
   plannedCosts    PlannedCost[]
   billableCharges BillableCharge[]
+  extraCosts      CashAdvanceExtraCost[]
 
   @@map("charge_types")
 }
 
 model Vehicle {
-  id         Int     @id @default(autoincrement())
+  id         String  @id @default(uuid(7)) @db.Uuid
   plateNo    String  @unique @map("plate_no")
   ownerCode  String? @map("owner_code")
   isInternal Boolean @default(false) @map("is_internal")
@@ -235,7 +280,7 @@ model Vehicle {
 }
 
 model Driver {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(uuid(7)) @db.Uuid
   code String @unique
   name String
 
@@ -245,7 +290,7 @@ model Driver {
 }
 
 model CashAccount {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(uuid(7)) @db.Uuid
   code String @unique
   name String
 
@@ -259,17 +304,17 @@ model CashAccount {
 // 3. WORK ORDER
 // ---------------------------------------------------------------------
 model WorkOrder {
-  id          Int             @id @default(autoincrement())
+  id          String          @id @default(uuid(7)) @db.Uuid
   number      String          @unique
   orderDate   DateTime        @map("order_date") @db.Date
-  customerId  Int             @map("customer_id")
+  customerId  String          @map("customer_id") @db.Uuid
   brand       String?
   project     String?
   entityCode  String          @default("AGS") @map("entity_code")
   isDummy     Boolean         @default(false) @map("is_dummy")
   status      WorkOrderStatus @default(OPEN)
   costNote    String?         @map("cost_note")
-  createdById Int?            @map("created_by")
+  createdById String?         @map("created_by") @db.Uuid
   createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -285,8 +330,8 @@ model WorkOrder {
 
 // Satu baris = satu trip / kontainer / truk dalam WO
 model WorkOrderItem {
-  id            Int                 @id @default(autoincrement())
-  workOrderId   Int                 @map("work_order_id")
+  id            String              @id @default(uuid(7)) @db.Uuid
+  workOrderId   String              @map("work_order_id") @db.Uuid
   lineNo        Int                 @map("line_no")
   direction     Direction?
   referenceNo   String?             @map("reference_no")
@@ -294,8 +339,8 @@ model WorkOrderItem {
   containerSize String?             @map("container_size")
   containerNo   String?             @map("container_no")
   sealNo        String?             @map("seal_no")
-  vehicleId     Int?                @map("vehicle_id")
-  driverId      Int?                @map("driver_id")
+  vehicleId     String?             @map("vehicle_id") @db.Uuid
+  driverId      String?             @map("driver_id") @db.Uuid
   origin        String?
   destination   String?
   status        WorkOrderItemStatus @default(DRAFT)
@@ -319,15 +364,17 @@ model WorkOrderItem {
 //    totalCost / totalPrice diisi service layer = round(quantity * unit, 2)
 // ---------------------------------------------------------------------
 model PlannedCost {
-  id              Int      @id @default(autoincrement())
-  workOrderItemId Int      @map("work_order_item_id")
-  chargeTypeId    Int      @map("charge_type_id")
-  quantity        Decimal  @default(1) @db.Decimal(18, 4)
-  unitCost        Decimal  @default(0) @map("unit_cost") @db.Decimal(18, 2)
-  totalCost       Decimal  @default(0) @map("total_cost") @db.Decimal(18, 2)
+  id              String     @id @default(uuid(7)) @db.Uuid
+  workOrderItemId String     @map("work_order_item_id") @db.Uuid
+  chargeTypeId    String     @map("charge_type_id") @db.Uuid
+  quantity        Decimal    @default(1) @db.Decimal(18, 4)
+  unitCost        Decimal    @default(0) @map("unit_cost") @db.Decimal(18, 2)
+  totalCost       Decimal    @default(0) @map("total_cost") @db.Decimal(18, 2)
   note            String?
-  createdById     Int?     @map("created_by")
-  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  bearer          CostBearer @default(COMPANY) // penanggung komponen biaya ini (lihat enum CostBearer)
+  bearerNote      String?    @map("bearer_note") // alasan bila berbeda dari kesepakatan standar vendor
+  createdById     String?    @map("created_by") @db.Uuid
+  updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
   chargeType    ChargeType    @relation(fields: [chargeTypeId], references: [id])
@@ -340,14 +387,15 @@ model PlannedCost {
 }
 
 // Tarif yang akan ditagih ke customer. invoiceId null = belum ditagih.
+// Untuk jenis biaya AT_COST, baris ini dibuat/diperbarui otomatis saat LPJ disetujui.
 model BillableCharge {
-  id              Int     @id @default(autoincrement())
-  workOrderItemId Int     @map("work_order_item_id")
-  chargeTypeId    Int     @map("charge_type_id")
+  id              String  @id @default(uuid(7)) @db.Uuid
+  workOrderItemId String  @map("work_order_item_id") @db.Uuid
+  chargeTypeId    String  @map("charge_type_id") @db.Uuid
   quantity        Decimal @default(1) @db.Decimal(18, 4)
   unitPrice       Decimal @default(0) @map("unit_price") @db.Decimal(18, 2)
   totalPrice      Decimal @default(0) @map("total_price") @db.Decimal(18, 2)
-  invoiceId       Int?    @map("invoice_id") // relasi ke Invoice ditambahkan di modul invoice
+  invoiceId       String? @map("invoice_id") @db.Uuid // relasi ke Invoice ditambahkan di modul invoice
   note            String?
 
   workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
@@ -361,18 +409,22 @@ model BillableCharge {
 // 5. PENGAJUAN DANA (uang jalan & cashbon biaya operasional)
 // ---------------------------------------------------------------------
 model CashAdvance {
-  id            Int               @id @default(autoincrement())
+  id            String            @id @default(uuid(7)) @db.Uuid
   number        String            @unique
   advanceType   CashAdvanceType   @default(OPERATIONAL) @map("advance_type")
-  workOrderId   Int               @map("work_order_id")
+  workOrderId   String            @map("work_order_id") @db.Uuid
   advanceDate   DateTime          @map("advance_date") @db.Date
   recipient     String // penerima dana
-  holderId      Int?              @map("holder_user_id") // staf operasional pemegang dana, wajib membuat LPJ
-  cashAccountId Int?              @map("cash_account_id")
+  holderId      String?           @map("holder_user_id") @db.Uuid // staf operasional pemegang dana, wajib membuat LPJ
+  cashAccountId String?           @map("cash_account_id") @db.Uuid
   transferFee   Decimal           @default(0) @map("transfer_fee") @db.Decimal(18, 2)
   description   String?
   status        CashAdvanceStatus @default(DRAFT)
-  createdById   Int?              @map("created_by")
+  // Langkah pengecekan yang berlaku untuk dokumen ini (CHECK, VERIFY_TRANSFER, REPORT_CHECK).
+  // Dihitung dari workflow_settings dan total pengajuan selama DRAFT, lalu dibekukan
+  // saat dokumen meninggalkan DRAFT agar perubahan pengaturan tidak memengaruhi dokumen berjalan.
+  requiredSteps ApprovalStep[]    @default([]) @map("required_steps")
+  createdById   String?           @map("created_by") @db.Uuid
   createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -391,9 +443,9 @@ model CashAdvance {
 }
 
 model CashAdvanceItem {
-  id            Int      @id @default(autoincrement())
-  cashAdvanceId Int      @map("cash_advance_id")
-  plannedCostId Int      @map("planned_cost_id")
+  id            String   @id @default(uuid(7)) @db.Uuid
+  cashAdvanceId String   @map("cash_advance_id") @db.Uuid
+  plannedCostId String   @map("planned_cost_id") @db.Uuid
   advanceAmount Decimal  @map("advance_amount") @db.Decimal(18, 2) // dana yang diberikan
   actualAmount  Decimal? @map("actual_amount") @db.Decimal(18, 2) // realisasi LPJ; null = belum dilaporkan
   note          String?
@@ -406,34 +458,43 @@ model CashAdvanceItem {
   @@map("cash_advance_items")
 }
 
-// Biaya di luar rencana yang dilaporkan saat LPJ (dulu: "tambahan" uang jalan)
+// Biaya di luar rencana yang dilaporkan saat LPJ (dulu: "tambahan" uang jalan).
+// chargeTypeId memetakan biaya ke jenis biaya agar ikut ditagihkan (bila AT_COST dan billable).
 model CashAdvanceExtraCost {
-  id              Int     @id @default(autoincrement())
-  cashAdvanceId   Int     @map("cash_advance_id")
-  workOrderItemId Int     @map("work_order_item_id")
+  id              String  @id @default(uuid(7)) @db.Uuid
+  cashAdvanceId   String  @map("cash_advance_id") @db.Uuid
+  workOrderItemId String  @map("work_order_item_id") @db.Uuid
+  chargeTypeId    String  @map("charge_type_id") @db.Uuid
   description     String
   amount          Decimal @db.Decimal(18, 2)
+  billable        Boolean @default(true) // false = ditanggung perusahaan, tidak ditagihkan ke customer
   note            String?
 
   cashAdvance   CashAdvance   @relation(fields: [cashAdvanceId], references: [id], onDelete: Cascade)
   workOrderItem WorkOrderItem @relation(fields: [workOrderItemId], references: [id])
+  chargeType    ChargeType    @relation(fields: [chargeTypeId], references: [id])
 
   @@index([cashAdvanceId])
+  @@index([chargeTypeId])
   @@map("cash_advance_extra_costs")
 }
 
 // ---------------------------------------------------------------------
-// 6. PENGEMBALIAN SISA DANA
+// 6. PENGEMBALIAN SISA DANA / PENGGANTIAN KEKURANGAN
+//    Satu dokumen untuk dua arah (lihat enum AdvanceReturnDirection), keduanya
+//    wajib bukti transfer (attachments, kind TRANSFER_PROOF).
 // ---------------------------------------------------------------------
 model AdvanceReturn {
-  id            Int                 @id @default(autoincrement())
-  number        String              @unique
-  returnDate    DateTime            @map("return_date") @db.Date
-  returnedBy    String              @map("returned_by")
-  cashAccountId Int?                @map("cash_account_id")
-  status        AdvanceReturnStatus @default(DRAFT)
-  createdById   Int?                @map("created_by")
-  createdAt     DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  id            String                 @id @default(uuid(7)) @db.Uuid
+  number        String                 @unique
+  direction     AdvanceReturnDirection @default(RETURN_TO_COMPANY)
+  returnDate    DateTime               @map("return_date") @db.Date
+  returnedBy    String                 @map("returned_by") // nama pihak yang menyerahkan dana (atau penerima, untuk penggantian)
+  cashAccountId String?                @map("cash_account_id") @db.Uuid
+  status        AdvanceReturnStatus    @default(DRAFT)
+  note          String?
+  createdById   String?                @map("created_by") @db.Uuid
+  createdAt     DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
 
   cashAccount CashAccount? @relation(fields: [cashAccountId], references: [id])
   createdBy   User?        @relation("AdvanceReturnCreatedBy", fields: [createdById], references: [id])
@@ -444,9 +505,9 @@ model AdvanceReturn {
 }
 
 model AdvanceReturnItem {
-  id              Int     @id @default(autoincrement())
-  advanceReturnId Int     @map("advance_return_id")
-  cashAdvanceId   Int     @map("cash_advance_id")
+  id              String  @id @default(uuid(7)) @db.Uuid
+  advanceReturnId String  @map("advance_return_id") @db.Uuid
+  cashAdvanceId   String  @map("cash_advance_id") @db.Uuid
   amount          Decimal @db.Decimal(18, 2)
 
   advanceReturn AdvanceReturn @relation(fields: [advanceReturnId], references: [id], onDelete: Cascade)
@@ -462,12 +523,12 @@ model AdvanceReturnItem {
 //    dibedakan oleh docType / ownerType).
 // ---------------------------------------------------------------------
 model ApprovalHistory {
-  id      Int             @id @default(autoincrement())
+  id      String          @id @default(uuid(7)) @db.Uuid
   docType ApprovalDocType @map("doc_type")
-  docId   Int             @map("doc_id")
+  docId   String          @map("doc_id") @db.Uuid
   step    ApprovalStep
   action  ApprovalAction
-  actorId Int             @map("actor_id")
+  actorId String          @map("actor_id") @db.Uuid
   actedAt DateTime        @default(now()) @map("acted_at") @db.Timestamptz(6)
   note    String?
 
@@ -478,13 +539,15 @@ model ApprovalHistory {
 }
 
 model Attachment {
-  id           Int                 @id @default(autoincrement())
+  id           String              @id @default(uuid(7)) @db.Uuid
   ownerType    AttachmentOwnerType @map("owner_type")
-  ownerId      Int                 @map("owner_id")
+  ownerId      String              @map("owner_id") @db.Uuid
   kind         AttachmentKind
   storageKey   String              @map("storage_key") // path di object storage, bukan BLOB
   fileName     String?             @map("file_name")
-  uploadedById Int?                @map("uploaded_by")
+  mimeType     String?             @map("mime_type")
+  sizeBytes    Int?                @map("size_bytes")
+  uploadedById String?             @map("uploaded_by") @db.Uuid
   uploadedAt   DateTime            @default(now()) @map("uploaded_at") @db.Timestamptz(6)
 
   uploadedBy User? @relation(fields: [uploadedById], references: [id])
@@ -495,13 +558,51 @@ model Attachment {
 
 // Antrean posting jurnal (diisi di modul akuntansi)
 model AccountingEvent {
-  id         Int                   @id @default(autoincrement())
+  id         String                @id @default(uuid(7)) @db.Uuid
   eventType  String                @map("event_type") // ADVANCE_PAID, REPORT_APPROVED, RETURN_RECEIVED
   sourceType String                @map("source_type")
-  sourceId   Int                   @map("source_id")
+  sourceId   String                @map("source_id") @db.Uuid
   status     AccountingEventStatus @default(PENDING)
   createdAt  DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
   postedAt   DateTime?             @map("posted_at") @db.Timestamptz(6)
 
   @@map("accounting_events")
+}
+
+// ---------------------------------------------------------------------
+// 8. PENGATURAN ALUR PERSETUJUAN
+//    Hanya langkah pengecekan yang bisa diatur (CHECK, VERIFY_TRANSFER, REPORT_CHECK).
+//    Langkah inti (APPROVE, PAY, REPORT_SUBMIT, REPORT_APPROVE) tetap di kode dan
+//    tidak bisa dinonaktifkan. minAmount: langkah hanya berlaku bila total pengajuan >= minAmount.
+// ---------------------------------------------------------------------
+model WorkflowSetting {
+  id          String          @id @default(uuid(7)) @db.Uuid
+  docType     ApprovalDocType @map("doc_type")
+  step        ApprovalStep
+  isEnabled   Boolean         @default(true) @map("is_enabled")
+  minAmount   Decimal         @default(0) @map("min_amount") @db.Decimal(18, 2)
+  updatedById String?         @map("updated_by") @db.Uuid
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  updatedBy User?                @relation("WorkflowSettingUpdatedBy", fields: [updatedById], references: [id])
+  logs      WorkflowSettingLog[]
+
+  @@unique([docType, step])
+  @@map("workflow_settings")
+}
+
+// Jejak perubahan pengaturan: siapa, kapan, nilai lama dan baru.
+model WorkflowSettingLog {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  settingId   String   @map("setting_id") @db.Uuid
+  oldValue    Json     @map("old_value")
+  newValue    Json     @map("new_value")
+  changedById String   @map("changed_by") @db.Uuid
+  changedAt   DateTime @default(now()) @map("changed_at") @db.Timestamptz(6)
+
+  setting   WorkflowSetting @relation(fields: [settingId], references: [id], onDelete: Cascade)
+  changedBy User            @relation("WorkflowSettingLogChangedBy", fields: [changedById], references: [id])
+
+  @@index([settingId, changedAt])
+  @@map("workflow_setting_logs")
 }

@@ -2,9 +2,7 @@ import { z } from 'zod';
 
 // Aplikasi menolak start jika konfigurasi wajib tidak valid (fail fast).
 const envSchema = z.object({
-  NODE_ENV: z
-    .enum(['development', 'test', 'production'])
-    .default('development'),
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL wajib diisi'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET minimal 32 karakter'),

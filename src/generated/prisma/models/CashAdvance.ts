@@ -27,53 +27,43 @@ export type AggregateCashAdvance = {
 }
 
 export type CashAdvanceAvgAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
-  holderId: number | null
-  cashAccountId: number | null
   transferFee: runtime.Decimal | null
-  createdById: number | null
 }
 
 export type CashAdvanceSumAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
-  holderId: number | null
-  cashAccountId: number | null
   transferFee: runtime.Decimal | null
-  createdById: number | null
 }
 
 export type CashAdvanceMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
   advanceType: $Enums.CashAdvanceType | null
-  workOrderId: number | null
+  workOrderId: string | null
   advanceDate: Date | null
   recipient: string | null
-  holderId: number | null
-  cashAccountId: number | null
+  holderId: string | null
+  cashAccountId: string | null
   transferFee: runtime.Decimal | null
   description: string | null
   status: $Enums.CashAdvanceStatus | null
-  createdById: number | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type CashAdvanceMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
   advanceType: $Enums.CashAdvanceType | null
-  workOrderId: number | null
+  workOrderId: string | null
   advanceDate: Date | null
   recipient: string | null
-  holderId: number | null
-  cashAccountId: number | null
+  holderId: string | null
+  cashAccountId: string | null
   transferFee: runtime.Decimal | null
   description: string | null
   status: $Enums.CashAdvanceStatus | null
-  createdById: number | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -90,6 +80,7 @@ export type CashAdvanceCountAggregateOutputType = {
   transferFee: number
   description: number
   status: number
+  requiredSteps: number
   createdById: number
   createdAt: number
   updatedAt: number
@@ -98,21 +89,11 @@ export type CashAdvanceCountAggregateOutputType = {
 
 
 export type CashAdvanceAvgAggregateInputType = {
-  id?: true
-  workOrderId?: true
-  holderId?: true
-  cashAccountId?: true
   transferFee?: true
-  createdById?: true
 }
 
 export type CashAdvanceSumAggregateInputType = {
-  id?: true
-  workOrderId?: true
-  holderId?: true
-  cashAccountId?: true
   transferFee?: true
-  createdById?: true
 }
 
 export type CashAdvanceMinAggregateInputType = {
@@ -161,6 +142,7 @@ export type CashAdvanceCountAggregateInputType = {
   transferFee?: true
   description?: true
   status?: true
+  requiredSteps?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -254,18 +236,19 @@ export type CashAdvanceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type CashAdvanceGroupByOutputType = {
-  id: number
+  id: string
   number: string
   advanceType: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date
   recipient: string
-  holderId: number | null
-  cashAccountId: number | null
+  holderId: string | null
+  cashAccountId: string | null
   transferFee: runtime.Decimal
   description: string | null
   status: $Enums.CashAdvanceStatus
-  createdById: number | null
+  requiredSteps: $Enums.ApprovalStep[]
+  createdById: string | null
   createdAt: Date
   updatedAt: Date
   _count: CashAdvanceCountAggregateOutputType | null
@@ -294,18 +277,19 @@ export type CashAdvanceWhereInput = {
   AND?: Prisma.CashAdvanceWhereInput | Prisma.CashAdvanceWhereInput[]
   OR?: Prisma.CashAdvanceWhereInput[]
   NOT?: Prisma.CashAdvanceWhereInput | Prisma.CashAdvanceWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvance"> | number
+  id?: Prisma.UuidFilter<"CashAdvance"> | string
   number?: Prisma.StringFilter<"CashAdvance"> | string
   advanceType?: Prisma.EnumCashAdvanceTypeFilter<"CashAdvance"> | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFilter<"CashAdvance"> | number
+  workOrderId?: Prisma.UuidFilter<"CashAdvance"> | string
   advanceDate?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   recipient?: Prisma.StringFilter<"CashAdvance"> | string
-  holderId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
-  cashAccountId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  holderId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
+  cashAccountId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   transferFee?: Prisma.DecimalFilter<"CashAdvance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"CashAdvance"> | string | null
   status?: Prisma.EnumCashAdvanceStatusFilter<"CashAdvance"> | $Enums.CashAdvanceStatus
-  createdById?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  requiredSteps?: Prisma.EnumApprovalStepNullableListFilter<"CashAdvance">
+  createdById?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   workOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
@@ -329,6 +313,7 @@ export type CashAdvanceOrderByWithRelationInput = {
   transferFee?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  requiredSteps?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -342,21 +327,22 @@ export type CashAdvanceOrderByWithRelationInput = {
 }
 
 export type CashAdvanceWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   number?: string
   AND?: Prisma.CashAdvanceWhereInput | Prisma.CashAdvanceWhereInput[]
   OR?: Prisma.CashAdvanceWhereInput[]
   NOT?: Prisma.CashAdvanceWhereInput | Prisma.CashAdvanceWhereInput[]
   advanceType?: Prisma.EnumCashAdvanceTypeFilter<"CashAdvance"> | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFilter<"CashAdvance"> | number
+  workOrderId?: Prisma.UuidFilter<"CashAdvance"> | string
   advanceDate?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   recipient?: Prisma.StringFilter<"CashAdvance"> | string
-  holderId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
-  cashAccountId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  holderId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
+  cashAccountId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   transferFee?: Prisma.DecimalFilter<"CashAdvance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"CashAdvance"> | string | null
   status?: Prisma.EnumCashAdvanceStatusFilter<"CashAdvance"> | $Enums.CashAdvanceStatus
-  createdById?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  requiredSteps?: Prisma.EnumApprovalStepNullableListFilter<"CashAdvance">
+  createdById?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   workOrder?: Prisma.XOR<Prisma.WorkOrderScalarRelationFilter, Prisma.WorkOrderWhereInput>
@@ -380,6 +366,7 @@ export type CashAdvanceOrderByWithAggregationInput = {
   transferFee?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  requiredSteps?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -394,23 +381,25 @@ export type CashAdvanceScalarWhereWithAggregatesInput = {
   AND?: Prisma.CashAdvanceScalarWhereWithAggregatesInput | Prisma.CashAdvanceScalarWhereWithAggregatesInput[]
   OR?: Prisma.CashAdvanceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CashAdvanceScalarWhereWithAggregatesInput | Prisma.CashAdvanceScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"CashAdvance"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"CashAdvance"> | string
   number?: Prisma.StringWithAggregatesFilter<"CashAdvance"> | string
   advanceType?: Prisma.EnumCashAdvanceTypeWithAggregatesFilter<"CashAdvance"> | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntWithAggregatesFilter<"CashAdvance"> | number
+  workOrderId?: Prisma.UuidWithAggregatesFilter<"CashAdvance"> | string
   advanceDate?: Prisma.DateTimeWithAggregatesFilter<"CashAdvance"> | Date | string
   recipient?: Prisma.StringWithAggregatesFilter<"CashAdvance"> | string
-  holderId?: Prisma.IntNullableWithAggregatesFilter<"CashAdvance"> | number | null
-  cashAccountId?: Prisma.IntNullableWithAggregatesFilter<"CashAdvance"> | number | null
+  holderId?: Prisma.UuidNullableWithAggregatesFilter<"CashAdvance"> | string | null
+  cashAccountId?: Prisma.UuidNullableWithAggregatesFilter<"CashAdvance"> | string | null
   transferFee?: Prisma.DecimalWithAggregatesFilter<"CashAdvance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableWithAggregatesFilter<"CashAdvance"> | string | null
   status?: Prisma.EnumCashAdvanceStatusWithAggregatesFilter<"CashAdvance"> | $Enums.CashAdvanceStatus
-  createdById?: Prisma.IntNullableWithAggregatesFilter<"CashAdvance"> | number | null
+  requiredSteps?: Prisma.EnumApprovalStepNullableListFilter<"CashAdvance">
+  createdById?: Prisma.UuidNullableWithAggregatesFilter<"CashAdvance"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CashAdvance"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CashAdvance"> | Date | string
 }
 
 export type CashAdvanceCreateInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -418,6 +407,7 @@ export type CashAdvanceCreateInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -430,18 +420,19 @@ export type CashAdvanceCreateInput = {
 }
 
 export type CashAdvanceUncheckedCreateInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -450,6 +441,7 @@ export type CashAdvanceUncheckedCreateInput = {
 }
 
 export type CashAdvanceUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,6 +449,7 @@ export type CashAdvanceUpdateInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -469,18 +462,19 @@ export type CashAdvanceUpdateInput = {
 }
 
 export type CashAdvanceUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -489,23 +483,25 @@ export type CashAdvanceUncheckedUpdateInput = {
 }
 
 export type CashAdvanceCreateManyInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CashAdvanceUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -513,23 +509,25 @@ export type CashAdvanceUpdateManyMutationInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CashAdvanceUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -544,6 +542,14 @@ export type CashAdvanceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type EnumApprovalStepNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApprovalStep[] | Prisma.ListEnumApprovalStepFieldRefInput<$PrismaModel> | null
+  has?: $Enums.ApprovalStep | Prisma.EnumApprovalStepFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.ApprovalStep[] | Prisma.ListEnumApprovalStepFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.ApprovalStep[] | Prisma.ListEnumApprovalStepFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type CashAdvanceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
@@ -556,18 +562,14 @@ export type CashAdvanceCountOrderByAggregateInput = {
   transferFee?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  requiredSteps?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CashAdvanceAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
-  holderId?: Prisma.SortOrder
-  cashAccountId?: Prisma.SortOrder
   transferFee?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type CashAdvanceMaxOrderByAggregateInput = {
@@ -605,12 +607,7 @@ export type CashAdvanceMinOrderByAggregateInput = {
 }
 
 export type CashAdvanceSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
-  holderId?: Prisma.SortOrder
-  cashAccountId?: Prisma.SortOrder
   transferFee?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type CashAdvanceScalarRelationFilter = {
@@ -786,12 +783,21 @@ export type CashAdvanceUncheckedUpdateManyWithoutWorkOrderNestedInput = {
   deleteMany?: Prisma.CashAdvanceScalarWhereInput | Prisma.CashAdvanceScalarWhereInput[]
 }
 
+export type CashAdvanceCreaterequiredStepsInput = {
+  set: $Enums.ApprovalStep[]
+}
+
 export type EnumCashAdvanceTypeFieldUpdateOperationsInput = {
   set?: $Enums.CashAdvanceType
 }
 
 export type EnumCashAdvanceStatusFieldUpdateOperationsInput = {
   set?: $Enums.CashAdvanceStatus
+}
+
+export type CashAdvanceUpdaterequiredStepsInput = {
+  set?: $Enums.ApprovalStep[]
+  push?: $Enums.ApprovalStep | $Enums.ApprovalStep[]
 }
 
 export type CashAdvanceCreateNestedOneWithoutItemsInput = {
@@ -837,6 +843,7 @@ export type CashAdvanceUpdateOneRequiredWithoutReturnItemsNestedInput = {
 }
 
 export type CashAdvanceCreateWithoutCreatedByInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -844,6 +851,7 @@ export type CashAdvanceCreateWithoutCreatedByInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -855,17 +863,18 @@ export type CashAdvanceCreateWithoutCreatedByInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutCreatedByInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -884,6 +893,7 @@ export type CashAdvanceCreateManyCreatedByInputEnvelope = {
 }
 
 export type CashAdvanceCreateWithoutHolderInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -891,6 +901,7 @@ export type CashAdvanceCreateWithoutHolderInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -902,17 +913,18 @@ export type CashAdvanceCreateWithoutHolderInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutHolderInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -950,18 +962,19 @@ export type CashAdvanceScalarWhereInput = {
   AND?: Prisma.CashAdvanceScalarWhereInput | Prisma.CashAdvanceScalarWhereInput[]
   OR?: Prisma.CashAdvanceScalarWhereInput[]
   NOT?: Prisma.CashAdvanceScalarWhereInput | Prisma.CashAdvanceScalarWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvance"> | number
+  id?: Prisma.UuidFilter<"CashAdvance"> | string
   number?: Prisma.StringFilter<"CashAdvance"> | string
   advanceType?: Prisma.EnumCashAdvanceTypeFilter<"CashAdvance"> | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFilter<"CashAdvance"> | number
+  workOrderId?: Prisma.UuidFilter<"CashAdvance"> | string
   advanceDate?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   recipient?: Prisma.StringFilter<"CashAdvance"> | string
-  holderId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
-  cashAccountId?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  holderId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
+  cashAccountId?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   transferFee?: Prisma.DecimalFilter<"CashAdvance"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.StringNullableFilter<"CashAdvance"> | string | null
   status?: Prisma.EnumCashAdvanceStatusFilter<"CashAdvance"> | $Enums.CashAdvanceStatus
-  createdById?: Prisma.IntNullableFilter<"CashAdvance"> | number | null
+  requiredSteps?: Prisma.EnumApprovalStepNullableListFilter<"CashAdvance">
+  createdById?: Prisma.UuidNullableFilter<"CashAdvance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CashAdvance"> | Date | string
 }
@@ -983,6 +996,7 @@ export type CashAdvanceUpdateManyWithWhereWithoutHolderInput = {
 }
 
 export type CashAdvanceCreateWithoutCashAccountInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -990,6 +1004,7 @@ export type CashAdvanceCreateWithoutCashAccountInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -1001,17 +1016,18 @@ export type CashAdvanceCreateWithoutCashAccountInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutCashAccountInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
+  holderId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -1046,6 +1062,7 @@ export type CashAdvanceUpdateManyWithWhereWithoutCashAccountInput = {
 }
 
 export type CashAdvanceCreateWithoutWorkOrderInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -1053,6 +1070,7 @@ export type CashAdvanceCreateWithoutWorkOrderInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   holder?: Prisma.UserCreateNestedOneWithoutHeldCashAdvancesInput
@@ -1064,17 +1082,18 @@ export type CashAdvanceCreateWithoutWorkOrderInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutWorkOrderInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -1109,6 +1128,7 @@ export type CashAdvanceUpdateManyWithWhereWithoutWorkOrderInput = {
 }
 
 export type CashAdvanceCreateWithoutItemsInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -1116,6 +1136,7 @@ export type CashAdvanceCreateWithoutItemsInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -1127,18 +1148,19 @@ export type CashAdvanceCreateWithoutItemsInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutItemsInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   extraCosts?: Prisma.CashAdvanceExtraCostUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -1162,6 +1184,7 @@ export type CashAdvanceUpdateToOneWithWhereWithoutItemsInput = {
 }
 
 export type CashAdvanceUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1169,6 +1192,7 @@ export type CashAdvanceUpdateWithoutItemsInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1180,18 +1204,19 @@ export type CashAdvanceUpdateWithoutItemsInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   extraCosts?: Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1199,6 +1224,7 @@ export type CashAdvanceUncheckedUpdateWithoutItemsInput = {
 }
 
 export type CashAdvanceCreateWithoutExtraCostsInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -1206,6 +1232,7 @@ export type CashAdvanceCreateWithoutExtraCostsInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -1217,18 +1244,19 @@ export type CashAdvanceCreateWithoutExtraCostsInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutExtraCostsInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -1252,6 +1280,7 @@ export type CashAdvanceUpdateToOneWithWhereWithoutExtraCostsInput = {
 }
 
 export type CashAdvanceUpdateWithoutExtraCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1259,6 +1288,7 @@ export type CashAdvanceUpdateWithoutExtraCostsInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1270,18 +1300,19 @@ export type CashAdvanceUpdateWithoutExtraCostsInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutExtraCostsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1289,6 +1320,7 @@ export type CashAdvanceUncheckedUpdateWithoutExtraCostsInput = {
 }
 
 export type CashAdvanceCreateWithoutReturnItemsInput = {
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
@@ -1296,6 +1328,7 @@ export type CashAdvanceCreateWithoutReturnItemsInput = {
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
   workOrder: Prisma.WorkOrderCreateNestedOneWithoutCashAdvancesInput
@@ -1307,18 +1340,19 @@ export type CashAdvanceCreateWithoutReturnItemsInput = {
 }
 
 export type CashAdvanceUncheckedCreateWithoutReturnItemsInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutCashAdvanceInput
@@ -1342,6 +1376,7 @@ export type CashAdvanceUpdateToOneWithWhereWithoutReturnItemsInput = {
 }
 
 export type CashAdvanceUpdateWithoutReturnItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1349,6 +1384,7 @@ export type CashAdvanceUpdateWithoutReturnItemsInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1360,18 +1396,19 @@ export type CashAdvanceUpdateWithoutReturnItemsInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutReturnItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1379,38 +1416,41 @@ export type CashAdvanceUncheckedUpdateWithoutReturnItemsInput = {
 }
 
 export type CashAdvanceCreateManyCreatedByInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CashAdvanceCreateManyHolderInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CashAdvanceUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1418,6 +1458,7 @@ export type CashAdvanceUpdateWithoutCreatedByInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1429,17 +1470,18 @@ export type CashAdvanceUpdateWithoutCreatedByInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1448,22 +1490,24 @@ export type CashAdvanceUncheckedUpdateWithoutCreatedByInput = {
 }
 
 export type CashAdvanceUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CashAdvanceUpdateWithoutHolderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1471,6 +1515,7 @@ export type CashAdvanceUpdateWithoutHolderInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1482,17 +1527,18 @@ export type CashAdvanceUpdateWithoutHolderInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutHolderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1501,38 +1547,41 @@ export type CashAdvanceUncheckedUpdateWithoutHolderInput = {
 }
 
 export type CashAdvanceUncheckedUpdateManyWithoutHolderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CashAdvanceCreateManyCashAccountInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
-  workOrderId: number
+  workOrderId: string
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
+  holderId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CashAdvanceUpdateWithoutCashAccountInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1540,6 +1589,7 @@ export type CashAdvanceUpdateWithoutCashAccountInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrder?: Prisma.WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput
@@ -1551,17 +1601,18 @@ export type CashAdvanceUpdateWithoutCashAccountInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutCashAccountInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1570,38 +1621,41 @@ export type CashAdvanceUncheckedUpdateWithoutCashAccountInput = {
 }
 
 export type CashAdvanceUncheckedUpdateManyWithoutCashAccountInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CashAdvanceCreateManyWorkOrderInput = {
-  id?: number
+  id?: string
   number: string
   advanceType?: $Enums.CashAdvanceType
   advanceDate: Date | string
   recipient: string
-  holderId?: number | null
-  cashAccountId?: number | null
+  holderId?: string | null
+  cashAccountId?: string | null
   transferFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: string | null
   status?: $Enums.CashAdvanceStatus
-  createdById?: number | null
+  requiredSteps?: Prisma.CashAdvanceCreaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CashAdvanceUpdateWithoutWorkOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1609,6 +1663,7 @@ export type CashAdvanceUpdateWithoutWorkOrderInput = {
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   holder?: Prisma.UserUpdateOneWithoutHeldCashAdvancesNestedInput
@@ -1620,17 +1675,18 @@ export type CashAdvanceUpdateWithoutWorkOrderInput = {
 }
 
 export type CashAdvanceUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput
@@ -1639,17 +1695,18 @@ export type CashAdvanceUncheckedUpdateWithoutWorkOrderInput = {
 }
 
 export type CashAdvanceUncheckedUpdateManyWithoutWorkOrderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   advanceType?: Prisma.EnumCashAdvanceTypeFieldUpdateOperationsInput | $Enums.CashAdvanceType
   advanceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  holderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transferFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumCashAdvanceStatusFieldUpdateOperationsInput | $Enums.CashAdvanceStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredSteps?: Prisma.CashAdvanceUpdaterequiredStepsInput | $Enums.ApprovalStep[]
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1715,6 +1772,7 @@ export type CashAdvanceSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   transferFee?: boolean
   description?: boolean
   status?: boolean
+  requiredSteps?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1740,6 +1798,7 @@ export type CashAdvanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   transferFee?: boolean
   description?: boolean
   status?: boolean
+  requiredSteps?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1761,6 +1820,7 @@ export type CashAdvanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   transferFee?: boolean
   description?: boolean
   status?: boolean
+  requiredSteps?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1782,12 +1842,13 @@ export type CashAdvanceSelectScalar = {
   transferFee?: boolean
   description?: boolean
   status?: boolean
+  requiredSteps?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CashAdvanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "advanceType" | "workOrderId" | "advanceDate" | "recipient" | "holderId" | "cashAccountId" | "transferFee" | "description" | "status" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["cashAdvance"]>
+export type CashAdvanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "advanceType" | "workOrderId" | "advanceDate" | "recipient" | "holderId" | "cashAccountId" | "transferFee" | "description" | "status" | "requiredSteps" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["cashAdvance"]>
 export type CashAdvanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workOrder?: boolean | Prisma.WorkOrderDefaultArgs<ExtArgs>
   holder?: boolean | Prisma.CashAdvance$holderArgs<ExtArgs>
@@ -1823,18 +1884,19 @@ export type $CashAdvancePayload<ExtArgs extends runtime.Types.Extensions.Interna
     returnItems: Prisma.$AdvanceReturnItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     number: string
     advanceType: $Enums.CashAdvanceType
-    workOrderId: number
+    workOrderId: string
     advanceDate: Date
     recipient: string
-    holderId: number | null
-    cashAccountId: number | null
+    holderId: string | null
+    cashAccountId: string | null
     transferFee: runtime.Decimal
     description: string | null
     status: $Enums.CashAdvanceStatus
-    createdById: number | null
+    requiredSteps: $Enums.ApprovalStep[]
+    createdById: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["cashAdvance"]>
@@ -2267,18 +2329,19 @@ export interface Prisma__CashAdvanceClient<T, Null = never, ExtArgs extends runt
  * Fields of the CashAdvance model
  */
 export interface CashAdvanceFieldRefs {
-  readonly id: Prisma.FieldRef<"CashAdvance", 'Int'>
+  readonly id: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly number: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly advanceType: Prisma.FieldRef<"CashAdvance", 'CashAdvanceType'>
-  readonly workOrderId: Prisma.FieldRef<"CashAdvance", 'Int'>
+  readonly workOrderId: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly advanceDate: Prisma.FieldRef<"CashAdvance", 'DateTime'>
   readonly recipient: Prisma.FieldRef<"CashAdvance", 'String'>
-  readonly holderId: Prisma.FieldRef<"CashAdvance", 'Int'>
-  readonly cashAccountId: Prisma.FieldRef<"CashAdvance", 'Int'>
+  readonly holderId: Prisma.FieldRef<"CashAdvance", 'String'>
+  readonly cashAccountId: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly transferFee: Prisma.FieldRef<"CashAdvance", 'Decimal'>
   readonly description: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly status: Prisma.FieldRef<"CashAdvance", 'CashAdvanceStatus'>
-  readonly createdById: Prisma.FieldRef<"CashAdvance", 'Int'>
+  readonly requiredSteps: Prisma.FieldRef<"CashAdvance", 'ApprovalStep[]'>
+  readonly createdById: Prisma.FieldRef<"CashAdvance", 'String'>
   readonly createdAt: Prisma.FieldRef<"CashAdvance", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CashAdvance", 'DateTime'>
 }

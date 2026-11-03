@@ -27,24 +27,16 @@ export type AggregateWorkOrderItem = {
 }
 
 export type WorkOrderItemAvgAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
   lineNo: number | null
-  vehicleId: number | null
-  driverId: number | null
 }
 
 export type WorkOrderItemSumAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
   lineNo: number | null
-  vehicleId: number | null
-  driverId: number | null
 }
 
 export type WorkOrderItemMinAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
+  id: string | null
+  workOrderId: string | null
   lineNo: number | null
   direction: $Enums.Direction | null
   referenceNo: string | null
@@ -52,16 +44,16 @@ export type WorkOrderItemMinAggregateOutputType = {
   containerSize: string | null
   containerNo: string | null
   sealNo: string | null
-  vehicleId: number | null
-  driverId: number | null
+  vehicleId: string | null
+  driverId: string | null
   origin: string | null
   destination: string | null
   status: $Enums.WorkOrderItemStatus | null
 }
 
 export type WorkOrderItemMaxAggregateOutputType = {
-  id: number | null
-  workOrderId: number | null
+  id: string | null
+  workOrderId: string | null
   lineNo: number | null
   direction: $Enums.Direction | null
   referenceNo: string | null
@@ -69,8 +61,8 @@ export type WorkOrderItemMaxAggregateOutputType = {
   containerSize: string | null
   containerNo: string | null
   sealNo: string | null
-  vehicleId: number | null
-  driverId: number | null
+  vehicleId: string | null
+  driverId: string | null
   origin: string | null
   destination: string | null
   status: $Enums.WorkOrderItemStatus | null
@@ -96,19 +88,11 @@ export type WorkOrderItemCountAggregateOutputType = {
 
 
 export type WorkOrderItemAvgAggregateInputType = {
-  id?: true
-  workOrderId?: true
   lineNo?: true
-  vehicleId?: true
-  driverId?: true
 }
 
 export type WorkOrderItemSumAggregateInputType = {
-  id?: true
-  workOrderId?: true
   lineNo?: true
-  vehicleId?: true
-  driverId?: true
 }
 
 export type WorkOrderItemMinAggregateInputType = {
@@ -250,8 +234,8 @@ export type WorkOrderItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 export type WorkOrderItemGroupByOutputType = {
-  id: number
-  workOrderId: number
+  id: string
+  workOrderId: string
   lineNo: number
   direction: $Enums.Direction | null
   referenceNo: string | null
@@ -259,8 +243,8 @@ export type WorkOrderItemGroupByOutputType = {
   containerSize: string | null
   containerNo: string | null
   sealNo: string | null
-  vehicleId: number | null
-  driverId: number | null
+  vehicleId: string | null
+  driverId: string | null
   origin: string | null
   destination: string | null
   status: $Enums.WorkOrderItemStatus
@@ -290,8 +274,8 @@ export type WorkOrderItemWhereInput = {
   AND?: Prisma.WorkOrderItemWhereInput | Prisma.WorkOrderItemWhereInput[]
   OR?: Prisma.WorkOrderItemWhereInput[]
   NOT?: Prisma.WorkOrderItemWhereInput | Prisma.WorkOrderItemWhereInput[]
-  id?: Prisma.IntFilter<"WorkOrderItem"> | number
-  workOrderId?: Prisma.IntFilter<"WorkOrderItem"> | number
+  id?: Prisma.UuidFilter<"WorkOrderItem"> | string
+  workOrderId?: Prisma.UuidFilter<"WorkOrderItem"> | string
   lineNo?: Prisma.IntFilter<"WorkOrderItem"> | number
   direction?: Prisma.EnumDirectionNullableFilter<"WorkOrderItem"> | $Enums.Direction | null
   referenceNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
@@ -299,8 +283,8 @@ export type WorkOrderItemWhereInput = {
   containerSize?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   containerNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   sealNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
-  vehicleId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
-  driverId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
+  vehicleId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
+  driverId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
   origin?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   destination?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   status?: Prisma.EnumWorkOrderItemStatusFilter<"WorkOrderItem"> | $Enums.WorkOrderItemStatus
@@ -336,12 +320,12 @@ export type WorkOrderItemOrderByWithRelationInput = {
 }
 
 export type WorkOrderItemWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   workOrderId_lineNo?: Prisma.WorkOrderItemWorkOrderIdLineNoCompoundUniqueInput
   AND?: Prisma.WorkOrderItemWhereInput | Prisma.WorkOrderItemWhereInput[]
   OR?: Prisma.WorkOrderItemWhereInput[]
   NOT?: Prisma.WorkOrderItemWhereInput | Prisma.WorkOrderItemWhereInput[]
-  workOrderId?: Prisma.IntFilter<"WorkOrderItem"> | number
+  workOrderId?: Prisma.UuidFilter<"WorkOrderItem"> | string
   lineNo?: Prisma.IntFilter<"WorkOrderItem"> | number
   direction?: Prisma.EnumDirectionNullableFilter<"WorkOrderItem"> | $Enums.Direction | null
   referenceNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
@@ -349,8 +333,8 @@ export type WorkOrderItemWhereUniqueInput = Prisma.AtLeast<{
   containerSize?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   containerNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   sealNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
-  vehicleId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
-  driverId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
+  vehicleId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
+  driverId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
   origin?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   destination?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   status?: Prisma.EnumWorkOrderItemStatusFilter<"WorkOrderItem"> | $Enums.WorkOrderItemStatus
@@ -388,8 +372,8 @@ export type WorkOrderItemScalarWhereWithAggregatesInput = {
   AND?: Prisma.WorkOrderItemScalarWhereWithAggregatesInput | Prisma.WorkOrderItemScalarWhereWithAggregatesInput[]
   OR?: Prisma.WorkOrderItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WorkOrderItemScalarWhereWithAggregatesInput | Prisma.WorkOrderItemScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"WorkOrderItem"> | number
-  workOrderId?: Prisma.IntWithAggregatesFilter<"WorkOrderItem"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"WorkOrderItem"> | string
+  workOrderId?: Prisma.UuidWithAggregatesFilter<"WorkOrderItem"> | string
   lineNo?: Prisma.IntWithAggregatesFilter<"WorkOrderItem"> | number
   direction?: Prisma.EnumDirectionNullableWithAggregatesFilter<"WorkOrderItem"> | $Enums.Direction | null
   referenceNo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
@@ -397,14 +381,15 @@ export type WorkOrderItemScalarWhereWithAggregatesInput = {
   containerSize?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
   containerNo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
   sealNo?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
-  vehicleId?: Prisma.IntNullableWithAggregatesFilter<"WorkOrderItem"> | number | null
-  driverId?: Prisma.IntNullableWithAggregatesFilter<"WorkOrderItem"> | number | null
+  vehicleId?: Prisma.UuidNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
+  driverId?: Prisma.UuidNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
   origin?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
   destination?: Prisma.StringNullableWithAggregatesFilter<"WorkOrderItem"> | string | null
   status?: Prisma.EnumWorkOrderItemStatusWithAggregatesFilter<"WorkOrderItem"> | $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemCreateInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -424,8 +409,8 @@ export type WorkOrderItemCreateInput = {
 }
 
 export type WorkOrderItemUncheckedCreateInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -433,8 +418,8 @@ export type WorkOrderItemUncheckedCreateInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -444,6 +429,7 @@ export type WorkOrderItemUncheckedCreateInput = {
 }
 
 export type WorkOrderItemUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -463,8 +449,8 @@ export type WorkOrderItemUpdateInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -472,8 +458,8 @@ export type WorkOrderItemUncheckedUpdateInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -483,8 +469,8 @@ export type WorkOrderItemUncheckedUpdateInput = {
 }
 
 export type WorkOrderItemCreateManyInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -492,14 +478,15 @@ export type WorkOrderItemCreateManyInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -513,8 +500,8 @@ export type WorkOrderItemUpdateManyMutationInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -522,8 +509,8 @@ export type WorkOrderItemUncheckedUpdateManyInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -540,7 +527,7 @@ export type WorkOrderItemOrderByRelationAggregateInput = {
 }
 
 export type WorkOrderItemWorkOrderIdLineNoCompoundUniqueInput = {
-  workOrderId: number
+  workOrderId: string
   lineNo: number
 }
 
@@ -562,11 +549,7 @@ export type WorkOrderItemCountOrderByAggregateInput = {
 }
 
 export type WorkOrderItemAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   lineNo?: Prisma.SortOrder
-  vehicleId?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
 }
 
 export type WorkOrderItemMaxOrderByAggregateInput = {
@@ -604,11 +587,7 @@ export type WorkOrderItemMinOrderByAggregateInput = {
 }
 
 export type WorkOrderItemSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderId?: Prisma.SortOrder
   lineNo?: Prisma.SortOrder
-  vehicleId?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
 }
 
 export type WorkOrderItemScalarRelationFilter = {
@@ -797,6 +776,7 @@ export type WorkOrderItemUpdateOneRequiredWithoutExtraCostsNestedInput = {
 }
 
 export type WorkOrderItemCreateWithoutVehicleInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -815,8 +795,8 @@ export type WorkOrderItemCreateWithoutVehicleInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutVehicleInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -824,7 +804,7 @@ export type WorkOrderItemUncheckedCreateWithoutVehicleInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  driverId?: number | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -863,8 +843,8 @@ export type WorkOrderItemScalarWhereInput = {
   AND?: Prisma.WorkOrderItemScalarWhereInput | Prisma.WorkOrderItemScalarWhereInput[]
   OR?: Prisma.WorkOrderItemScalarWhereInput[]
   NOT?: Prisma.WorkOrderItemScalarWhereInput | Prisma.WorkOrderItemScalarWhereInput[]
-  id?: Prisma.IntFilter<"WorkOrderItem"> | number
-  workOrderId?: Prisma.IntFilter<"WorkOrderItem"> | number
+  id?: Prisma.UuidFilter<"WorkOrderItem"> | string
+  workOrderId?: Prisma.UuidFilter<"WorkOrderItem"> | string
   lineNo?: Prisma.IntFilter<"WorkOrderItem"> | number
   direction?: Prisma.EnumDirectionNullableFilter<"WorkOrderItem"> | $Enums.Direction | null
   referenceNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
@@ -872,14 +852,15 @@ export type WorkOrderItemScalarWhereInput = {
   containerSize?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   containerNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   sealNo?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
-  vehicleId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
-  driverId?: Prisma.IntNullableFilter<"WorkOrderItem"> | number | null
+  vehicleId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
+  driverId?: Prisma.UuidNullableFilter<"WorkOrderItem"> | string | null
   origin?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   destination?: Prisma.StringNullableFilter<"WorkOrderItem"> | string | null
   status?: Prisma.EnumWorkOrderItemStatusFilter<"WorkOrderItem"> | $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemCreateWithoutDriverInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -898,8 +879,8 @@ export type WorkOrderItemCreateWithoutDriverInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutDriverInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -907,7 +888,7 @@ export type WorkOrderItemUncheckedCreateWithoutDriverInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
+  vehicleId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -943,6 +924,7 @@ export type WorkOrderItemUpdateManyWithWhereWithoutDriverInput = {
 }
 
 export type WorkOrderItemCreateWithoutWorkOrderInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -961,7 +943,7 @@ export type WorkOrderItemCreateWithoutWorkOrderInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutWorkOrderInput = {
-  id?: number
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -969,8 +951,8 @@ export type WorkOrderItemUncheckedCreateWithoutWorkOrderInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -1006,6 +988,7 @@ export type WorkOrderItemUpdateManyWithWhereWithoutWorkOrderInput = {
 }
 
 export type WorkOrderItemCreateWithoutPlannedCostsInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1024,8 +1007,8 @@ export type WorkOrderItemCreateWithoutPlannedCostsInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutPlannedCostsInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1033,8 +1016,8 @@ export type WorkOrderItemUncheckedCreateWithoutPlannedCostsInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -1059,6 +1042,7 @@ export type WorkOrderItemUpdateToOneWithWhereWithoutPlannedCostsInput = {
 }
 
 export type WorkOrderItemUpdateWithoutPlannedCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1077,8 +1061,8 @@ export type WorkOrderItemUpdateWithoutPlannedCostsInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutPlannedCostsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1086,8 +1070,8 @@ export type WorkOrderItemUncheckedUpdateWithoutPlannedCostsInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1096,6 +1080,7 @@ export type WorkOrderItemUncheckedUpdateWithoutPlannedCostsInput = {
 }
 
 export type WorkOrderItemCreateWithoutBillableChargesInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1114,8 +1099,8 @@ export type WorkOrderItemCreateWithoutBillableChargesInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutBillableChargesInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1123,8 +1108,8 @@ export type WorkOrderItemUncheckedCreateWithoutBillableChargesInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -1149,6 +1134,7 @@ export type WorkOrderItemUpdateToOneWithWhereWithoutBillableChargesInput = {
 }
 
 export type WorkOrderItemUpdateWithoutBillableChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1167,8 +1153,8 @@ export type WorkOrderItemUpdateWithoutBillableChargesInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutBillableChargesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1176,8 +1162,8 @@ export type WorkOrderItemUncheckedUpdateWithoutBillableChargesInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1186,6 +1172,7 @@ export type WorkOrderItemUncheckedUpdateWithoutBillableChargesInput = {
 }
 
 export type WorkOrderItemCreateWithoutExtraCostsInput = {
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1204,8 +1191,8 @@ export type WorkOrderItemCreateWithoutExtraCostsInput = {
 }
 
 export type WorkOrderItemUncheckedCreateWithoutExtraCostsInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1213,8 +1200,8 @@ export type WorkOrderItemUncheckedCreateWithoutExtraCostsInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
@@ -1239,6 +1226,7 @@ export type WorkOrderItemUpdateToOneWithWhereWithoutExtraCostsInput = {
 }
 
 export type WorkOrderItemUpdateWithoutExtraCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1257,8 +1245,8 @@ export type WorkOrderItemUpdateWithoutExtraCostsInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutExtraCostsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1266,8 +1254,8 @@ export type WorkOrderItemUncheckedUpdateWithoutExtraCostsInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1276,8 +1264,8 @@ export type WorkOrderItemUncheckedUpdateWithoutExtraCostsInput = {
 }
 
 export type WorkOrderItemCreateManyVehicleInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1285,13 +1273,14 @@ export type WorkOrderItemCreateManyVehicleInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  driverId?: number | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemUpdateWithoutVehicleInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1310,8 +1299,8 @@ export type WorkOrderItemUpdateWithoutVehicleInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutVehicleInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1319,7 +1308,7 @@ export type WorkOrderItemUncheckedUpdateWithoutVehicleInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1329,8 +1318,8 @@ export type WorkOrderItemUncheckedUpdateWithoutVehicleInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateManyWithoutVehicleInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1338,15 +1327,15 @@ export type WorkOrderItemUncheckedUpdateManyWithoutVehicleInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemCreateManyDriverInput = {
-  id?: number
-  workOrderId: number
+  id?: string
+  workOrderId: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1354,13 +1343,14 @@ export type WorkOrderItemCreateManyDriverInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
+  vehicleId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemUpdateWithoutDriverInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1379,8 +1369,8 @@ export type WorkOrderItemUpdateWithoutDriverInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutDriverInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1388,7 +1378,7 @@ export type WorkOrderItemUncheckedUpdateWithoutDriverInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1398,8 +1388,8 @@ export type WorkOrderItemUncheckedUpdateWithoutDriverInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateManyWithoutDriverInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderId?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1407,14 +1397,14 @@ export type WorkOrderItemUncheckedUpdateManyWithoutDriverInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemCreateManyWorkOrderInput = {
-  id?: number
+  id?: string
   lineNo: number
   direction?: $Enums.Direction | null
   referenceNo?: string | null
@@ -1422,14 +1412,15 @@ export type WorkOrderItemCreateManyWorkOrderInput = {
   containerSize?: string | null
   containerNo?: string | null
   sealNo?: string | null
-  vehicleId?: number | null
-  driverId?: number | null
+  vehicleId?: string | null
+  driverId?: string | null
   origin?: string | null
   destination?: string | null
   status?: $Enums.WorkOrderItemStatus
 }
 
 export type WorkOrderItemUpdateWithoutWorkOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1448,7 +1439,7 @@ export type WorkOrderItemUpdateWithoutWorkOrderInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateWithoutWorkOrderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1456,8 +1447,8 @@ export type WorkOrderItemUncheckedUpdateWithoutWorkOrderInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1467,7 +1458,7 @@ export type WorkOrderItemUncheckedUpdateWithoutWorkOrderInput = {
 }
 
 export type WorkOrderItemUncheckedUpdateManyWithoutWorkOrderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   lineNo?: Prisma.IntFieldUpdateOperationsInput | number
   direction?: Prisma.NullableEnumDirectionFieldUpdateOperationsInput | $Enums.Direction | null
   referenceNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1475,8 +1466,8 @@ export type WorkOrderItemUncheckedUpdateManyWithoutWorkOrderInput = {
   containerSize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   containerNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sealNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vehicleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  driverId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   destination?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumWorkOrderItemStatusFieldUpdateOperationsInput | $Enums.WorkOrderItemStatus
@@ -1644,8 +1635,8 @@ export type $WorkOrderItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     extraCosts: Prisma.$CashAdvanceExtraCostPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    workOrderId: number
+    id: string
+    workOrderId: string
     lineNo: number
     direction: $Enums.Direction | null
     referenceNo: string | null
@@ -1653,8 +1644,8 @@ export type $WorkOrderItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     containerSize: string | null
     containerNo: string | null
     sealNo: string | null
-    vehicleId: number | null
-    driverId: number | null
+    vehicleId: string | null
+    driverId: string | null
     origin: string | null
     destination: string | null
     status: $Enums.WorkOrderItemStatus
@@ -2087,8 +2078,8 @@ export interface Prisma__WorkOrderItemClient<T, Null = never, ExtArgs extends ru
  * Fields of the WorkOrderItem model
  */
 export interface WorkOrderItemFieldRefs {
-  readonly id: Prisma.FieldRef<"WorkOrderItem", 'Int'>
-  readonly workOrderId: Prisma.FieldRef<"WorkOrderItem", 'Int'>
+  readonly id: Prisma.FieldRef<"WorkOrderItem", 'String'>
+  readonly workOrderId: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly lineNo: Prisma.FieldRef<"WorkOrderItem", 'Int'>
   readonly direction: Prisma.FieldRef<"WorkOrderItem", 'Direction'>
   readonly referenceNo: Prisma.FieldRef<"WorkOrderItem", 'String'>
@@ -2096,8 +2087,8 @@ export interface WorkOrderItemFieldRefs {
   readonly containerSize: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly containerNo: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly sealNo: Prisma.FieldRef<"WorkOrderItem", 'String'>
-  readonly vehicleId: Prisma.FieldRef<"WorkOrderItem", 'Int'>
-  readonly driverId: Prisma.FieldRef<"WorkOrderItem", 'Int'>
+  readonly vehicleId: Prisma.FieldRef<"WorkOrderItem", 'String'>
+  readonly driverId: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly origin: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly destination: Prisma.FieldRef<"WorkOrderItem", 'String'>
   readonly status: Prisma.FieldRef<"WorkOrderItem", 'WorkOrderItemStatus'>

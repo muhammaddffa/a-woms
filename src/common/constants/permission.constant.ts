@@ -41,6 +41,11 @@ export const PERMISSIONS = {
     module: 'costing',
     description: 'Mengisi biaya rencana per item',
   },
+  BILLABLE_CHARGE_MANAGE: {
+    code: 'billable_charge:manage',
+    module: 'costing',
+    description: 'Mengisi tarif tagih per item',
+  },
   WORK_ORDER_COST_CHECK: {
     code: 'work_order_cost:check',
     module: 'costing',
@@ -70,7 +75,7 @@ export const PERMISSIONS = {
   CASH_ADVANCE_CHECK: {
     code: 'cash_advance:check',
     module: 'cash_advance',
-    description: 'Mengecek pengajuan dan LPJ',
+    description: 'Mengecek pengajuan dana',
   },
   CASH_ADVANCE_APPROVE: {
     code: 'cash_advance:approve',
@@ -119,6 +124,26 @@ export const PERMISSIONS = {
     code: 'role:manage',
     module: 'admin',
     description: 'Mengelola role dan permission',
+  },
+    CASH_ADVANCE_VERIFY_TRANSFER: {
+    code: 'cash_advance:verify_transfer',
+    module: 'cash_advance',
+    description: 'Memverifikasi transfer dana sudah dilakukan',
+  },
+  CASH_ADVANCE_CHECK_REPORT: {
+    code: 'cash_advance:check_report',
+    module: 'cash_advance',
+    description: 'Memeriksa LPJ',
+  },
+  ATTACHMENT_UPLOAD: {
+    code: 'attachment:upload',
+    module: 'cash_advance',
+    description: 'Mengunggah bukti (bon, bukti transfer)',
+  },
+  WORKFLOW_MANAGE: {
+    code: 'workflow:manage',
+    module: 'admin',
+    description: 'Mengatur langkah persetujuan',
   },
 } as const;
 

@@ -18,9 +18,6 @@ export class PermissionService {
       list.push(row);
       groups.set(row.module, list);
     }
-    return [...groups.entries()].map(([module, permissions]) => ({
-      module,
-      permissions,
-    }));
+    return [...groups.entries()].map(([module, permissions]) => ({ module, permissions }));
   }
 }

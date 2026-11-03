@@ -20,22 +20,12 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-export type UserAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type UserSumAggregateOutputType = {
-  id: number | null
-}
-
 export type UserMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   username: string | null
   email: string | null
   fullName: string | null
@@ -46,7 +36,7 @@ export type UserMinAggregateOutputType = {
 }
 
 export type UserMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   username: string | null
   email: string | null
   fullName: string | null
@@ -68,14 +58,6 @@ export type UserCountAggregateOutputType = {
   _all: number
 }
 
-
-export type UserAvgAggregateInputType = {
-  id?: true
-}
-
-export type UserSumAggregateInputType = {
-  id?: true
-}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -149,18 +131,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: UserAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: UserSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -191,14 +161,12 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
-  _avg?: UserAvgAggregateInputType
-  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
-  id: number
+  id: string
   username: string
   email: string | null
   fullName: string
@@ -207,8 +175,6 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -232,7 +198,7 @@ export type UserWhereInput = {
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  id?: Prisma.IntFilter<"User"> | number
+  id?: Prisma.UuidFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringNullableFilter<"User"> | string | null
   fullName?: Prisma.StringFilter<"User"> | string
@@ -248,6 +214,8 @@ export type UserWhereInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnListRelationFilter
   approvalActions?: Prisma.ApprovalHistoryListRelationFilter
   uploadedAttachments?: Prisma.AttachmentListRelationFilter
+  updatedWorkflowSettings?: Prisma.WorkflowSettingListRelationFilter
+  workflowSettingLogs?: Prisma.WorkflowSettingLogListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -267,10 +235,12 @@ export type UserOrderByWithRelationInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnOrderByRelationAggregateInput
   approvalActions?: Prisma.ApprovalHistoryOrderByRelationAggregateInput
   uploadedAttachments?: Prisma.AttachmentOrderByRelationAggregateInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingOrderByRelationAggregateInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   username?: string
   email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -289,6 +259,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAdvanceReturns?: Prisma.AdvanceReturnListRelationFilter
   approvalActions?: Prisma.ApprovalHistoryListRelationFilter
   uploadedAttachments?: Prisma.AttachmentListRelationFilter
+  updatedWorkflowSettings?: Prisma.WorkflowSettingListRelationFilter
+  workflowSettingLogs?: Prisma.WorkflowSettingLogListRelationFilter
 }, "id" | "username" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -301,17 +273,15 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
-  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
-  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
   AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"User"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   fullName?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -322,6 +292,7 @@ export type UserScalarWhereWithAggregatesInput = {
 }
 
 export type UserCreateInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -337,10 +308,12 @@ export type UserCreateInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -356,9 +329,12 @@ export type UserUncheckedCreateInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,10 +350,12 @@ export type UserUpdateInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -393,10 +371,12 @@ export type UserUncheckedUpdateInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateManyInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -407,6 +387,7 @@ export type UserCreateManyInput = {
 }
 
 export type UserUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -417,7 +398,7 @@ export type UserUpdateManyMutationInput = {
 }
 
 export type UserUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -436,10 +417,6 @@ export type UserCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -462,10 +439,6 @@ export type UserMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -492,14 +465,6 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type UserCreateNestedOneWithoutRolesInput = {
@@ -626,7 +591,38 @@ export type UserUpdateOneWithoutUploadedAttachmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUploadedAttachmentsInput, Prisma.UserUpdateWithoutUploadedAttachmentsInput>, Prisma.UserUncheckedUpdateWithoutUploadedAttachmentsInput>
 }
 
+export type UserCreateNestedOneWithoutUpdatedWorkflowSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedWorkflowSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutUpdatedWorkflowSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedWorkflowSettingsInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedWorkflowSettingsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedWorkflowSettingsInput, Prisma.UserUpdateWithoutUpdatedWorkflowSettingsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput>
+}
+
+export type UserCreateNestedOneWithoutWorkflowSettingLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedCreateWithoutWorkflowSettingLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkflowSettingLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWorkflowSettingLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedCreateWithoutWorkflowSettingLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkflowSettingLogsInput
+  upsert?: Prisma.UserUpsertWithoutWorkflowSettingLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkflowSettingLogsInput, Prisma.UserUpdateWithoutWorkflowSettingLogsInput>, Prisma.UserUncheckedUpdateWithoutWorkflowSettingLogsInput>
+}
+
 export type UserCreateWithoutRolesInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -641,10 +637,12 @@ export type UserCreateWithoutRolesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -659,6 +657,8 @@ export type UserUncheckedCreateWithoutRolesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -678,6 +678,7 @@ export type UserUpdateToOneWithWhereWithoutRolesInput = {
 }
 
 export type UserUpdateWithoutRolesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -692,10 +693,12 @@ export type UserUpdateWithoutRolesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -710,9 +713,12 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutCreatedWorkOrdersInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -727,10 +733,12 @@ export type UserCreateWithoutCreatedWorkOrdersInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWorkOrdersInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -745,6 +753,8 @@ export type UserUncheckedCreateWithoutCreatedWorkOrdersInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWorkOrdersInput = {
@@ -764,6 +774,7 @@ export type UserUpdateToOneWithWhereWithoutCreatedWorkOrdersInput = {
 }
 
 export type UserUpdateWithoutCreatedWorkOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -778,10 +789,12 @@ export type UserUpdateWithoutCreatedWorkOrdersInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWorkOrdersInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -796,9 +809,12 @@ export type UserUncheckedUpdateWithoutCreatedWorkOrdersInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutCreatedPlannedCostsInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -813,10 +829,12 @@ export type UserCreateWithoutCreatedPlannedCostsInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlannedCostsInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -831,6 +849,8 @@ export type UserUncheckedCreateWithoutCreatedPlannedCostsInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlannedCostsInput = {
@@ -850,6 +870,7 @@ export type UserUpdateToOneWithWhereWithoutCreatedPlannedCostsInput = {
 }
 
 export type UserUpdateWithoutCreatedPlannedCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -864,10 +885,12 @@ export type UserUpdateWithoutCreatedPlannedCostsInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlannedCostsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -882,9 +905,12 @@ export type UserUncheckedUpdateWithoutCreatedPlannedCostsInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutHeldCashAdvancesInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -899,10 +925,12 @@ export type UserCreateWithoutHeldCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutHeldCashAdvancesInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -917,6 +945,8 @@ export type UserUncheckedCreateWithoutHeldCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutHeldCashAdvancesInput = {
@@ -925,6 +955,7 @@ export type UserCreateOrConnectWithoutHeldCashAdvancesInput = {
 }
 
 export type UserCreateWithoutCreatedCashAdvancesInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -939,10 +970,12 @@ export type UserCreateWithoutCreatedCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCashAdvancesInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -957,6 +990,8 @@ export type UserUncheckedCreateWithoutCreatedCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCashAdvancesInput = {
@@ -976,6 +1011,7 @@ export type UserUpdateToOneWithWhereWithoutHeldCashAdvancesInput = {
 }
 
 export type UserUpdateWithoutHeldCashAdvancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -990,10 +1026,12 @@ export type UserUpdateWithoutHeldCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHeldCashAdvancesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1008,6 +1046,8 @@ export type UserUncheckedUpdateWithoutHeldCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUpsertWithoutCreatedCashAdvancesInput = {
@@ -1022,6 +1062,7 @@ export type UserUpdateToOneWithWhereWithoutCreatedCashAdvancesInput = {
 }
 
 export type UserUpdateWithoutCreatedCashAdvancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1036,10 +1077,12 @@ export type UserUpdateWithoutCreatedCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCashAdvancesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1054,9 +1097,12 @@ export type UserUncheckedUpdateWithoutCreatedCashAdvancesInput = {
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutCreatedAdvanceReturnsInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1071,10 +1117,12 @@ export type UserCreateWithoutCreatedAdvanceReturnsInput = {
   heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAdvanceReturnsInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1089,6 +1137,8 @@ export type UserUncheckedCreateWithoutCreatedAdvanceReturnsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAdvanceReturnsInput = {
@@ -1108,6 +1158,7 @@ export type UserUpdateToOneWithWhereWithoutCreatedAdvanceReturnsInput = {
 }
 
 export type UserUpdateWithoutCreatedAdvanceReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1122,10 +1173,12 @@ export type UserUpdateWithoutCreatedAdvanceReturnsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAdvanceReturnsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1140,9 +1193,12 @@ export type UserUncheckedUpdateWithoutCreatedAdvanceReturnsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutApprovalActionsInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1157,10 +1213,12 @@ export type UserCreateWithoutApprovalActionsInput = {
   heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutApprovalActionsInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1175,6 +1233,8 @@ export type UserUncheckedCreateWithoutApprovalActionsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutApprovalActionsInput = {
@@ -1194,6 +1254,7 @@ export type UserUpdateToOneWithWhereWithoutApprovalActionsInput = {
 }
 
 export type UserUpdateWithoutApprovalActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1208,10 +1269,12 @@ export type UserUpdateWithoutApprovalActionsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovalActionsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1226,9 +1289,12 @@ export type UserUncheckedUpdateWithoutApprovalActionsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutUploadedAttachmentsInput = {
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1243,10 +1309,12 @@ export type UserCreateWithoutUploadedAttachmentsInput = {
   heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
   createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutUploadedAttachmentsInput = {
-  id?: number
+  id?: string
   username: string
   email?: string | null
   fullName: string
@@ -1261,6 +1329,8 @@ export type UserUncheckedCreateWithoutUploadedAttachmentsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutUploadedAttachmentsInput = {
@@ -1280,6 +1350,7 @@ export type UserUpdateToOneWithWhereWithoutUploadedAttachmentsInput = {
 }
 
 export type UserUpdateWithoutUploadedAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1294,10 +1365,12 @@ export type UserUpdateWithoutUploadedAttachmentsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedAttachmentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1312,6 +1385,200 @@ export type UserUncheckedUpdateWithoutUploadedAttachmentsInput = {
   heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
   createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutUpdatedWorkflowSettingsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedWorkflowSettingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput>
+}
+
+export type UserUpsertWithoutUpdatedWorkflowSettingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedWorkflowSettingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedWorkflowSettingsInput, Prisma.UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput>
+}
+
+export type UserUpdateWithoutUpdatedWorkflowSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutWorkflowSettingLogsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserUncheckedCreateWithoutWorkflowSettingLogsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+}
+
+export type UserCreateOrConnectWithoutWorkflowSettingLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedCreateWithoutWorkflowSettingLogsInput>
+}
+
+export type UserUpsertWithoutWorkflowSettingLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedUpdateWithoutWorkflowSettingLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedCreateWithoutWorkflowSettingLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWorkflowSettingLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWorkflowSettingLogsInput, Prisma.UserUncheckedUpdateWithoutWorkflowSettingLogsInput>
+}
+
+export type UserUpdateWithoutWorkflowSettingLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWorkflowSettingLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 
@@ -1328,6 +1595,8 @@ export type UserCountOutputType = {
   createdAdvanceReturns: number
   approvalActions: number
   uploadedAttachments: number
+  updatedWorkflowSettings: number
+  workflowSettingLogs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1339,6 +1608,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   createdAdvanceReturns?: boolean | UserCountOutputTypeCountCreatedAdvanceReturnsArgs
   approvalActions?: boolean | UserCountOutputTypeCountApprovalActionsArgs
   uploadedAttachments?: boolean | UserCountOutputTypeCountUploadedAttachmentsArgs
+  updatedWorkflowSettings?: boolean | UserCountOutputTypeCountUpdatedWorkflowSettingsArgs
+  workflowSettingLogs?: boolean | UserCountOutputTypeCountWorkflowSettingLogsArgs
 }
 
 /**
@@ -1407,6 +1678,20 @@ export type UserCountOutputTypeCountUploadedAttachmentsArgs<ExtArgs extends runt
   where?: Prisma.AttachmentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedWorkflowSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkflowSettingWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWorkflowSettingLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkflowSettingLogWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1425,6 +1710,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAdvanceReturns?: boolean | Prisma.User$createdAdvanceReturnsArgs<ExtArgs>
   approvalActions?: boolean | Prisma.User$approvalActionsArgs<ExtArgs>
   uploadedAttachments?: boolean | Prisma.User$uploadedAttachmentsArgs<ExtArgs>
+  updatedWorkflowSettings?: boolean | Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>
+  workflowSettingLogs?: boolean | Prisma.User$workflowSettingLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1471,6 +1758,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAdvanceReturns?: boolean | Prisma.User$createdAdvanceReturnsArgs<ExtArgs>
   approvalActions?: boolean | Prisma.User$approvalActionsArgs<ExtArgs>
   uploadedAttachments?: boolean | Prisma.User$uploadedAttachmentsArgs<ExtArgs>
+  updatedWorkflowSettings?: boolean | Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>
+  workflowSettingLogs?: boolean | Prisma.User$workflowSettingLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1487,9 +1776,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAdvanceReturns: Prisma.$AdvanceReturnPayload<ExtArgs>[]
     approvalActions: Prisma.$ApprovalHistoryPayload<ExtArgs>[]
     uploadedAttachments: Prisma.$AttachmentPayload<ExtArgs>[]
+    updatedWorkflowSettings: Prisma.$WorkflowSettingPayload<ExtArgs>[]
+    workflowSettingLogs: Prisma.$WorkflowSettingLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     username: string
     email: string | null
     fullName: string
@@ -1899,6 +2190,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   createdAdvanceReturns<T extends Prisma.User$createdAdvanceReturnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdAdvanceReturnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdvanceReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   approvalActions<T extends Prisma.User$approvalActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvalActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApprovalHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedAttachments<T extends Prisma.User$uploadedAttachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedAttachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedWorkflowSettings<T extends Prisma.User$updatedWorkflowSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  workflowSettingLogs<T extends Prisma.User$workflowSettingLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workflowSettingLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowSettingLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1928,7 +2221,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the User model
  */
 export interface UserFieldRefs {
-  readonly id: Prisma.FieldRef<"User", 'Int'>
+  readonly id: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly fullName: Prisma.FieldRef<"User", 'String'>
@@ -2518,6 +2811,54 @@ export type User$uploadedAttachmentsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.AttachmentScalarFieldEnum | Prisma.AttachmentScalarFieldEnum[]
+}
+
+/**
+ * User.updatedWorkflowSettings
+ */
+export type User$updatedWorkflowSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkflowSetting
+   */
+  select?: Prisma.WorkflowSettingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkflowSetting
+   */
+  omit?: Prisma.WorkflowSettingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkflowSettingInclude<ExtArgs> | null
+  where?: Prisma.WorkflowSettingWhereInput
+  orderBy?: Prisma.WorkflowSettingOrderByWithRelationInput | Prisma.WorkflowSettingOrderByWithRelationInput[]
+  cursor?: Prisma.WorkflowSettingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkflowSettingScalarFieldEnum | Prisma.WorkflowSettingScalarFieldEnum[]
+}
+
+/**
+ * User.workflowSettingLogs
+ */
+export type User$workflowSettingLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkflowSettingLog
+   */
+  select?: Prisma.WorkflowSettingLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkflowSettingLog
+   */
+  omit?: Prisma.WorkflowSettingLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkflowSettingLogInclude<ExtArgs> | null
+  where?: Prisma.WorkflowSettingLogWhereInput
+  orderBy?: Prisma.WorkflowSettingLogOrderByWithRelationInput | Prisma.WorkflowSettingLogOrderByWithRelationInput[]
+  cursor?: Prisma.WorkflowSettingLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkflowSettingLogScalarFieldEnum | Prisma.WorkflowSettingLogScalarFieldEnum[]
 }
 
 /**

@@ -20,28 +20,18 @@ export type DriverModel = runtime.Types.Result.DefaultSelection<Prisma.$DriverPa
 
 export type AggregateDriver = {
   _count: DriverCountAggregateOutputType | null
-  _avg: DriverAvgAggregateOutputType | null
-  _sum: DriverSumAggregateOutputType | null
   _min: DriverMinAggregateOutputType | null
   _max: DriverMaxAggregateOutputType | null
 }
 
-export type DriverAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type DriverSumAggregateOutputType = {
-  id: number | null
-}
-
 export type DriverMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
 }
 
 export type DriverMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
 }
@@ -53,14 +43,6 @@ export type DriverCountAggregateOutputType = {
   _all: number
 }
 
-
-export type DriverAvgAggregateInputType = {
-  id?: true
-}
-
-export type DriverSumAggregateInputType = {
-  id?: true
-}
 
 export type DriverMinAggregateInputType = {
   id?: true
@@ -119,18 +101,6 @@ export type DriverAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: DriverAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: DriverSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: DriverMinAggregateInputType
@@ -161,19 +131,15 @@ export type DriverGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: DriverCountAggregateInputType | true
-  _avg?: DriverAvgAggregateInputType
-  _sum?: DriverSumAggregateInputType
   _min?: DriverMinAggregateInputType
   _max?: DriverMaxAggregateInputType
 }
 
 export type DriverGroupByOutputType = {
-  id: number
+  id: string
   code: string
   name: string
   _count: DriverCountAggregateOutputType | null
-  _avg: DriverAvgAggregateOutputType | null
-  _sum: DriverSumAggregateOutputType | null
   _min: DriverMinAggregateOutputType | null
   _max: DriverMaxAggregateOutputType | null
 }
@@ -197,7 +163,7 @@ export type DriverWhereInput = {
   AND?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
   OR?: Prisma.DriverWhereInput[]
   NOT?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
-  id?: Prisma.IntFilter<"Driver"> | number
+  id?: Prisma.UuidFilter<"Driver"> | string
   code?: Prisma.StringFilter<"Driver"> | string
   name?: Prisma.StringFilter<"Driver"> | string
   workOrderItems?: Prisma.WorkOrderItemListRelationFilter
@@ -211,7 +177,7 @@ export type DriverOrderByWithRelationInput = {
 }
 
 export type DriverWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   code?: string
   AND?: Prisma.DriverWhereInput | Prisma.DriverWhereInput[]
   OR?: Prisma.DriverWhereInput[]
@@ -225,60 +191,61 @@ export type DriverOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   _count?: Prisma.DriverCountOrderByAggregateInput
-  _avg?: Prisma.DriverAvgOrderByAggregateInput
   _max?: Prisma.DriverMaxOrderByAggregateInput
   _min?: Prisma.DriverMinOrderByAggregateInput
-  _sum?: Prisma.DriverSumOrderByAggregateInput
 }
 
 export type DriverScalarWhereWithAggregatesInput = {
   AND?: Prisma.DriverScalarWhereWithAggregatesInput | Prisma.DriverScalarWhereWithAggregatesInput[]
   OR?: Prisma.DriverScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DriverScalarWhereWithAggregatesInput | Prisma.DriverScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Driver"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"Driver"> | string
   code?: Prisma.StringWithAggregatesFilter<"Driver"> | string
   name?: Prisma.StringWithAggregatesFilter<"Driver"> | string
 }
 
 export type DriverCreateInput = {
+  id?: string
   code: string
   name: string
   workOrderItems?: Prisma.WorkOrderItemCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   workOrderItems?: Prisma.WorkOrderItemUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderItems?: Prisma.WorkOrderItemUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workOrderItems?: Prisma.WorkOrderItemUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverCreateManyInput = {
-  id?: number
+  id?: string
   code: string
   name: string
 }
 
 export type DriverUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DriverUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -287,10 +254,6 @@ export type DriverCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
-}
-
-export type DriverAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type DriverMaxOrderByAggregateInput = {
@@ -303,10 +266,6 @@ export type DriverMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
-}
-
-export type DriverSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type DriverNullableScalarRelationFilter = {
@@ -331,12 +290,13 @@ export type DriverUpdateOneWithoutWorkOrderItemsNestedInput = {
 }
 
 export type DriverCreateWithoutWorkOrderItemsInput = {
+  id?: string
   code: string
   name: string
 }
 
 export type DriverUncheckedCreateWithoutWorkOrderItemsInput = {
-  id?: number
+  id?: string
   code: string
   name: string
 }
@@ -358,12 +318,13 @@ export type DriverUpdateToOneWithWhereWithoutWorkOrderItemsInput = {
 }
 
 export type DriverUpdateWithoutWorkOrderItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DriverUncheckedUpdateWithoutWorkOrderItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -439,7 +400,7 @@ export type $DriverPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     workOrderItems: Prisma.$WorkOrderItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     code: string
     name: string
   }, ExtArgs["result"]["driver"]>
@@ -866,7 +827,7 @@ export interface Prisma__DriverClient<T, Null = never, ExtArgs extends runtime.T
  * Fields of the Driver model
  */
 export interface DriverFieldRefs {
-  readonly id: Prisma.FieldRef<"Driver", 'Int'>
+  readonly id: Prisma.FieldRef<"Driver", 'String'>
   readonly code: Prisma.FieldRef<"Driver", 'String'>
   readonly name: Prisma.FieldRef<"Driver", 'String'>
 }
