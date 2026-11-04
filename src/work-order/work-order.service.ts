@@ -108,7 +108,7 @@ export class WorkOrderService {
 
   async create(actor: AuthUser, dto: CreateWorkOrderDto) {
     await this.assertCustomerUsable(dto.customerId);
-    await this.itemService.assertReferences(dto.items);
+    await this.itemService.assertReferences(dto.items.map((it) => ({ vehicleId: it.vehicleId, driverId: it.driverId })));
 
     // Nomor: WO/YYMM/NNNN, urut per bulan menurut tanggal order.
     const prefix = `WO/${dto.orderDate.slice(2, 4)}${dto.orderDate.slice(5, 7)}/`;

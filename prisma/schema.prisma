@@ -173,7 +173,7 @@ model User {
   uploadedAttachments     Attachment[]
   updatedWorkflowSettings WorkflowSetting[]    @relation("WorkflowSettingUpdatedBy")
   workflowSettingLogs     WorkflowSettingLog[] @relation("WorkflowSettingLogChangedBy")
-
+  containerPositionLogs   ContainerPositionLog[]
   @@map("users")
 }
 
@@ -280,9 +280,10 @@ model Vehicle {
 }
 
 model Driver {
-  id   String @id @default(uuid(7)) @db.Uuid
-  code String @unique
-  name String
+  id    String @id @default(uuid(7)) @db.Uuid
+  code  String @unique
+  name  String
+  phone String?
 
   workOrderItems WorkOrderItem[]
 
@@ -330,29 +331,39 @@ model WorkOrder {
 
 // Satu baris = satu trip / kontainer / truk dalam WO
 model WorkOrderItem {
-  id            String              @id @default(uuid(7)) @db.Uuid
-  workOrderId   String              @map("work_order_id") @db.Uuid
-  lineNo        Int                 @map("line_no")
-  direction     Direction?
-  referenceNo   String?             @map("reference_no")
-  loadType      LoadType            @default(FCL) @map("load_type")
-  containerSize String?             @map("container_size")
-  containerNo   String?             @map("container_no")
-  sealNo        String?             @map("seal_no")
-  vehicleId     String?             @map("vehicle_id") @db.Uuid
-  driverId      String?             @map("driver_id") @db.Uuid
-  origin        String?
-  destination   String?
-  status        WorkOrderItemStatus @default(DRAFT)
+  id                  String              @id @default(uuid(7)) @db.Uuid
+  workOrderId         String              @map("work_order_id") @db.Uuid
+  lineNo              Int                 @map("line_no")
+  direction           Direction?
+  referenceNo         String?             @map("reference_no")
+  loadType            LoadType            @default(FCL) @map("load_type")
+  containerSize       String?             @map("container_size")
+  containerNo         String?             @map("container_no")
+  sealNo              String?             @map("seal_no")
+  vehicleId           String?             @map("vehicle_id") @db.Uuid
+  driverId            String?             @map("driver_id") @db.Uuid
+  origin              String?
+  destination         String?
+  status              WorkOrderItemStatus @default(DRAFT)
+  tare                Decimal?            @db.Decimal(10, 2) // kilogram
+  actualContainerSize String?             @map("actual_container_size")
+  stuffingLocation    String?             @map("stuffing_location")
+  currentPositionId   String?             @map("current_position_id") @db.Uuid
+  positionNote        String?             @map("position_note")
+  positionUpdatedAt   DateTime?           @map("position_updated_at") @db.Timestamptz(6)
 
   workOrder WorkOrder @relation(fields: [workOrderId], references: [id])
   vehicle   Vehicle?  @relation(fields: [vehicleId], references: [id])
   driver    Driver?   @relation(fields: [driverId], references: [id])
 
-  plannedCosts    PlannedCost[]
-  billableCharges BillableCharge[]
-  extraCosts      CashAdvanceExtraCost[]
+  currentPosition     ContainerPosition?     @relation(fields: [currentPositionId], references: [id])
+  positionLogs        ContainerPositionLog[]
 
+  plannedCosts        PlannedCost[]
+  billableCharges     BillableCharge[]
+  extraCosts          CashAdvanceExtraCost[]
+
+  @@index([currentPositionId])
   @@unique([workOrderId, lineNo])
   @@index([containerNo])
   @@index([vehicleId])
@@ -428,14 +439,15 @@ model CashAdvance {
   createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  workOrder   WorkOrder    @relation(fields: [workOrderId], references: [id])
-  holder      User?        @relation("CashAdvanceHolder", fields: [holderId], references: [id])
-  createdBy   User?        @relation("CashAdvanceCreatedBy", fields: [createdById], references: [id])
-  cashAccount CashAccount? @relation(fields: [cashAccountId], references: [id])
+  workOrder   WorkOrder           @relation(fields: [workOrderId], references: [id])
+  holder      User?               @relation("CashAdvanceHolder", fields: [holderId], references: [id])
+  createdBy   User?               @relation("CashAdvanceCreatedBy", fields: [createdById], references: [id])
+  cashAccount CashAccount?        @relation(fields: [cashAccountId], references: [id])
 
   items       CashAdvanceItem[]
   extraCosts  CashAdvanceExtraCost[]
   returnItems AdvanceReturnItem[]
+  
 
   @@index([workOrderId])
   @@index([status, advanceDate])
@@ -605,4 +617,32 @@ model WorkflowSettingLog {
 
   @@index([settingId, changedAt])
   @@map("workflow_setting_logs")
+}
+model ContainerPosition {
+  id        String  @id @default(uuid(7)) @db.Uuid
+  code      String  @unique
+  name      String
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
+
+  items WorkOrderItem[]
+  logs  ContainerPositionLog[]
+
+  @@map("container_positions")
+}
+
+model ContainerPositionLog {
+  id              String   @id @default(uuid(7)) @db.Uuid
+  workOrderItemId String   @map("work_order_item_id") @db.Uuid
+  positionId      String   @map("position_id") @db.Uuid
+  note            String?
+  actorId         String   @map("actor_id") @db.Uuid
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  workOrderItem WorkOrderItem     @relation(fields: [workOrderItemId], references: [id], onDelete: Cascade)
+  position      ContainerPosition @relation(fields: [positionId], references: [id])
+  actor         User              @relation(fields: [actorId], references: [id])
+
+  @@index([workOrderItemId, createdAt])
+  @@map("container_position_logs")
 }

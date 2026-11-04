@@ -74,7 +74,9 @@ export const ModelName = {
   Attachment: 'Attachment',
   AccountingEvent: 'AccountingEvent',
   WorkflowSetting: 'WorkflowSetting',
-  WorkflowSettingLog: 'WorkflowSettingLog'
+  WorkflowSettingLog: 'WorkflowSettingLog',
+  ContainerPosition: 'ContainerPosition',
+  ContainerPositionLog: 'ContainerPositionLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -193,7 +195,8 @@ export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeo
 export const DriverScalarFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  phone: 'phone'
 } as const
 
 export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
@@ -241,7 +244,13 @@ export const WorkOrderItemScalarFieldEnum = {
   driverId: 'driverId',
   origin: 'origin',
   destination: 'destination',
-  status: 'status'
+  status: 'status',
+  tare: 'tare',
+  actualContainerSize: 'actualContainerSize',
+  stuffingLocation: 'stuffingLocation',
+  currentPositionId: 'currentPositionId',
+  positionNote: 'positionNote',
+  positionUpdatedAt: 'positionUpdatedAt'
 } as const
 
 export type WorkOrderItemScalarFieldEnum = (typeof WorkOrderItemScalarFieldEnum)[keyof typeof WorkOrderItemScalarFieldEnum]
@@ -417,6 +426,29 @@ export const WorkflowSettingLogScalarFieldEnum = {
 } as const
 
 export type WorkflowSettingLogScalarFieldEnum = (typeof WorkflowSettingLogScalarFieldEnum)[keyof typeof WorkflowSettingLogScalarFieldEnum]
+
+
+export const ContainerPositionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive'
+} as const
+
+export type ContainerPositionScalarFieldEnum = (typeof ContainerPositionScalarFieldEnum)[keyof typeof ContainerPositionScalarFieldEnum]
+
+
+export const ContainerPositionLogScalarFieldEnum = {
+  id: 'id',
+  workOrderItemId: 'workOrderItemId',
+  positionId: 'positionId',
+  note: 'note',
+  actorId: 'actorId',
+  createdAt: 'createdAt'
+} as const
+
+export type ContainerPositionLogScalarFieldEnum = (typeof ContainerPositionLogScalarFieldEnum)[keyof typeof ContainerPositionLogScalarFieldEnum]
 
 
 export const SortOrder = {

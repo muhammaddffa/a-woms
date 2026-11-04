@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { idSchema } from '../../common/dto/id.dto.js';
+import { uuidSchema } from '../../common/dto/uuid.dto.js';
 import { createWorkOrderItemSchema } from '../../work-order-item/dto/work-order-item.dto.js';
 
 const dateString = z
@@ -10,7 +10,7 @@ const dateString = z
     return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
   }, 'Tanggal tidak valid');
 
-const id = idSchema;
+const id = uuidSchema;
 
 export const createWorkOrderSchema = z.object({
   orderDate: dateString,
@@ -47,7 +47,7 @@ export const listWorkOrdersQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(20),
   search: z.string().trim().max(64).optional(),
-  customerId: idSchema.optional(),
+  customerId: uuidSchema.optional(),
   status: z.enum(['OPEN', 'COST_CHECKED', 'COST_APPROVED', 'CLOSED', 'CANCELLED']).optional(),
   dateFrom: dateString.optional(),
   dateTo: dateString.optional(),

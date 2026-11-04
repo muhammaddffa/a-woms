@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { idSchema } from '../../common/dto/id.dto.js';
+import { uuidSchema } from '../../common/dto/uuid.dto.js';
 import { moneySchema, quantitySchema } from '../../common/utils/decimal.util.js';
 
 export const createPlannedCostSchema = z.object({
-  chargeTypeId: idSchema,
+  chargeTypeId: uuidSchema,
   quantity: quantitySchema.default(1),
   unitCost: moneySchema,
   note: z.string().trim().max(255).optional(),

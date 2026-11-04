@@ -45,7 +45,7 @@ const ROLES = [
   {
     code: 'DIRECTOR',
     name: 'Direktur',
-    description: 'Melihat semua dan menyetujui',
+    description: 'Melihat semua, menyetujui, dan mengatur alur persetujuan',
     permissions: codes(
       P.DASHBOARD_VIEW,
       P.WORK_ORDER_VIEW,
@@ -55,6 +55,7 @@ const ROLES = [
       P.CASH_ADVANCE_APPROVE_REPORT,
       P.PROFIT_VIEW,
       P.CHARGE_VIEW_HIDDEN,
+      P.WORKFLOW_MANAGE,
     ),
   },
   {
@@ -78,30 +79,36 @@ const ROLES = [
       P.CASH_ADVANCE_CREATE,
       P.CASH_ADVANCE_SUBMIT_REPORT,
       P.ADVANCE_RETURN_CREATE,
+      P.ATTACHMENT_UPLOAD,
+      P.CONTAINER_POSITION_UPDATE,
     ),
   },
   {
     code: 'CHECKER',
     name: 'Checker',
-    description: 'Mengecek biaya ops, pengajuan dana, dan LPJ',
+    description:
+      'Mengecek biaya ops, pengajuan dana, verifikasi transfer, dan LPJ',
     permissions: codes(
       P.DASHBOARD_VIEW,
       P.WORK_ORDER_VIEW,
       P.WORK_ORDER_COST_CHECK,
       P.CASH_ADVANCE_VIEW,
       P.CASH_ADVANCE_CHECK,
+      P.CASH_ADVANCE_VERIFY_TRANSFER,
+      P.CASH_ADVANCE_CHECK_REPORT,
     ),
   },
   {
     code: 'FINANCE',
     name: 'Keuangan',
-    description: 'Mencairkan dana dan menerima pengembalian',
+    description: 'Mencairkan dana, mengunggah bukti transfer, menerima pengembalian',
     permissions: codes(
       P.DASHBOARD_VIEW,
       P.WORK_ORDER_VIEW,
       P.CASH_ADVANCE_VIEW,
       P.CASH_ADVANCE_PAY,
       P.ADVANCE_RETURN_RECEIVE,
+      P.ATTACHMENT_UPLOAD,
     ),
   },
 ];
@@ -121,52 +128,19 @@ const USERS = [
 
 // ---------------------------------------------------------------
 // Jenis biaya (ilustrasi; sesuaikan dengan data sebenarnya)
+//   useActualCost : biaya efektif WO memakai realisasi LPJ
+//   billingMode   : AT_COST = ditagih sesuai realisasi LPJ, FIXED = tarif tetap
 // ---------------------------------------------------------------
 const CHARGE_TYPES = [
-  // Komponen uang jalan: biaya dihitung dari realisasi LPJ
-  {
-    code: 'FUEL',
-    name: 'BBM',
-    category: 'UANG_JALAN',
-    useActualCost: true,
-    sortOrder: 1,
-  },
-  {
-    code: 'TOLL',
-    name: 'Tol',
-    category: 'UANG_JALAN',
-    useActualCost: true,
-    sortOrder: 2,
-  },
-  {
-    code: 'LEVY',
-    name: 'Retribusi',
-    category: 'UANG_JALAN',
-    useActualCost: true,
-    sortOrder: 3,
-  },
-  {
-    code: 'MEALS',
-    name: 'Konsumsi',
-    category: 'UANG_JALAN',
-    useActualCost: true,
-    sortOrder: 4,
-  },
-  // Biaya dan tarif umum
-  {
-    code: 'TRUCKING',
-    name: 'Trucking',
-    category: 'TRUCKING',
-    isTrucking: true,
-    sortOrder: 10,
-  },
-  {
-    code: 'LOLO',
-    name: 'Lift On/Lift Off',
-    category: 'LOLO',
-    useActualCost: true,
-    sortOrder: 11,
-  },
+  // Komponen uang jalan: sesuai realisasi
+  { code: 'FUEL', name: 'BBM', category: 'UANG_JALAN', useActualCost: true, billingMode: 'AT_COST' as const, sortOrder: 1 },
+  { code: 'TOLL', name: 'Tol', category: 'UANG_JALAN', useActualCost: true, billingMode: 'AT_COST' as const, sortOrder: 2 },
+  { code: 'LEVY', name: 'Retribusi', category: 'UANG_JALAN', useActualCost: true, billingMode: 'AT_COST' as const, sortOrder: 3 },
+  { code: 'MEALS', name: 'Konsumsi', category: 'UANG_JALAN', useActualCost: true, billingMode: 'AT_COST' as const, sortOrder: 4 },
+  // Trucking per ritase: tarif kesepakatan dengan pabrik
+  { code: 'TRUCKING', name: 'Trucking', category: 'TRUCKING', isTrucking: true, sortOrder: 10 },
+  // Biaya lapangan: sesuai bukti
+  { code: 'LOLO', name: 'Lift On/Lift Off', category: 'LOLO', useActualCost: true, billingMode: 'AT_COST' as const, sortOrder: 11 },
   { code: 'HANDLING', name: 'Handling', category: 'HANDLING', sortOrder: 12 },
 ];
 
@@ -223,11 +197,11 @@ async function main() {
     });
   }
 
-  // 4. Data master
+  // 4. Data master (billingMode ikut diperbarui agar seed lama tidak tertinggal)
   for (const c of CHARGE_TYPES) {
     await prisma.chargeType.upsert({
       where: { code: c.code },
-      update: {},
+      update: { billingMode: c.billingMode ?? 'FIXED' },
       create: c,
     });
   }
@@ -392,12 +366,31 @@ async function main() {
       });
     }
   }
+
+  // 6. Pengaturan alur persetujuan (default: semua langkah pengecekan aktif)
   for (const step of ['CHECK', 'VERIFY_TRANSFER', 'REPORT_CHECK'] as const) {
     await prisma.workflowSetting.upsert({
       where: { docType_step: { docType: 'CASH_ADVANCE', step } },
       update: {},
       create: { docType: 'CASH_ADVANCE', step },
     });
+  }
+
+  const POSITIONS = [
+    { code: 'AT_DEPOT', name: 'Di depo', sortOrder: 1 },
+    { code: 'TO_FACTORY', name: 'Menuju pabrik', sortOrder: 2 },
+    { code: 'AT_FACTORY', name: 'Di pabrik', sortOrder: 3 },
+    { code: 'STUFFED', name: 'Sudah stuffing', sortOrder: 4 },
+    { code: 'IN_CUSTODY', name: 'Dititipkan di penitipan container', sortOrder: 5 },
+    { code: 'AT_THIRD_PARTY_WAREHOUSE', name: 'Di gudang pihak ketiga', sortOrder: 6 },
+    { code: 'WAITING_VESSEL', name: 'Menunggu kapal', sortOrder: 7 },
+    { code: 'AT_PORT', name: 'Di pelabuhan', sortOrder: 8 },
+    { code: 'HELD_BY_CUSTOMS', name: 'Ditahan bea cukai', sortOrder: 9 },
+    { code: 'RETURNED_TO_DEPOT', name: 'Kembali ke depo setelah bongkar', sortOrder: 10 },
+    { code: 'DONE', name: 'Selesai', sortOrder: 11 },
+  ];
+  for (const p of POSITIONS) {
+    await prisma.containerPosition.upsert({ where: { code: p.code }, update: {}, create: p });
   }
 
   console.log('Seed selesai.');

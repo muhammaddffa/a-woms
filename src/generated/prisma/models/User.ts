@@ -216,6 +216,7 @@ export type UserWhereInput = {
   uploadedAttachments?: Prisma.AttachmentListRelationFilter
   updatedWorkflowSettings?: Prisma.WorkflowSettingListRelationFilter
   workflowSettingLogs?: Prisma.WorkflowSettingLogListRelationFilter
+  containerPositionLogs?: Prisma.ContainerPositionLogListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type UserOrderByWithRelationInput = {
   uploadedAttachments?: Prisma.AttachmentOrderByRelationAggregateInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingOrderByRelationAggregateInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogOrderByRelationAggregateInput
+  containerPositionLogs?: Prisma.ContainerPositionLogOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   uploadedAttachments?: Prisma.AttachmentListRelationFilter
   updatedWorkflowSettings?: Prisma.WorkflowSettingListRelationFilter
   workflowSettingLogs?: Prisma.WorkflowSettingLogListRelationFilter
+  containerPositionLogs?: Prisma.ContainerPositionLogListRelationFilter
 }, "id" | "username" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -310,6 +313,7 @@ export type UserCreateInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -331,6 +335,7 @@ export type UserUncheckedCreateInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserUpdateInput = {
@@ -352,6 +357,7 @@ export type UserUpdateInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -373,6 +379,7 @@ export type UserUncheckedUpdateInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -621,6 +628,20 @@ export type UserUpdateOneRequiredWithoutWorkflowSettingLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkflowSettingLogsInput, Prisma.UserUpdateWithoutWorkflowSettingLogsInput>, Prisma.UserUncheckedUpdateWithoutWorkflowSettingLogsInput>
 }
 
+export type UserCreateNestedOneWithoutContainerPositionLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContainerPositionLogsInput, Prisma.UserUncheckedCreateWithoutContainerPositionLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContainerPositionLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutContainerPositionLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContainerPositionLogsInput, Prisma.UserUncheckedCreateWithoutContainerPositionLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContainerPositionLogsInput
+  upsert?: Prisma.UserUpsertWithoutContainerPositionLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutContainerPositionLogsInput, Prisma.UserUpdateWithoutContainerPositionLogsInput>, Prisma.UserUncheckedUpdateWithoutContainerPositionLogsInput>
+}
+
 export type UserCreateWithoutRolesInput = {
   id?: string
   username: string
@@ -639,6 +660,7 @@ export type UserCreateWithoutRolesInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
@@ -659,6 +681,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -695,6 +718,7 @@ export type UserUpdateWithoutRolesInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
@@ -715,6 +739,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedWorkOrdersInput = {
@@ -735,6 +760,7 @@ export type UserCreateWithoutCreatedWorkOrdersInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWorkOrdersInput = {
@@ -755,6 +781,7 @@ export type UserUncheckedCreateWithoutCreatedWorkOrdersInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWorkOrdersInput = {
@@ -791,6 +818,7 @@ export type UserUpdateWithoutCreatedWorkOrdersInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWorkOrdersInput = {
@@ -811,6 +839,7 @@ export type UserUncheckedUpdateWithoutCreatedWorkOrdersInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedPlannedCostsInput = {
@@ -831,6 +860,7 @@ export type UserCreateWithoutCreatedPlannedCostsInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedPlannedCostsInput = {
@@ -851,6 +881,7 @@ export type UserUncheckedCreateWithoutCreatedPlannedCostsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedPlannedCostsInput = {
@@ -887,6 +918,7 @@ export type UserUpdateWithoutCreatedPlannedCostsInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedPlannedCostsInput = {
@@ -907,6 +939,7 @@ export type UserUncheckedUpdateWithoutCreatedPlannedCostsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutHeldCashAdvancesInput = {
@@ -927,6 +960,7 @@ export type UserCreateWithoutHeldCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutHeldCashAdvancesInput = {
@@ -947,6 +981,7 @@ export type UserUncheckedCreateWithoutHeldCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutHeldCashAdvancesInput = {
@@ -972,6 +1007,7 @@ export type UserCreateWithoutCreatedCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCashAdvancesInput = {
@@ -992,6 +1028,7 @@ export type UserUncheckedCreateWithoutCreatedCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCashAdvancesInput = {
@@ -1028,6 +1065,7 @@ export type UserUpdateWithoutHeldCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHeldCashAdvancesInput = {
@@ -1048,6 +1086,7 @@ export type UserUncheckedUpdateWithoutHeldCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutCreatedCashAdvancesInput = {
@@ -1079,6 +1118,7 @@ export type UserUpdateWithoutCreatedCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCashAdvancesInput = {
@@ -1099,6 +1139,7 @@ export type UserUncheckedUpdateWithoutCreatedCashAdvancesInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedAdvanceReturnsInput = {
@@ -1119,6 +1160,7 @@ export type UserCreateWithoutCreatedAdvanceReturnsInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedAdvanceReturnsInput = {
@@ -1139,6 +1181,7 @@ export type UserUncheckedCreateWithoutCreatedAdvanceReturnsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedAdvanceReturnsInput = {
@@ -1175,6 +1218,7 @@ export type UserUpdateWithoutCreatedAdvanceReturnsInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedAdvanceReturnsInput = {
@@ -1195,6 +1239,7 @@ export type UserUncheckedUpdateWithoutCreatedAdvanceReturnsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutApprovalActionsInput = {
@@ -1215,6 +1260,7 @@ export type UserCreateWithoutApprovalActionsInput = {
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutApprovalActionsInput = {
@@ -1235,6 +1281,7 @@ export type UserUncheckedCreateWithoutApprovalActionsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutApprovalActionsInput = {
@@ -1271,6 +1318,7 @@ export type UserUpdateWithoutApprovalActionsInput = {
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovalActionsInput = {
@@ -1291,6 +1339,7 @@ export type UserUncheckedUpdateWithoutApprovalActionsInput = {
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutUploadedAttachmentsInput = {
@@ -1311,6 +1360,7 @@ export type UserCreateWithoutUploadedAttachmentsInput = {
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutUploadedAttachmentsInput = {
@@ -1331,6 +1381,7 @@ export type UserUncheckedCreateWithoutUploadedAttachmentsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutUploadedAttachmentsInput = {
@@ -1367,6 +1418,7 @@ export type UserUpdateWithoutUploadedAttachmentsInput = {
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedAttachmentsInput = {
@@ -1387,6 +1439,7 @@ export type UserUncheckedUpdateWithoutUploadedAttachmentsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutUpdatedWorkflowSettingsInput = {
@@ -1407,6 +1460,7 @@ export type UserCreateWithoutUpdatedWorkflowSettingsInput = {
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput = {
@@ -1427,6 +1481,7 @@ export type UserUncheckedCreateWithoutUpdatedWorkflowSettingsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedWorkflowSettingsInput = {
@@ -1463,6 +1518,7 @@ export type UserUpdateWithoutUpdatedWorkflowSettingsInput = {
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput = {
@@ -1483,6 +1539,7 @@ export type UserUncheckedUpdateWithoutUpdatedWorkflowSettingsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutWorkflowSettingLogsInput = {
@@ -1503,6 +1560,7 @@ export type UserCreateWithoutWorkflowSettingLogsInput = {
   approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutWorkflowSettingLogsInput = {
@@ -1523,6 +1581,7 @@ export type UserUncheckedCreateWithoutWorkflowSettingLogsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
   uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutWorkflowSettingLogsInput = {
@@ -1559,6 +1618,7 @@ export type UserUpdateWithoutWorkflowSettingLogsInput = {
   approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkflowSettingLogsInput = {
@@ -1579,6 +1639,107 @@ export type UserUncheckedUpdateWithoutWorkflowSettingLogsInput = {
   approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
   uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
   updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  containerPositionLogs?: Prisma.ContainerPositionLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutContainerPositionLogsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutContainerPositionLogsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  fullName: string
+  passwordHash: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedCreateNestedManyWithoutCreatedByInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutCreatedByInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutCreatedByInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutHolderInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCreatedByInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedCreateNestedManyWithoutActorInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutUploadedByInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedCreateNestedManyWithoutUpdatedByInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutContainerPositionLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutContainerPositionLogsInput, Prisma.UserUncheckedCreateWithoutContainerPositionLogsInput>
+}
+
+export type UserUpsertWithoutContainerPositionLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutContainerPositionLogsInput, Prisma.UserUncheckedUpdateWithoutContainerPositionLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutContainerPositionLogsInput, Prisma.UserUncheckedCreateWithoutContainerPositionLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutContainerPositionLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutContainerPositionLogsInput, Prisma.UserUncheckedUpdateWithoutContainerPositionLogsInput>
+}
+
+export type UserUpdateWithoutContainerPositionLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutContainerPositionLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  createdWorkOrders?: Prisma.WorkOrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdPlannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutCreatedByNestedInput
+  heldCashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutHolderNestedInput
+  createdAdvanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCreatedByNestedInput
+  approvalActions?: Prisma.ApprovalHistoryUncheckedUpdateManyWithoutActorNestedInput
+  uploadedAttachments?: Prisma.AttachmentUncheckedUpdateManyWithoutUploadedByNestedInput
+  updatedWorkflowSettings?: Prisma.WorkflowSettingUncheckedUpdateManyWithoutUpdatedByNestedInput
+  workflowSettingLogs?: Prisma.WorkflowSettingLogUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 
@@ -1597,6 +1758,7 @@ export type UserCountOutputType = {
   uploadedAttachments: number
   updatedWorkflowSettings: number
   workflowSettingLogs: number
+  containerPositionLogs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1610,6 +1772,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   uploadedAttachments?: boolean | UserCountOutputTypeCountUploadedAttachmentsArgs
   updatedWorkflowSettings?: boolean | UserCountOutputTypeCountUpdatedWorkflowSettingsArgs
   workflowSettingLogs?: boolean | UserCountOutputTypeCountWorkflowSettingLogsArgs
+  containerPositionLogs?: boolean | UserCountOutputTypeCountContainerPositionLogsArgs
 }
 
 /**
@@ -1692,6 +1855,13 @@ export type UserCountOutputTypeCountWorkflowSettingLogsArgs<ExtArgs extends runt
   where?: Prisma.WorkflowSettingLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountContainerPositionLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContainerPositionLogWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1712,6 +1882,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   uploadedAttachments?: boolean | Prisma.User$uploadedAttachmentsArgs<ExtArgs>
   updatedWorkflowSettings?: boolean | Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>
   workflowSettingLogs?: boolean | Prisma.User$workflowSettingLogsArgs<ExtArgs>
+  containerPositionLogs?: boolean | Prisma.User$containerPositionLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1760,6 +1931,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   uploadedAttachments?: boolean | Prisma.User$uploadedAttachmentsArgs<ExtArgs>
   updatedWorkflowSettings?: boolean | Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>
   workflowSettingLogs?: boolean | Prisma.User$workflowSettingLogsArgs<ExtArgs>
+  containerPositionLogs?: boolean | Prisma.User$containerPositionLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1778,6 +1950,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     uploadedAttachments: Prisma.$AttachmentPayload<ExtArgs>[]
     updatedWorkflowSettings: Prisma.$WorkflowSettingPayload<ExtArgs>[]
     workflowSettingLogs: Prisma.$WorkflowSettingLogPayload<ExtArgs>[]
+    containerPositionLogs: Prisma.$ContainerPositionLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2192,6 +2365,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   uploadedAttachments<T extends Prisma.User$uploadedAttachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedAttachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedWorkflowSettings<T extends Prisma.User$updatedWorkflowSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedWorkflowSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workflowSettingLogs<T extends Prisma.User$workflowSettingLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workflowSettingLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowSettingLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  containerPositionLogs<T extends Prisma.User$containerPositionLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$containerPositionLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContainerPositionLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2859,6 +3033,30 @@ export type User$workflowSettingLogsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.WorkflowSettingLogScalarFieldEnum | Prisma.WorkflowSettingLogScalarFieldEnum[]
+}
+
+/**
+ * User.containerPositionLogs
+ */
+export type User$containerPositionLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContainerPositionLog
+   */
+  select?: Prisma.ContainerPositionLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContainerPositionLog
+   */
+  omit?: Prisma.ContainerPositionLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContainerPositionLogInclude<ExtArgs> | null
+  where?: Prisma.ContainerPositionLogWhereInput
+  orderBy?: Prisma.ContainerPositionLogOrderByWithRelationInput | Prisma.ContainerPositionLogOrderByWithRelationInput[]
+  cursor?: Prisma.ContainerPositionLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContainerPositionLogScalarFieldEnum | Prisma.ContainerPositionLogScalarFieldEnum[]
 }
 
 /**

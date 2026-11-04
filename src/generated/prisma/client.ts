@@ -161,3 +161,13 @@ export type WorkflowSetting = Prisma.WorkflowSettingModel
  * 
  */
 export type WorkflowSettingLog = Prisma.WorkflowSettingLogModel
+/**
+ * Model ContainerPosition
+ * 
+ */
+export type ContainerPosition = Prisma.ContainerPositionModel
+/**
+ * Model ContainerPositionLog
+ * 
+ */
+export type ContainerPositionLog = Prisma.ContainerPositionLogModel

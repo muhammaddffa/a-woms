@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { idSchema } from '../../common/dto/id.dto.js';
+import { uuidSchema } from '../../common/dto/uuid.dto.js';
 
 export const approvalParamsSchema = z.object({
   docType: z.enum(['WORK_ORDER_COST', 'CASH_ADVANCE', 'ADVANCE_RETURN']),
-  docId: idSchema,
+  docId: uuidSchema,
 });
 export type ApprovalParams = z.infer<typeof approvalParamsSchema>;

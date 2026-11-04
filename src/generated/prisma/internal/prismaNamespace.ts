@@ -420,7 +420,9 @@ export const ModelName = {
   Attachment: 'Attachment',
   AccountingEvent: 'AccountingEvent',
   WorkflowSetting: 'WorkflowSetting',
-  WorkflowSettingLog: 'WorkflowSettingLog'
+  WorkflowSettingLog: 'WorkflowSettingLog',
+  ContainerPosition: 'ContainerPosition',
+  ContainerPositionLog: 'ContainerPositionLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -436,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRole" | "customer" | "chargeType" | "vehicle" | "driver" | "cashAccount" | "workOrder" | "workOrderItem" | "plannedCost" | "billableCharge" | "cashAdvance" | "cashAdvanceItem" | "cashAdvanceExtraCost" | "advanceReturn" | "advanceReturnItem" | "approvalHistory" | "attachment" | "accountingEvent" | "workflowSetting" | "workflowSettingLog"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRole" | "customer" | "chargeType" | "vehicle" | "driver" | "cashAccount" | "workOrder" | "workOrderItem" | "plannedCost" | "billableCharge" | "cashAdvance" | "cashAdvanceItem" | "cashAdvanceExtraCost" | "advanceReturn" | "advanceReturnItem" | "approvalHistory" | "attachment" | "accountingEvent" | "workflowSetting" | "workflowSettingLog" | "containerPosition" | "containerPositionLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2216,6 +2218,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ContainerPosition: {
+      payload: Prisma.$ContainerPositionPayload<ExtArgs>
+      fields: Prisma.ContainerPositionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContainerPositionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContainerPositionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        findFirst: {
+          args: Prisma.ContainerPositionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContainerPositionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        findMany: {
+          args: Prisma.ContainerPositionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>[]
+        }
+        create: {
+          args: Prisma.ContainerPositionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        createMany: {
+          args: Prisma.ContainerPositionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContainerPositionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>[]
+        }
+        delete: {
+          args: Prisma.ContainerPositionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        update: {
+          args: Prisma.ContainerPositionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContainerPositionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContainerPositionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContainerPositionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContainerPositionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionPayload>
+        }
+        aggregate: {
+          args: Prisma.ContainerPositionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContainerPosition>
+        }
+        groupBy: {
+          args: Prisma.ContainerPositionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerPositionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContainerPositionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerPositionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ContainerPositionLog: {
+      payload: Prisma.$ContainerPositionLogPayload<ExtArgs>
+      fields: Prisma.ContainerPositionLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContainerPositionLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContainerPositionLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ContainerPositionLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContainerPositionLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        findMany: {
+          args: Prisma.ContainerPositionLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>[]
+        }
+        create: {
+          args: Prisma.ContainerPositionLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        createMany: {
+          args: Prisma.ContainerPositionLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContainerPositionLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ContainerPositionLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        update: {
+          args: Prisma.ContainerPositionLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContainerPositionLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContainerPositionLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContainerPositionLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContainerPositionLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContainerPositionLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ContainerPositionLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContainerPositionLog>
+        }
+        groupBy: {
+          args: Prisma.ContainerPositionLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerPositionLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContainerPositionLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContainerPositionLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2355,7 +2505,8 @@ export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeo
 export const DriverScalarFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  phone: 'phone'
 } as const
 
 export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
@@ -2403,7 +2554,13 @@ export const WorkOrderItemScalarFieldEnum = {
   driverId: 'driverId',
   origin: 'origin',
   destination: 'destination',
-  status: 'status'
+  status: 'status',
+  tare: 'tare',
+  actualContainerSize: 'actualContainerSize',
+  stuffingLocation: 'stuffingLocation',
+  currentPositionId: 'currentPositionId',
+  positionNote: 'positionNote',
+  positionUpdatedAt: 'positionUpdatedAt'
 } as const
 
 export type WorkOrderItemScalarFieldEnum = (typeof WorkOrderItemScalarFieldEnum)[keyof typeof WorkOrderItemScalarFieldEnum]
@@ -2579,6 +2736,29 @@ export const WorkflowSettingLogScalarFieldEnum = {
 } as const
 
 export type WorkflowSettingLogScalarFieldEnum = (typeof WorkflowSettingLogScalarFieldEnum)[keyof typeof WorkflowSettingLogScalarFieldEnum]
+
+
+export const ContainerPositionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive'
+} as const
+
+export type ContainerPositionScalarFieldEnum = (typeof ContainerPositionScalarFieldEnum)[keyof typeof ContainerPositionScalarFieldEnum]
+
+
+export const ContainerPositionLogScalarFieldEnum = {
+  id: 'id',
+  workOrderItemId: 'workOrderItemId',
+  positionId: 'positionId',
+  note: 'note',
+  actorId: 'actorId',
+  createdAt: 'createdAt'
+} as const
+
+export type ContainerPositionLogScalarFieldEnum = (typeof ContainerPositionLogScalarFieldEnum)[keyof typeof ContainerPositionLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3130,6 +3310,8 @@ export type GlobalOmitConfig = {
   accountingEvent?: Prisma.AccountingEventOmit
   workflowSetting?: Prisma.WorkflowSettingOmit
   workflowSettingLog?: Prisma.WorkflowSettingLogOmit
+  containerPosition?: Prisma.ContainerPositionOmit
+  containerPositionLog?: Prisma.ContainerPositionLogOmit
 }
 
 /* Types for Logging */

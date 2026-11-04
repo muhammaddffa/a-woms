@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { idSchema } from '../../common/dto/id.dto.js';
+import { uuidSchema } from '../../common/dto/uuid.dto.js';
 
 const text = (max: number) => z.string().trim().max(max);
 
@@ -12,8 +12,11 @@ const itemBase = z.object({
   containerSize: text(10).nullable().optional(),
   containerNo: z.string().trim().toUpperCase().max(20).nullable().optional(),
   sealNo: text(40).nullable().optional(),
-  vehicleId: idSchema.nullable().optional(),
-  driverId: idSchema.nullable().optional(),
+  tare: z.number().min(0).max(99999999.99).nullable().optional(), // kilogram
+  actualContainerSize: text(10).nullable().optional(),
+  stuffingLocation: text(120).nullable().optional(),
+  vehicleId: uuidSchema.nullable().optional(),
+  driverId: uuidSchema.nullable().optional(),
   origin: text(120).nullable().optional(),
   destination: text(120).nullable().optional(),
 });

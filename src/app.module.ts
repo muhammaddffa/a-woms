@@ -23,6 +23,10 @@ import { PermissionModule } from './permission/permission.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { RoleModule } from './role/role.module.js';
 import { UserModule } from './user/user.module.js';
+import { CashAdvanceModule } from './cash-advance/cash-advance.module.js';
+import { WorkflowSettingModule } from './workflow-setting/workflow-setting.module.js';
+import { AdvanceReturnModule } from './advance-return/advance-return.module.js';
+import { ContainerPositionModule } from './container-position/container-position.module.js';
 
 @Module({
   imports: [
@@ -43,6 +47,12 @@ import { UserModule } from './user/user.module.js';
     ApprovalModule,
     BillableChargeModule,
     PlannedCostModule,
+    CashAdvanceModule,
+    WorkflowSettingModule,
+    BillableChargeModule,
+    PlannedCostModule,
+    AdvanceReturnModule,
+    ContainerPositionModule,
   ],
   // controllers: [AppController],
   providers: [

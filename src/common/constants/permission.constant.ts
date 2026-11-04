@@ -87,10 +87,20 @@ export const PERMISSIONS = {
     module: 'cash_advance',
     description: 'Mencairkan dana',
   },
+  CASH_ADVANCE_VERIFY_TRANSFER: {
+    code: 'cash_advance:verify_transfer',
+    module: 'cash_advance',
+    description: 'Memverifikasi transfer dana sudah dilakukan',
+  },
   CASH_ADVANCE_SUBMIT_REPORT: {
     code: 'cash_advance:submit_report',
     module: 'cash_advance',
     description: 'Mengisi LPJ',
+  },
+  CASH_ADVANCE_CHECK_REPORT: {
+    code: 'cash_advance:check_report',
+    module: 'cash_advance',
+    description: 'Memeriksa LPJ',
   },
   CASH_ADVANCE_APPROVE_REPORT: {
     code: 'cash_advance:approve_report',
@@ -108,6 +118,17 @@ export const PERMISSIONS = {
     module: 'cash_advance',
     description: 'Mengonfirmasi penerimaan pengembalian',
   },
+  ATTACHMENT_UPLOAD: {
+    code: 'attachment:upload',
+    module: 'cash_advance',
+    description: 'Mengunggah bukti (bon, bukti transfer)',
+  },
+
+  CONTAINER_POSITION_UPDATE: {
+    code: 'container_position:update',
+    module: 'work_order',
+    description: 'Memperbarui posisi kontainer',
+  },
 
   PROFIT_VIEW: {
     code: 'profit:view',
@@ -124,21 +145,6 @@ export const PERMISSIONS = {
     code: 'role:manage',
     module: 'admin',
     description: 'Mengelola role dan permission',
-  },
-    CASH_ADVANCE_VERIFY_TRANSFER: {
-    code: 'cash_advance:verify_transfer',
-    module: 'cash_advance',
-    description: 'Memverifikasi transfer dana sudah dilakukan',
-  },
-  CASH_ADVANCE_CHECK_REPORT: {
-    code: 'cash_advance:check_report',
-    module: 'cash_advance',
-    description: 'Memeriksa LPJ',
-  },
-  ATTACHMENT_UPLOAD: {
-    code: 'attachment:upload',
-    module: 'cash_advance',
-    description: 'Mengunggah bukti (bon, bukti transfer)',
   },
   WORKFLOW_MANAGE: {
     code: 'workflow:manage',

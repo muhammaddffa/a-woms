@@ -353,10 +353,6 @@ export type EnumAccountingEventStatusFieldUpdateOperationsInput = {
   set?: $Enums.AccountingEventStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 
 
 export type AccountingEventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
