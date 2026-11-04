@@ -20,52 +20,38 @@ export type WorkOrderModel = runtime.Types.Result.DefaultSelection<Prisma.$WorkO
 
 export type AggregateWorkOrder = {
   _count: WorkOrderCountAggregateOutputType | null
-  _avg: WorkOrderAvgAggregateOutputType | null
-  _sum: WorkOrderSumAggregateOutputType | null
   _min: WorkOrderMinAggregateOutputType | null
   _max: WorkOrderMaxAggregateOutputType | null
 }
 
-export type WorkOrderAvgAggregateOutputType = {
-  id: number | null
-  customerId: number | null
-  createdById: number | null
-}
-
-export type WorkOrderSumAggregateOutputType = {
-  id: number | null
-  customerId: number | null
-  createdById: number | null
-}
-
 export type WorkOrderMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
   orderDate: Date | null
-  customerId: number | null
+  customerId: string | null
   brand: string | null
   project: string | null
   entityCode: string | null
   isDummy: boolean | null
   status: $Enums.WorkOrderStatus | null
   costNote: string | null
-  createdById: number | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type WorkOrderMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
   orderDate: Date | null
-  customerId: number | null
+  customerId: string | null
   brand: string | null
   project: string | null
   entityCode: string | null
   isDummy: boolean | null
   status: $Enums.WorkOrderStatus | null
   costNote: string | null
-  createdById: number | null
+  createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -87,18 +73,6 @@ export type WorkOrderCountAggregateOutputType = {
   _all: number
 }
 
-
-export type WorkOrderAvgAggregateInputType = {
-  id?: true
-  customerId?: true
-  createdById?: true
-}
-
-export type WorkOrderSumAggregateInputType = {
-  id?: true
-  customerId?: true
-  createdById?: true
-}
 
 export type WorkOrderMinAggregateInputType = {
   id?: true
@@ -187,18 +161,6 @@ export type WorkOrderAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: WorkOrderAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: WorkOrderSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: WorkOrderMinAggregateInputType
@@ -229,29 +191,25 @@ export type WorkOrderGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: WorkOrderCountAggregateInputType | true
-  _avg?: WorkOrderAvgAggregateInputType
-  _sum?: WorkOrderSumAggregateInputType
   _min?: WorkOrderMinAggregateInputType
   _max?: WorkOrderMaxAggregateInputType
 }
 
 export type WorkOrderGroupByOutputType = {
-  id: number
+  id: string
   number: string
   orderDate: Date
-  customerId: number
+  customerId: string
   brand: string | null
   project: string | null
   entityCode: string
   isDummy: boolean
   status: $Enums.WorkOrderStatus
   costNote: string | null
-  createdById: number | null
+  createdById: string | null
   createdAt: Date
   updatedAt: Date
   _count: WorkOrderCountAggregateOutputType | null
-  _avg: WorkOrderAvgAggregateOutputType | null
-  _sum: WorkOrderSumAggregateOutputType | null
   _min: WorkOrderMinAggregateOutputType | null
   _max: WorkOrderMaxAggregateOutputType | null
 }
@@ -275,17 +233,17 @@ export type WorkOrderWhereInput = {
   AND?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
-  id?: Prisma.IntFilter<"WorkOrder"> | number
+  id?: Prisma.UuidFilter<"WorkOrder"> | string
   number?: Prisma.StringFilter<"WorkOrder"> | string
   orderDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
-  customerId?: Prisma.IntFilter<"WorkOrder"> | number
+  customerId?: Prisma.UuidFilter<"WorkOrder"> | string
   brand?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   project?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   entityCode?: Prisma.StringFilter<"WorkOrder"> | string
   isDummy?: Prisma.BoolFilter<"WorkOrder"> | boolean
   status?: Prisma.EnumWorkOrderStatusFilter<"WorkOrder"> | $Enums.WorkOrderStatus
   costNote?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
-  createdById?: Prisma.IntNullableFilter<"WorkOrder"> | number | null
+  createdById?: Prisma.UuidNullableFilter<"WorkOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -315,20 +273,20 @@ export type WorkOrderOrderByWithRelationInput = {
 }
 
 export type WorkOrderWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   number?: string
   AND?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   OR?: Prisma.WorkOrderWhereInput[]
   NOT?: Prisma.WorkOrderWhereInput | Prisma.WorkOrderWhereInput[]
   orderDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
-  customerId?: Prisma.IntFilter<"WorkOrder"> | number
+  customerId?: Prisma.UuidFilter<"WorkOrder"> | string
   brand?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   project?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   entityCode?: Prisma.StringFilter<"WorkOrder"> | string
   isDummy?: Prisma.BoolFilter<"WorkOrder"> | boolean
   status?: Prisma.EnumWorkOrderStatusFilter<"WorkOrder"> | $Enums.WorkOrderStatus
   costNote?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
-  createdById?: Prisma.IntNullableFilter<"WorkOrder"> | number | null
+  createdById?: Prisma.UuidNullableFilter<"WorkOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -352,32 +310,31 @@ export type WorkOrderOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.WorkOrderCountOrderByAggregateInput
-  _avg?: Prisma.WorkOrderAvgOrderByAggregateInput
   _max?: Prisma.WorkOrderMaxOrderByAggregateInput
   _min?: Prisma.WorkOrderMinOrderByAggregateInput
-  _sum?: Prisma.WorkOrderSumOrderByAggregateInput
 }
 
 export type WorkOrderScalarWhereWithAggregatesInput = {
   AND?: Prisma.WorkOrderScalarWhereWithAggregatesInput | Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   OR?: Prisma.WorkOrderScalarWhereWithAggregatesInput[]
   NOT?: Prisma.WorkOrderScalarWhereWithAggregatesInput | Prisma.WorkOrderScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"WorkOrder"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"WorkOrder"> | string
   number?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
   orderDate?: Prisma.DateTimeWithAggregatesFilter<"WorkOrder"> | Date | string
-  customerId?: Prisma.IntWithAggregatesFilter<"WorkOrder"> | number
+  customerId?: Prisma.UuidWithAggregatesFilter<"WorkOrder"> | string
   brand?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   project?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
   entityCode?: Prisma.StringWithAggregatesFilter<"WorkOrder"> | string
   isDummy?: Prisma.BoolWithAggregatesFilter<"WorkOrder"> | boolean
   status?: Prisma.EnumWorkOrderStatusWithAggregatesFilter<"WorkOrder"> | $Enums.WorkOrderStatus
   costNote?: Prisma.StringNullableWithAggregatesFilter<"WorkOrder"> | string | null
-  createdById?: Prisma.IntNullableWithAggregatesFilter<"WorkOrder"> | number | null
+  createdById?: Prisma.UuidNullableWithAggregatesFilter<"WorkOrder"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WorkOrder"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"WorkOrder"> | Date | string
 }
 
 export type WorkOrderCreateInput = {
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -395,17 +352,17 @@ export type WorkOrderCreateInput = {
 }
 
 export type WorkOrderUncheckedCreateInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.WorkOrderItemUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -413,6 +370,7 @@ export type WorkOrderUncheckedCreateInput = {
 }
 
 export type WorkOrderUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -430,17 +388,17 @@ export type WorkOrderUpdateInput = {
 }
 
 export type WorkOrderUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.WorkOrderItemUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -448,22 +406,23 @@ export type WorkOrderUncheckedUpdateInput = {
 }
 
 export type WorkOrderCreateManyInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type WorkOrderUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -477,17 +436,17 @@ export type WorkOrderUpdateManyMutationInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -516,12 +475,6 @@ export type WorkOrderCountOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type WorkOrderAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  customerId?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type WorkOrderMaxOrderByAggregateInput = {
@@ -554,12 +507,6 @@ export type WorkOrderMinOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type WorkOrderSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  customerId?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type WorkOrderScalarRelationFilter = {
@@ -655,14 +602,6 @@ export type EnumWorkOrderStatusFieldUpdateOperationsInput = {
   set?: $Enums.WorkOrderStatus
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type WorkOrderCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.WorkOrderCreateWithoutItemsInput, Prisma.WorkOrderUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.WorkOrderCreateOrConnectWithoutItemsInput
@@ -692,6 +631,7 @@ export type WorkOrderUpdateOneRequiredWithoutCashAdvancesNestedInput = {
 }
 
 export type WorkOrderCreateWithoutCreatedByInput = {
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -708,10 +648,10 @@ export type WorkOrderCreateWithoutCreatedByInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutCreatedByInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
@@ -754,22 +694,23 @@ export type WorkOrderScalarWhereInput = {
   AND?: Prisma.WorkOrderScalarWhereInput | Prisma.WorkOrderScalarWhereInput[]
   OR?: Prisma.WorkOrderScalarWhereInput[]
   NOT?: Prisma.WorkOrderScalarWhereInput | Prisma.WorkOrderScalarWhereInput[]
-  id?: Prisma.IntFilter<"WorkOrder"> | number
+  id?: Prisma.UuidFilter<"WorkOrder"> | string
   number?: Prisma.StringFilter<"WorkOrder"> | string
   orderDate?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
-  customerId?: Prisma.IntFilter<"WorkOrder"> | number
+  customerId?: Prisma.UuidFilter<"WorkOrder"> | string
   brand?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   project?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
   entityCode?: Prisma.StringFilter<"WorkOrder"> | string
   isDummy?: Prisma.BoolFilter<"WorkOrder"> | boolean
   status?: Prisma.EnumWorkOrderStatusFilter<"WorkOrder"> | $Enums.WorkOrderStatus
   costNote?: Prisma.StringNullableFilter<"WorkOrder"> | string | null
-  createdById?: Prisma.IntNullableFilter<"WorkOrder"> | number | null
+  createdById?: Prisma.UuidNullableFilter<"WorkOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WorkOrder"> | Date | string
 }
 
 export type WorkOrderCreateWithoutCustomerInput = {
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -786,7 +727,7 @@ export type WorkOrderCreateWithoutCustomerInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutCustomerInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -795,7 +736,7 @@ export type WorkOrderUncheckedCreateWithoutCustomerInput = {
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.WorkOrderItemUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -829,6 +770,7 @@ export type WorkOrderUpdateManyWithWhereWithoutCustomerInput = {
 }
 
 export type WorkOrderCreateWithoutItemsInput = {
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -845,17 +787,17 @@ export type WorkOrderCreateWithoutItemsInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutItemsInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -878,6 +820,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutItemsInput = {
 }
 
 export type WorkOrderUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -894,23 +837,24 @@ export type WorkOrderUpdateWithoutItemsInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateWithoutCashAdvancesInput = {
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -927,17 +871,17 @@ export type WorkOrderCreateWithoutCashAdvancesInput = {
 }
 
 export type WorkOrderUncheckedCreateWithoutCashAdvancesInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.WorkOrderItemUncheckedCreateNestedManyWithoutWorkOrderInput
@@ -960,6 +904,7 @@ export type WorkOrderUpdateToOneWithWhereWithoutCashAdvancesInput = {
 }
 
 export type WorkOrderUpdateWithoutCashAdvancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -976,27 +921,27 @@ export type WorkOrderUpdateWithoutCashAdvancesInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutCashAdvancesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.WorkOrderItemUncheckedUpdateManyWithoutWorkOrderNestedInput
 }
 
 export type WorkOrderCreateManyCreatedByInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
-  customerId: number
+  customerId: string
   brand?: string | null
   project?: string | null
   entityCode?: string
@@ -1008,6 +953,7 @@ export type WorkOrderCreateManyCreatedByInput = {
 }
 
 export type WorkOrderUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1024,10 +970,10 @@ export type WorkOrderUpdateWithoutCreatedByInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1041,10 +987,10 @@ export type WorkOrderUncheckedUpdateWithoutCreatedByInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  customerId?: Prisma.IntFieldUpdateOperationsInput | number
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   project?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   entityCode?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1056,7 +1002,7 @@ export type WorkOrderUncheckedUpdateManyWithoutCreatedByInput = {
 }
 
 export type WorkOrderCreateManyCustomerInput = {
-  id?: number
+  id?: string
   number: string
   orderDate: Date | string
   brand?: string | null
@@ -1065,12 +1011,13 @@ export type WorkOrderCreateManyCustomerInput = {
   isDummy?: boolean
   status?: $Enums.WorkOrderStatus
   costNote?: string | null
-  createdById?: number | null
+  createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type WorkOrderUpdateWithoutCustomerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1087,7 +1034,7 @@ export type WorkOrderUpdateWithoutCustomerInput = {
 }
 
 export type WorkOrderUncheckedUpdateWithoutCustomerInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1096,7 +1043,7 @@ export type WorkOrderUncheckedUpdateWithoutCustomerInput = {
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.WorkOrderItemUncheckedUpdateManyWithoutWorkOrderNestedInput
@@ -1104,7 +1051,7 @@ export type WorkOrderUncheckedUpdateWithoutCustomerInput = {
 }
 
 export type WorkOrderUncheckedUpdateManyWithoutCustomerInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   orderDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1113,7 +1060,7 @@ export type WorkOrderUncheckedUpdateManyWithoutCustomerInput = {
   isDummy?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumWorkOrderStatusFieldUpdateOperationsInput | $Enums.WorkOrderStatus
   costNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1257,17 +1204,17 @@ export type $WorkOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     cashAdvances: Prisma.$CashAdvancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     number: string
     orderDate: Date
-    customerId: number
+    customerId: string
     brand: string | null
     project: string | null
     entityCode: string
     isDummy: boolean
     status: $Enums.WorkOrderStatus
     costNote: string | null
-    createdById: number | null
+    createdById: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["workOrder"]>
@@ -1697,17 +1644,17 @@ export interface Prisma__WorkOrderClient<T, Null = never, ExtArgs extends runtim
  * Fields of the WorkOrder model
  */
 export interface WorkOrderFieldRefs {
-  readonly id: Prisma.FieldRef<"WorkOrder", 'Int'>
+  readonly id: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly number: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly orderDate: Prisma.FieldRef<"WorkOrder", 'DateTime'>
-  readonly customerId: Prisma.FieldRef<"WorkOrder", 'Int'>
+  readonly customerId: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly brand: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly project: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly entityCode: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly isDummy: Prisma.FieldRef<"WorkOrder", 'Boolean'>
   readonly status: Prisma.FieldRef<"WorkOrder", 'WorkOrderStatus'>
   readonly costNote: Prisma.FieldRef<"WorkOrder", 'String'>
-  readonly createdById: Prisma.FieldRef<"WorkOrder", 'Int'>
+  readonly createdById: Prisma.FieldRef<"WorkOrder", 'String'>
   readonly createdAt: Prisma.FieldRef<"WorkOrder", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"WorkOrder", 'DateTime'>
 }

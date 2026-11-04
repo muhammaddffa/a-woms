@@ -27,26 +27,25 @@ export type AggregateChargeType = {
 }
 
 export type ChargeTypeAvgAggregateOutputType = {
-  id: number | null
   sortOrder: number | null
   defaultCost: runtime.Decimal | null
   defaultPrice: runtime.Decimal | null
 }
 
 export type ChargeTypeSumAggregateOutputType = {
-  id: number | null
   sortOrder: number | null
   defaultCost: runtime.Decimal | null
   defaultPrice: runtime.Decimal | null
 }
 
 export type ChargeTypeMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
   category: string | null
   appliesTo: $Enums.ChargeAppliesTo | null
   useActualCost: boolean | null
+  billingMode: $Enums.BillingMode | null
   isTrucking: boolean | null
   isHidden: boolean | null
   sortOrder: number | null
@@ -58,12 +57,13 @@ export type ChargeTypeMinAggregateOutputType = {
 }
 
 export type ChargeTypeMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
   category: string | null
   appliesTo: $Enums.ChargeAppliesTo | null
   useActualCost: boolean | null
+  billingMode: $Enums.BillingMode | null
   isTrucking: boolean | null
   isHidden: boolean | null
   sortOrder: number | null
@@ -81,6 +81,7 @@ export type ChargeTypeCountAggregateOutputType = {
   category: number
   appliesTo: number
   useActualCost: number
+  billingMode: number
   isTrucking: number
   isHidden: number
   sortOrder: number
@@ -94,14 +95,12 @@ export type ChargeTypeCountAggregateOutputType = {
 
 
 export type ChargeTypeAvgAggregateInputType = {
-  id?: true
   sortOrder?: true
   defaultCost?: true
   defaultPrice?: true
 }
 
 export type ChargeTypeSumAggregateInputType = {
-  id?: true
   sortOrder?: true
   defaultCost?: true
   defaultPrice?: true
@@ -114,6 +113,7 @@ export type ChargeTypeMinAggregateInputType = {
   category?: true
   appliesTo?: true
   useActualCost?: true
+  billingMode?: true
   isTrucking?: true
   isHidden?: true
   sortOrder?: true
@@ -131,6 +131,7 @@ export type ChargeTypeMaxAggregateInputType = {
   category?: true
   appliesTo?: true
   useActualCost?: true
+  billingMode?: true
   isTrucking?: true
   isHidden?: true
   sortOrder?: true
@@ -148,6 +149,7 @@ export type ChargeTypeCountAggregateInputType = {
   category?: true
   appliesTo?: true
   useActualCost?: true
+  billingMode?: true
   isTrucking?: true
   isHidden?: true
   sortOrder?: true
@@ -246,12 +248,13 @@ export type ChargeTypeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type ChargeTypeGroupByOutputType = {
-  id: number
+  id: string
   code: string
   name: string
   category: string | null
   appliesTo: $Enums.ChargeAppliesTo
   useActualCost: boolean
+  billingMode: $Enums.BillingMode
   isTrucking: boolean
   isHidden: boolean
   sortOrder: number
@@ -286,12 +289,13 @@ export type ChargeTypeWhereInput = {
   AND?: Prisma.ChargeTypeWhereInput | Prisma.ChargeTypeWhereInput[]
   OR?: Prisma.ChargeTypeWhereInput[]
   NOT?: Prisma.ChargeTypeWhereInput | Prisma.ChargeTypeWhereInput[]
-  id?: Prisma.IntFilter<"ChargeType"> | number
+  id?: Prisma.UuidFilter<"ChargeType"> | string
   code?: Prisma.StringFilter<"ChargeType"> | string
   name?: Prisma.StringFilter<"ChargeType"> | string
   category?: Prisma.StringNullableFilter<"ChargeType"> | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFilter<"ChargeType"> | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFilter<"ChargeType"> | boolean
+  billingMode?: Prisma.EnumBillingModeFilter<"ChargeType"> | $Enums.BillingMode
   isTrucking?: Prisma.BoolFilter<"ChargeType"> | boolean
   isHidden?: Prisma.BoolFilter<"ChargeType"> | boolean
   sortOrder?: Prisma.IntFilter<"ChargeType"> | number
@@ -302,6 +306,7 @@ export type ChargeTypeWhereInput = {
   isActive?: Prisma.BoolFilter<"ChargeType"> | boolean
   plannedCosts?: Prisma.PlannedCostListRelationFilter
   billableCharges?: Prisma.BillableChargeListRelationFilter
+  extraCosts?: Prisma.CashAdvanceExtraCostListRelationFilter
 }
 
 export type ChargeTypeOrderByWithRelationInput = {
@@ -311,6 +316,7 @@ export type ChargeTypeOrderByWithRelationInput = {
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   appliesTo?: Prisma.SortOrder
   useActualCost?: Prisma.SortOrder
+  billingMode?: Prisma.SortOrder
   isTrucking?: Prisma.SortOrder
   isHidden?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -321,10 +327,11 @@ export type ChargeTypeOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   plannedCosts?: Prisma.PlannedCostOrderByRelationAggregateInput
   billableCharges?: Prisma.BillableChargeOrderByRelationAggregateInput
+  extraCosts?: Prisma.CashAdvanceExtraCostOrderByRelationAggregateInput
 }
 
 export type ChargeTypeWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   code?: string
   AND?: Prisma.ChargeTypeWhereInput | Prisma.ChargeTypeWhereInput[]
   OR?: Prisma.ChargeTypeWhereInput[]
@@ -333,6 +340,7 @@ export type ChargeTypeWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.StringNullableFilter<"ChargeType"> | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFilter<"ChargeType"> | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFilter<"ChargeType"> | boolean
+  billingMode?: Prisma.EnumBillingModeFilter<"ChargeType"> | $Enums.BillingMode
   isTrucking?: Prisma.BoolFilter<"ChargeType"> | boolean
   isHidden?: Prisma.BoolFilter<"ChargeType"> | boolean
   sortOrder?: Prisma.IntFilter<"ChargeType"> | number
@@ -343,6 +351,7 @@ export type ChargeTypeWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"ChargeType"> | boolean
   plannedCosts?: Prisma.PlannedCostListRelationFilter
   billableCharges?: Prisma.BillableChargeListRelationFilter
+  extraCosts?: Prisma.CashAdvanceExtraCostListRelationFilter
 }, "id" | "code">
 
 export type ChargeTypeOrderByWithAggregationInput = {
@@ -352,6 +361,7 @@ export type ChargeTypeOrderByWithAggregationInput = {
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   appliesTo?: Prisma.SortOrder
   useActualCost?: Prisma.SortOrder
+  billingMode?: Prisma.SortOrder
   isTrucking?: Prisma.SortOrder
   isHidden?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -371,12 +381,13 @@ export type ChargeTypeScalarWhereWithAggregatesInput = {
   AND?: Prisma.ChargeTypeScalarWhereWithAggregatesInput | Prisma.ChargeTypeScalarWhereWithAggregatesInput[]
   OR?: Prisma.ChargeTypeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ChargeTypeScalarWhereWithAggregatesInput | Prisma.ChargeTypeScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"ChargeType"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"ChargeType"> | string
   code?: Prisma.StringWithAggregatesFilter<"ChargeType"> | string
   name?: Prisma.StringWithAggregatesFilter<"ChargeType"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"ChargeType"> | string | null
   appliesTo?: Prisma.EnumChargeAppliesToWithAggregatesFilter<"ChargeType"> | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolWithAggregatesFilter<"ChargeType"> | boolean
+  billingMode?: Prisma.EnumBillingModeWithAggregatesFilter<"ChargeType"> | $Enums.BillingMode
   isTrucking?: Prisma.BoolWithAggregatesFilter<"ChargeType"> | boolean
   isHidden?: Prisma.BoolWithAggregatesFilter<"ChargeType"> | boolean
   sortOrder?: Prisma.IntWithAggregatesFilter<"ChargeType"> | number
@@ -388,11 +399,13 @@ export type ChargeTypeScalarWhereWithAggregatesInput = {
 }
 
 export type ChargeTypeCreateInput = {
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -403,15 +416,17 @@ export type ChargeTypeCreateInput = {
   isActive?: boolean
   plannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutChargeTypeInput
   billableCharges?: Prisma.BillableChargeCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeUncheckedCreateInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -422,14 +437,17 @@ export type ChargeTypeUncheckedCreateInput = {
   isActive?: boolean
   plannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutChargeTypeInput
   billableCharges?: Prisma.BillableChargeUncheckedCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -440,15 +458,17 @@ export type ChargeTypeUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plannedCosts?: Prisma.PlannedCostUpdateManyWithoutChargeTypeNestedInput
   billableCharges?: Prisma.BillableChargeUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUpdateManyWithoutChargeTypeNestedInput
 }
 
 export type ChargeTypeUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -459,15 +479,17 @@ export type ChargeTypeUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutChargeTypeNestedInput
   billableCharges?: Prisma.BillableChargeUncheckedUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeNestedInput
 }
 
 export type ChargeTypeCreateManyInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -479,11 +501,13 @@ export type ChargeTypeCreateManyInput = {
 }
 
 export type ChargeTypeUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -495,12 +519,13 @@ export type ChargeTypeUpdateManyMutationInput = {
 }
 
 export type ChargeTypeUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -518,6 +543,7 @@ export type ChargeTypeCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   appliesTo?: Prisma.SortOrder
   useActualCost?: Prisma.SortOrder
+  billingMode?: Prisma.SortOrder
   isTrucking?: Prisma.SortOrder
   isHidden?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -529,7 +555,6 @@ export type ChargeTypeCountOrderByAggregateInput = {
 }
 
 export type ChargeTypeAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   defaultCost?: Prisma.SortOrder
   defaultPrice?: Prisma.SortOrder
@@ -542,6 +567,7 @@ export type ChargeTypeMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   appliesTo?: Prisma.SortOrder
   useActualCost?: Prisma.SortOrder
+  billingMode?: Prisma.SortOrder
   isTrucking?: Prisma.SortOrder
   isHidden?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -559,6 +585,7 @@ export type ChargeTypeMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   appliesTo?: Prisma.SortOrder
   useActualCost?: Prisma.SortOrder
+  billingMode?: Prisma.SortOrder
   isTrucking?: Prisma.SortOrder
   isHidden?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
@@ -570,7 +597,6 @@ export type ChargeTypeMinOrderByAggregateInput = {
 }
 
 export type ChargeTypeSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   sortOrder?: Prisma.SortOrder
   defaultCost?: Prisma.SortOrder
   defaultPrice?: Prisma.SortOrder
@@ -583,6 +609,10 @@ export type ChargeTypeScalarRelationFilter = {
 
 export type EnumChargeAppliesToFieldUpdateOperationsInput = {
   set?: $Enums.ChargeAppliesTo
+}
+
+export type EnumBillingModeFieldUpdateOperationsInput = {
+  set?: $Enums.BillingMode
 }
 
 export type DecimalFieldUpdateOperationsInput = {
@@ -621,12 +651,28 @@ export type ChargeTypeUpdateOneRequiredWithoutBillableChargesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChargeTypeUpdateToOneWithWhereWithoutBillableChargesInput, Prisma.ChargeTypeUpdateWithoutBillableChargesInput>, Prisma.ChargeTypeUncheckedUpdateWithoutBillableChargesInput>
 }
 
+export type ChargeTypeCreateNestedOneWithoutExtraCostsInput = {
+  create?: Prisma.XOR<Prisma.ChargeTypeCreateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedCreateWithoutExtraCostsInput>
+  connectOrCreate?: Prisma.ChargeTypeCreateOrConnectWithoutExtraCostsInput
+  connect?: Prisma.ChargeTypeWhereUniqueInput
+}
+
+export type ChargeTypeUpdateOneRequiredWithoutExtraCostsNestedInput = {
+  create?: Prisma.XOR<Prisma.ChargeTypeCreateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedCreateWithoutExtraCostsInput>
+  connectOrCreate?: Prisma.ChargeTypeCreateOrConnectWithoutExtraCostsInput
+  upsert?: Prisma.ChargeTypeUpsertWithoutExtraCostsInput
+  connect?: Prisma.ChargeTypeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChargeTypeUpdateToOneWithWhereWithoutExtraCostsInput, Prisma.ChargeTypeUpdateWithoutExtraCostsInput>, Prisma.ChargeTypeUncheckedUpdateWithoutExtraCostsInput>
+}
+
 export type ChargeTypeCreateWithoutPlannedCostsInput = {
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -636,15 +682,17 @@ export type ChargeTypeCreateWithoutPlannedCostsInput = {
   costAccount?: string | null
   isActive?: boolean
   billableCharges?: Prisma.BillableChargeCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeUncheckedCreateWithoutPlannedCostsInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -654,6 +702,7 @@ export type ChargeTypeUncheckedCreateWithoutPlannedCostsInput = {
   costAccount?: string | null
   isActive?: boolean
   billableCharges?: Prisma.BillableChargeUncheckedCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeCreateOrConnectWithoutPlannedCostsInput = {
@@ -673,11 +722,13 @@ export type ChargeTypeUpdateToOneWithWhereWithoutPlannedCostsInput = {
 }
 
 export type ChargeTypeUpdateWithoutPlannedCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -687,15 +738,17 @@ export type ChargeTypeUpdateWithoutPlannedCostsInput = {
   costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billableCharges?: Prisma.BillableChargeUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUpdateManyWithoutChargeTypeNestedInput
 }
 
 export type ChargeTypeUncheckedUpdateWithoutPlannedCostsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -705,14 +758,17 @@ export type ChargeTypeUncheckedUpdateWithoutPlannedCostsInput = {
   costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   billableCharges?: Prisma.BillableChargeUncheckedUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeNestedInput
 }
 
 export type ChargeTypeCreateWithoutBillableChargesInput = {
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -722,15 +778,17 @@ export type ChargeTypeCreateWithoutBillableChargesInput = {
   costAccount?: string | null
   isActive?: boolean
   plannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeUncheckedCreateWithoutBillableChargesInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   category?: string | null
   appliesTo?: $Enums.ChargeAppliesTo
   useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: number
@@ -740,6 +798,7 @@ export type ChargeTypeUncheckedCreateWithoutBillableChargesInput = {
   costAccount?: string | null
   isActive?: boolean
   plannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutChargeTypeInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedCreateNestedManyWithoutChargeTypeInput
 }
 
 export type ChargeTypeCreateOrConnectWithoutBillableChargesInput = {
@@ -759,11 +818,13 @@ export type ChargeTypeUpdateToOneWithWhereWithoutBillableChargesInput = {
 }
 
 export type ChargeTypeUpdateWithoutBillableChargesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -773,15 +834,17 @@ export type ChargeTypeUpdateWithoutBillableChargesInput = {
   costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plannedCosts?: Prisma.PlannedCostUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUpdateManyWithoutChargeTypeNestedInput
 }
 
 export type ChargeTypeUncheckedUpdateWithoutBillableChargesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
   useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
   isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
@@ -791,6 +854,103 @@ export type ChargeTypeUncheckedUpdateWithoutBillableChargesInput = {
   costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutChargeTypeNestedInput
+  extraCosts?: Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeNestedInput
+}
+
+export type ChargeTypeCreateWithoutExtraCostsInput = {
+  id?: string
+  code: string
+  name: string
+  category?: string | null
+  appliesTo?: $Enums.ChargeAppliesTo
+  useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
+  isTrucking?: boolean
+  isHidden?: boolean
+  sortOrder?: number
+  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  revenueAccount?: string | null
+  costAccount?: string | null
+  isActive?: boolean
+  plannedCosts?: Prisma.PlannedCostCreateNestedManyWithoutChargeTypeInput
+  billableCharges?: Prisma.BillableChargeCreateNestedManyWithoutChargeTypeInput
+}
+
+export type ChargeTypeUncheckedCreateWithoutExtraCostsInput = {
+  id?: string
+  code: string
+  name: string
+  category?: string | null
+  appliesTo?: $Enums.ChargeAppliesTo
+  useActualCost?: boolean
+  billingMode?: $Enums.BillingMode
+  isTrucking?: boolean
+  isHidden?: boolean
+  sortOrder?: number
+  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  revenueAccount?: string | null
+  costAccount?: string | null
+  isActive?: boolean
+  plannedCosts?: Prisma.PlannedCostUncheckedCreateNestedManyWithoutChargeTypeInput
+  billableCharges?: Prisma.BillableChargeUncheckedCreateNestedManyWithoutChargeTypeInput
+}
+
+export type ChargeTypeCreateOrConnectWithoutExtraCostsInput = {
+  where: Prisma.ChargeTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChargeTypeCreateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedCreateWithoutExtraCostsInput>
+}
+
+export type ChargeTypeUpsertWithoutExtraCostsInput = {
+  update: Prisma.XOR<Prisma.ChargeTypeUpdateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedUpdateWithoutExtraCostsInput>
+  create: Prisma.XOR<Prisma.ChargeTypeCreateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedCreateWithoutExtraCostsInput>
+  where?: Prisma.ChargeTypeWhereInput
+}
+
+export type ChargeTypeUpdateToOneWithWhereWithoutExtraCostsInput = {
+  where?: Prisma.ChargeTypeWhereInput
+  data: Prisma.XOR<Prisma.ChargeTypeUpdateWithoutExtraCostsInput, Prisma.ChargeTypeUncheckedUpdateWithoutExtraCostsInput>
+}
+
+export type ChargeTypeUpdateWithoutExtraCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
+  useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
+  isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  defaultPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  revenueAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plannedCosts?: Prisma.PlannedCostUpdateManyWithoutChargeTypeNestedInput
+  billableCharges?: Prisma.BillableChargeUpdateManyWithoutChargeTypeNestedInput
+}
+
+export type ChargeTypeUncheckedUpdateWithoutExtraCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appliesTo?: Prisma.EnumChargeAppliesToFieldUpdateOperationsInput | $Enums.ChargeAppliesTo
+  useActualCost?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingMode?: Prisma.EnumBillingModeFieldUpdateOperationsInput | $Enums.BillingMode
+  isTrucking?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  defaultPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  revenueAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plannedCosts?: Prisma.PlannedCostUncheckedUpdateManyWithoutChargeTypeNestedInput
+  billableCharges?: Prisma.BillableChargeUncheckedUpdateManyWithoutChargeTypeNestedInput
 }
 
 
@@ -801,11 +961,13 @@ export type ChargeTypeUncheckedUpdateWithoutBillableChargesInput = {
 export type ChargeTypeCountOutputType = {
   plannedCosts: number
   billableCharges: number
+  extraCosts: number
 }
 
 export type ChargeTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plannedCosts?: boolean | ChargeTypeCountOutputTypeCountPlannedCostsArgs
   billableCharges?: boolean | ChargeTypeCountOutputTypeCountBillableChargesArgs
+  extraCosts?: boolean | ChargeTypeCountOutputTypeCountExtraCostsArgs
 }
 
 /**
@@ -832,6 +994,13 @@ export type ChargeTypeCountOutputTypeCountBillableChargesArgs<ExtArgs extends ru
   where?: Prisma.BillableChargeWhereInput
 }
 
+/**
+ * ChargeTypeCountOutputType without action
+ */
+export type ChargeTypeCountOutputTypeCountExtraCostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CashAdvanceExtraCostWhereInput
+}
+
 
 export type ChargeTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -840,6 +1009,7 @@ export type ChargeTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   category?: boolean
   appliesTo?: boolean
   useActualCost?: boolean
+  billingMode?: boolean
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: boolean
@@ -850,6 +1020,7 @@ export type ChargeTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   isActive?: boolean
   plannedCosts?: boolean | Prisma.ChargeType$plannedCostsArgs<ExtArgs>
   billableCharges?: boolean | Prisma.ChargeType$billableChargesArgs<ExtArgs>
+  extraCosts?: boolean | Prisma.ChargeType$extraCostsArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chargeType"]>
 
@@ -860,6 +1031,7 @@ export type ChargeTypeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   category?: boolean
   appliesTo?: boolean
   useActualCost?: boolean
+  billingMode?: boolean
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: boolean
@@ -877,6 +1049,7 @@ export type ChargeTypeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   category?: boolean
   appliesTo?: boolean
   useActualCost?: boolean
+  billingMode?: boolean
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: boolean
@@ -894,6 +1067,7 @@ export type ChargeTypeSelectScalar = {
   category?: boolean
   appliesTo?: boolean
   useActualCost?: boolean
+  billingMode?: boolean
   isTrucking?: boolean
   isHidden?: boolean
   sortOrder?: boolean
@@ -904,10 +1078,11 @@ export type ChargeTypeSelectScalar = {
   isActive?: boolean
 }
 
-export type ChargeTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "category" | "appliesTo" | "useActualCost" | "isTrucking" | "isHidden" | "sortOrder" | "defaultCost" | "defaultPrice" | "revenueAccount" | "costAccount" | "isActive", ExtArgs["result"]["chargeType"]>
+export type ChargeTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "category" | "appliesTo" | "useActualCost" | "billingMode" | "isTrucking" | "isHidden" | "sortOrder" | "defaultCost" | "defaultPrice" | "revenueAccount" | "costAccount" | "isActive", ExtArgs["result"]["chargeType"]>
 export type ChargeTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plannedCosts?: boolean | Prisma.ChargeType$plannedCostsArgs<ExtArgs>
   billableCharges?: boolean | Prisma.ChargeType$billableChargesArgs<ExtArgs>
+  extraCosts?: boolean | Prisma.ChargeType$extraCostsArgs<ExtArgs>
   _count?: boolean | Prisma.ChargeTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChargeTypeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -918,14 +1093,16 @@ export type $ChargeTypePayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     plannedCosts: Prisma.$PlannedCostPayload<ExtArgs>[]
     billableCharges: Prisma.$BillableChargePayload<ExtArgs>[]
+    extraCosts: Prisma.$CashAdvanceExtraCostPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     code: string
     name: string
     category: string | null
     appliesTo: $Enums.ChargeAppliesTo
     useActualCost: boolean
+    billingMode: $Enums.BillingMode
     isTrucking: boolean
     isHidden: boolean
     sortOrder: number
@@ -1330,6 +1507,7 @@ export interface Prisma__ChargeTypeClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   plannedCosts<T extends Prisma.ChargeType$plannedCostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeType$plannedCostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlannedCostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   billableCharges<T extends Prisma.ChargeType$billableChargesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeType$billableChargesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BillableChargePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  extraCosts<T extends Prisma.ChargeType$extraCostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeType$extraCostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CashAdvanceExtraCostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1359,12 +1537,13 @@ export interface Prisma__ChargeTypeClient<T, Null = never, ExtArgs extends runti
  * Fields of the ChargeType model
  */
 export interface ChargeTypeFieldRefs {
-  readonly id: Prisma.FieldRef<"ChargeType", 'Int'>
+  readonly id: Prisma.FieldRef<"ChargeType", 'String'>
   readonly code: Prisma.FieldRef<"ChargeType", 'String'>
   readonly name: Prisma.FieldRef<"ChargeType", 'String'>
   readonly category: Prisma.FieldRef<"ChargeType", 'String'>
   readonly appliesTo: Prisma.FieldRef<"ChargeType", 'ChargeAppliesTo'>
   readonly useActualCost: Prisma.FieldRef<"ChargeType", 'Boolean'>
+  readonly billingMode: Prisma.FieldRef<"ChargeType", 'BillingMode'>
   readonly isTrucking: Prisma.FieldRef<"ChargeType", 'Boolean'>
   readonly isHidden: Prisma.FieldRef<"ChargeType", 'Boolean'>
   readonly sortOrder: Prisma.FieldRef<"ChargeType", 'Int'>
@@ -1811,6 +1990,30 @@ export type ChargeType$billableChargesArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.BillableChargeScalarFieldEnum | Prisma.BillableChargeScalarFieldEnum[]
+}
+
+/**
+ * ChargeType.extraCosts
+ */
+export type ChargeType$extraCostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CashAdvanceExtraCost
+   */
+  select?: Prisma.CashAdvanceExtraCostSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CashAdvanceExtraCost
+   */
+  omit?: Prisma.CashAdvanceExtraCostOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CashAdvanceExtraCostInclude<ExtArgs> | null
+  where?: Prisma.CashAdvanceExtraCostWhereInput
+  orderBy?: Prisma.CashAdvanceExtraCostOrderByWithRelationInput | Prisma.CashAdvanceExtraCostOrderByWithRelationInput[]
+  cursor?: Prisma.CashAdvanceExtraCostWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CashAdvanceExtraCostScalarFieldEnum | Prisma.CashAdvanceExtraCostScalarFieldEnum[]
 }
 
 /**

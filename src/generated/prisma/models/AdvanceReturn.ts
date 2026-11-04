@@ -20,78 +20,60 @@ export type AdvanceReturnModel = runtime.Types.Result.DefaultSelection<Prisma.$A
 
 export type AggregateAdvanceReturn = {
   _count: AdvanceReturnCountAggregateOutputType | null
-  _avg: AdvanceReturnAvgAggregateOutputType | null
-  _sum: AdvanceReturnSumAggregateOutputType | null
   _min: AdvanceReturnMinAggregateOutputType | null
   _max: AdvanceReturnMaxAggregateOutputType | null
 }
 
-export type AdvanceReturnAvgAggregateOutputType = {
-  id: number | null
-  cashAccountId: number | null
-  createdById: number | null
-}
-
-export type AdvanceReturnSumAggregateOutputType = {
-  id: number | null
-  cashAccountId: number | null
-  createdById: number | null
-}
-
 export type AdvanceReturnMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
+  direction: $Enums.AdvanceReturnDirection | null
   returnDate: Date | null
   returnedBy: string | null
-  cashAccountId: number | null
+  cashAccountId: string | null
   status: $Enums.AdvanceReturnStatus | null
-  createdById: number | null
+  note: string | null
+  createdById: string | null
   createdAt: Date | null
 }
 
 export type AdvanceReturnMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   number: string | null
+  direction: $Enums.AdvanceReturnDirection | null
   returnDate: Date | null
   returnedBy: string | null
-  cashAccountId: number | null
+  cashAccountId: string | null
   status: $Enums.AdvanceReturnStatus | null
-  createdById: number | null
+  note: string | null
+  createdById: string | null
   createdAt: Date | null
 }
 
 export type AdvanceReturnCountAggregateOutputType = {
   id: number
   number: number
+  direction: number
   returnDate: number
   returnedBy: number
   cashAccountId: number
   status: number
+  note: number
   createdById: number
   createdAt: number
   _all: number
 }
 
 
-export type AdvanceReturnAvgAggregateInputType = {
-  id?: true
-  cashAccountId?: true
-  createdById?: true
-}
-
-export type AdvanceReturnSumAggregateInputType = {
-  id?: true
-  cashAccountId?: true
-  createdById?: true
-}
-
 export type AdvanceReturnMinAggregateInputType = {
   id?: true
   number?: true
+  direction?: true
   returnDate?: true
   returnedBy?: true
   cashAccountId?: true
   status?: true
+  note?: true
   createdById?: true
   createdAt?: true
 }
@@ -99,10 +81,12 @@ export type AdvanceReturnMinAggregateInputType = {
 export type AdvanceReturnMaxAggregateInputType = {
   id?: true
   number?: true
+  direction?: true
   returnDate?: true
   returnedBy?: true
   cashAccountId?: true
   status?: true
+  note?: true
   createdById?: true
   createdAt?: true
 }
@@ -110,10 +94,12 @@ export type AdvanceReturnMaxAggregateInputType = {
 export type AdvanceReturnCountAggregateInputType = {
   id?: true
   number?: true
+  direction?: true
   returnDate?: true
   returnedBy?: true
   cashAccountId?: true
   status?: true
+  note?: true
   createdById?: true
   createdAt?: true
   _all?: true
@@ -157,18 +143,6 @@ export type AdvanceReturnAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: AdvanceReturnAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: AdvanceReturnSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: AdvanceReturnMinAggregateInputType
@@ -199,24 +173,22 @@ export type AdvanceReturnGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: AdvanceReturnCountAggregateInputType | true
-  _avg?: AdvanceReturnAvgAggregateInputType
-  _sum?: AdvanceReturnSumAggregateInputType
   _min?: AdvanceReturnMinAggregateInputType
   _max?: AdvanceReturnMaxAggregateInputType
 }
 
 export type AdvanceReturnGroupByOutputType = {
-  id: number
+  id: string
   number: string
+  direction: $Enums.AdvanceReturnDirection
   returnDate: Date
   returnedBy: string
-  cashAccountId: number | null
+  cashAccountId: string | null
   status: $Enums.AdvanceReturnStatus
-  createdById: number | null
+  note: string | null
+  createdById: string | null
   createdAt: Date
   _count: AdvanceReturnCountAggregateOutputType | null
-  _avg: AdvanceReturnAvgAggregateOutputType | null
-  _sum: AdvanceReturnSumAggregateOutputType | null
   _min: AdvanceReturnMinAggregateOutputType | null
   _max: AdvanceReturnMaxAggregateOutputType | null
 }
@@ -240,13 +212,15 @@ export type AdvanceReturnWhereInput = {
   AND?: Prisma.AdvanceReturnWhereInput | Prisma.AdvanceReturnWhereInput[]
   OR?: Prisma.AdvanceReturnWhereInput[]
   NOT?: Prisma.AdvanceReturnWhereInput | Prisma.AdvanceReturnWhereInput[]
-  id?: Prisma.IntFilter<"AdvanceReturn"> | number
+  id?: Prisma.UuidFilter<"AdvanceReturn"> | string
   number?: Prisma.StringFilter<"AdvanceReturn"> | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFilter<"AdvanceReturn"> | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
   returnedBy?: Prisma.StringFilter<"AdvanceReturn"> | string
-  cashAccountId?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  cashAccountId?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   status?: Prisma.EnumAdvanceReturnStatusFilter<"AdvanceReturn"> | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  note?: Prisma.StringNullableFilter<"AdvanceReturn"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
   cashAccount?: Prisma.XOR<Prisma.CashAccountNullableScalarRelationFilter, Prisma.CashAccountWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -256,10 +230,12 @@ export type AdvanceReturnWhereInput = {
 export type AdvanceReturnOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
   returnDate?: Prisma.SortOrder
   returnedBy?: Prisma.SortOrder
   cashAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   cashAccount?: Prisma.CashAccountOrderByWithRelationInput
@@ -268,16 +244,18 @@ export type AdvanceReturnOrderByWithRelationInput = {
 }
 
 export type AdvanceReturnWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   number?: string
   AND?: Prisma.AdvanceReturnWhereInput | Prisma.AdvanceReturnWhereInput[]
   OR?: Prisma.AdvanceReturnWhereInput[]
   NOT?: Prisma.AdvanceReturnWhereInput | Prisma.AdvanceReturnWhereInput[]
+  direction?: Prisma.EnumAdvanceReturnDirectionFilter<"AdvanceReturn"> | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
   returnedBy?: Prisma.StringFilter<"AdvanceReturn"> | string
-  cashAccountId?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  cashAccountId?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   status?: Prisma.EnumAdvanceReturnStatusFilter<"AdvanceReturn"> | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  note?: Prisma.StringNullableFilter<"AdvanceReturn"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
   cashAccount?: Prisma.XOR<Prisma.CashAccountNullableScalarRelationFilter, Prisma.CashAccountWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -287,38 +265,43 @@ export type AdvanceReturnWhereUniqueInput = Prisma.AtLeast<{
 export type AdvanceReturnOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
   returnDate?: Prisma.SortOrder
   returnedBy?: Prisma.SortOrder
   cashAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AdvanceReturnCountOrderByAggregateInput
-  _avg?: Prisma.AdvanceReturnAvgOrderByAggregateInput
   _max?: Prisma.AdvanceReturnMaxOrderByAggregateInput
   _min?: Prisma.AdvanceReturnMinOrderByAggregateInput
-  _sum?: Prisma.AdvanceReturnSumOrderByAggregateInput
 }
 
 export type AdvanceReturnScalarWhereWithAggregatesInput = {
   AND?: Prisma.AdvanceReturnScalarWhereWithAggregatesInput | Prisma.AdvanceReturnScalarWhereWithAggregatesInput[]
   OR?: Prisma.AdvanceReturnScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AdvanceReturnScalarWhereWithAggregatesInput | Prisma.AdvanceReturnScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"AdvanceReturn"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"AdvanceReturn"> | string
   number?: Prisma.StringWithAggregatesFilter<"AdvanceReturn"> | string
+  direction?: Prisma.EnumAdvanceReturnDirectionWithAggregatesFilter<"AdvanceReturn"> | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeWithAggregatesFilter<"AdvanceReturn"> | Date | string
   returnedBy?: Prisma.StringWithAggregatesFilter<"AdvanceReturn"> | string
-  cashAccountId?: Prisma.IntNullableWithAggregatesFilter<"AdvanceReturn"> | number | null
+  cashAccountId?: Prisma.UuidNullableWithAggregatesFilter<"AdvanceReturn"> | string | null
   status?: Prisma.EnumAdvanceReturnStatusWithAggregatesFilter<"AdvanceReturn"> | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.IntNullableWithAggregatesFilter<"AdvanceReturn"> | number | null
+  note?: Prisma.StringNullableWithAggregatesFilter<"AdvanceReturn"> | string | null
+  createdById?: Prisma.UuidNullableWithAggregatesFilter<"AdvanceReturn"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AdvanceReturn"> | Date | string
 }
 
 export type AdvanceReturnCreateInput = {
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
   cashAccount?: Prisma.CashAccountCreateNestedOneWithoutAdvanceReturnsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAdvanceReturnsInput
@@ -326,22 +309,27 @@ export type AdvanceReturnCreateInput = {
 }
 
 export type AdvanceReturnUncheckedCreateInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   status?: $Enums.AdvanceReturnStatus
-  createdById?: number | null
+  note?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   items?: Prisma.AdvanceReturnItemUncheckedCreateNestedManyWithoutAdvanceReturnInput
 }
 
 export type AdvanceReturnUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cashAccount?: Prisma.CashAccountUpdateOneWithoutAdvanceReturnsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAdvanceReturnsNestedInput
@@ -349,44 +337,53 @@ export type AdvanceReturnUpdateInput = {
 }
 
 export type AdvanceReturnUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.AdvanceReturnItemUncheckedUpdateManyWithoutAdvanceReturnNestedInput
 }
 
 export type AdvanceReturnCreateManyInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   status?: $Enums.AdvanceReturnStatus
-  createdById?: number | null
+  note?: string | null
+  createdById?: string | null
   createdAt?: Date | string
 }
 
 export type AdvanceReturnUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdvanceReturnUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -403,27 +400,25 @@ export type AdvanceReturnOrderByRelationAggregateInput = {
 export type AdvanceReturnCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
   returnDate?: Prisma.SortOrder
   returnedBy?: Prisma.SortOrder
   cashAccountId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type AdvanceReturnAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAccountId?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type AdvanceReturnMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
   returnDate?: Prisma.SortOrder
   returnedBy?: Prisma.SortOrder
   cashAccountId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -431,18 +426,14 @@ export type AdvanceReturnMaxOrderByAggregateInput = {
 export type AdvanceReturnMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   number?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
   returnDate?: Prisma.SortOrder
   returnedBy?: Prisma.SortOrder
   cashAccountId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type AdvanceReturnSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAccountId?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type AdvanceReturnScalarRelationFilter = {
@@ -534,6 +525,10 @@ export type AdvanceReturnUncheckedUpdateManyWithoutCashAccountNestedInput = {
   deleteMany?: Prisma.AdvanceReturnScalarWhereInput | Prisma.AdvanceReturnScalarWhereInput[]
 }
 
+export type EnumAdvanceReturnDirectionFieldUpdateOperationsInput = {
+  set?: $Enums.AdvanceReturnDirection
+}
+
 export type EnumAdvanceReturnStatusFieldUpdateOperationsInput = {
   set?: $Enums.AdvanceReturnStatus
 }
@@ -553,22 +548,27 @@ export type AdvanceReturnUpdateOneRequiredWithoutItemsNestedInput = {
 }
 
 export type AdvanceReturnCreateWithoutCreatedByInput = {
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
   cashAccount?: Prisma.CashAccountCreateNestedOneWithoutAdvanceReturnsInput
   items?: Prisma.AdvanceReturnItemCreateNestedManyWithoutAdvanceReturnInput
 }
 
 export type AdvanceReturnUncheckedCreateWithoutCreatedByInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
   items?: Prisma.AdvanceReturnItemUncheckedCreateNestedManyWithoutAdvanceReturnInput
 }
@@ -603,33 +603,40 @@ export type AdvanceReturnScalarWhereInput = {
   AND?: Prisma.AdvanceReturnScalarWhereInput | Prisma.AdvanceReturnScalarWhereInput[]
   OR?: Prisma.AdvanceReturnScalarWhereInput[]
   NOT?: Prisma.AdvanceReturnScalarWhereInput | Prisma.AdvanceReturnScalarWhereInput[]
-  id?: Prisma.IntFilter<"AdvanceReturn"> | number
+  id?: Prisma.UuidFilter<"AdvanceReturn"> | string
   number?: Prisma.StringFilter<"AdvanceReturn"> | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFilter<"AdvanceReturn"> | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
   returnedBy?: Prisma.StringFilter<"AdvanceReturn"> | string
-  cashAccountId?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  cashAccountId?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   status?: Prisma.EnumAdvanceReturnStatusFilter<"AdvanceReturn"> | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.IntNullableFilter<"AdvanceReturn"> | number | null
+  note?: Prisma.StringNullableFilter<"AdvanceReturn"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"AdvanceReturn"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AdvanceReturn"> | Date | string
 }
 
 export type AdvanceReturnCreateWithoutCashAccountInput = {
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAdvanceReturnsInput
   items?: Prisma.AdvanceReturnItemCreateNestedManyWithoutAdvanceReturnInput
 }
 
 export type AdvanceReturnUncheckedCreateWithoutCashAccountInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
-  createdById?: number | null
+  note?: string | null
+  createdById?: string | null
   createdAt?: Date | string
   items?: Prisma.AdvanceReturnItemUncheckedCreateNestedManyWithoutAdvanceReturnInput
 }
@@ -661,23 +668,28 @@ export type AdvanceReturnUpdateManyWithWhereWithoutCashAccountInput = {
 }
 
 export type AdvanceReturnCreateWithoutItemsInput = {
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
   cashAccount?: Prisma.CashAccountCreateNestedOneWithoutAdvanceReturnsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAdvanceReturnsInput
 }
 
 export type AdvanceReturnUncheckedCreateWithoutItemsInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   status?: $Enums.AdvanceReturnStatus
-  createdById?: number | null
+  note?: string | null
+  createdById?: string | null
   createdAt?: Date | string
 }
 
@@ -698,105 +710,128 @@ export type AdvanceReturnUpdateToOneWithWhereWithoutItemsInput = {
 }
 
 export type AdvanceReturnUpdateWithoutItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cashAccount?: Prisma.CashAccountUpdateOneWithoutAdvanceReturnsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAdvanceReturnsNestedInput
 }
 
 export type AdvanceReturnUncheckedUpdateWithoutItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdvanceReturnCreateManyCreatedByInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
-  cashAccountId?: number | null
+  cashAccountId?: string | null
   status?: $Enums.AdvanceReturnStatus
+  note?: string | null
   createdAt?: Date | string
 }
 
 export type AdvanceReturnUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cashAccount?: Prisma.CashAccountUpdateOneWithoutAdvanceReturnsNestedInput
   items?: Prisma.AdvanceReturnItemUpdateManyWithoutAdvanceReturnNestedInput
 }
 
 export type AdvanceReturnUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.AdvanceReturnItemUncheckedUpdateManyWithoutAdvanceReturnNestedInput
 }
 
 export type AdvanceReturnUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
-  cashAccountId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  cashAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdvanceReturnCreateManyCashAccountInput = {
-  id?: number
+  id?: string
   number: string
+  direction?: $Enums.AdvanceReturnDirection
   returnDate: Date | string
   returnedBy: string
   status?: $Enums.AdvanceReturnStatus
-  createdById?: number | null
+  note?: string | null
+  createdById?: string | null
   createdAt?: Date | string
 }
 
 export type AdvanceReturnUpdateWithoutCashAccountInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneWithoutCreatedAdvanceReturnsNestedInput
   items?: Prisma.AdvanceReturnItemUpdateManyWithoutAdvanceReturnNestedInput
 }
 
 export type AdvanceReturnUncheckedUpdateWithoutCashAccountInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.AdvanceReturnItemUncheckedUpdateManyWithoutAdvanceReturnNestedInput
 }
 
 export type AdvanceReturnUncheckedUpdateManyWithoutCashAccountInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.EnumAdvanceReturnDirectionFieldUpdateOperationsInput | $Enums.AdvanceReturnDirection
   returnDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returnedBy?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAdvanceReturnStatusFieldUpdateOperationsInput | $Enums.AdvanceReturnStatus
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -834,10 +869,12 @@ export type AdvanceReturnCountOutputTypeCountItemsArgs<ExtArgs extends runtime.T
 export type AdvanceReturnSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   number?: boolean
+  direction?: boolean
   returnDate?: boolean
   returnedBy?: boolean
   cashAccountId?: boolean
   status?: boolean
+  note?: boolean
   createdById?: boolean
   createdAt?: boolean
   cashAccount?: boolean | Prisma.AdvanceReturn$cashAccountArgs<ExtArgs>
@@ -849,10 +886,12 @@ export type AdvanceReturnSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type AdvanceReturnSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   number?: boolean
+  direction?: boolean
   returnDate?: boolean
   returnedBy?: boolean
   cashAccountId?: boolean
   status?: boolean
+  note?: boolean
   createdById?: boolean
   createdAt?: boolean
   cashAccount?: boolean | Prisma.AdvanceReturn$cashAccountArgs<ExtArgs>
@@ -862,10 +901,12 @@ export type AdvanceReturnSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type AdvanceReturnSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   number?: boolean
+  direction?: boolean
   returnDate?: boolean
   returnedBy?: boolean
   cashAccountId?: boolean
   status?: boolean
+  note?: boolean
   createdById?: boolean
   createdAt?: boolean
   cashAccount?: boolean | Prisma.AdvanceReturn$cashAccountArgs<ExtArgs>
@@ -875,15 +916,17 @@ export type AdvanceReturnSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type AdvanceReturnSelectScalar = {
   id?: boolean
   number?: boolean
+  direction?: boolean
   returnDate?: boolean
   returnedBy?: boolean
   cashAccountId?: boolean
   status?: boolean
+  note?: boolean
   createdById?: boolean
   createdAt?: boolean
 }
 
-export type AdvanceReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "returnDate" | "returnedBy" | "cashAccountId" | "status" | "createdById" | "createdAt", ExtArgs["result"]["advanceReturn"]>
+export type AdvanceReturnOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "direction" | "returnDate" | "returnedBy" | "cashAccountId" | "status" | "note" | "createdById" | "createdAt", ExtArgs["result"]["advanceReturn"]>
 export type AdvanceReturnInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cashAccount?: boolean | Prisma.AdvanceReturn$cashAccountArgs<ExtArgs>
   createdBy?: boolean | Prisma.AdvanceReturn$createdByArgs<ExtArgs>
@@ -907,13 +950,15 @@ export type $AdvanceReturnPayload<ExtArgs extends runtime.Types.Extensions.Inter
     items: Prisma.$AdvanceReturnItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     number: string
+    direction: $Enums.AdvanceReturnDirection
     returnDate: Date
     returnedBy: string
-    cashAccountId: number | null
+    cashAccountId: string | null
     status: $Enums.AdvanceReturnStatus
-    createdById: number | null
+    note: string | null
+    createdById: string | null
     createdAt: Date
   }, ExtArgs["result"]["advanceReturn"]>
   composites: {}
@@ -1341,13 +1386,15 @@ export interface Prisma__AdvanceReturnClient<T, Null = never, ExtArgs extends ru
  * Fields of the AdvanceReturn model
  */
 export interface AdvanceReturnFieldRefs {
-  readonly id: Prisma.FieldRef<"AdvanceReturn", 'Int'>
+  readonly id: Prisma.FieldRef<"AdvanceReturn", 'String'>
   readonly number: Prisma.FieldRef<"AdvanceReturn", 'String'>
+  readonly direction: Prisma.FieldRef<"AdvanceReturn", 'AdvanceReturnDirection'>
   readonly returnDate: Prisma.FieldRef<"AdvanceReturn", 'DateTime'>
   readonly returnedBy: Prisma.FieldRef<"AdvanceReturn", 'String'>
-  readonly cashAccountId: Prisma.FieldRef<"AdvanceReturn", 'Int'>
+  readonly cashAccountId: Prisma.FieldRef<"AdvanceReturn", 'String'>
   readonly status: Prisma.FieldRef<"AdvanceReturn", 'AdvanceReturnStatus'>
-  readonly createdById: Prisma.FieldRef<"AdvanceReturn", 'Int'>
+  readonly note: Prisma.FieldRef<"AdvanceReturn", 'String'>
+  readonly createdById: Prisma.FieldRef<"AdvanceReturn", 'String'>
   readonly createdAt: Prisma.FieldRef<"AdvanceReturn", 'DateTime'>
 }
     

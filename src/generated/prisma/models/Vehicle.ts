@@ -20,29 +20,19 @@ export type VehicleModel = runtime.Types.Result.DefaultSelection<Prisma.$Vehicle
 
 export type AggregateVehicle = {
   _count: VehicleCountAggregateOutputType | null
-  _avg: VehicleAvgAggregateOutputType | null
-  _sum: VehicleSumAggregateOutputType | null
   _min: VehicleMinAggregateOutputType | null
   _max: VehicleMaxAggregateOutputType | null
 }
 
-export type VehicleAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type VehicleSumAggregateOutputType = {
-  id: number | null
-}
-
 export type VehicleMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   plateNo: string | null
   ownerCode: string | null
   isInternal: boolean | null
 }
 
 export type VehicleMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   plateNo: string | null
   ownerCode: string | null
   isInternal: boolean | null
@@ -56,14 +46,6 @@ export type VehicleCountAggregateOutputType = {
   _all: number
 }
 
-
-export type VehicleAvgAggregateInputType = {
-  id?: true
-}
-
-export type VehicleSumAggregateInputType = {
-  id?: true
-}
 
 export type VehicleMinAggregateInputType = {
   id?: true
@@ -125,18 +107,6 @@ export type VehicleAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: VehicleAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: VehicleSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: VehicleMinAggregateInputType
@@ -167,20 +137,16 @@ export type VehicleGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: VehicleCountAggregateInputType | true
-  _avg?: VehicleAvgAggregateInputType
-  _sum?: VehicleSumAggregateInputType
   _min?: VehicleMinAggregateInputType
   _max?: VehicleMaxAggregateInputType
 }
 
 export type VehicleGroupByOutputType = {
-  id: number
+  id: string
   plateNo: string
   ownerCode: string | null
   isInternal: boolean
   _count: VehicleCountAggregateOutputType | null
-  _avg: VehicleAvgAggregateOutputType | null
-  _sum: VehicleSumAggregateOutputType | null
   _min: VehicleMinAggregateOutputType | null
   _max: VehicleMaxAggregateOutputType | null
 }
@@ -204,7 +170,7 @@ export type VehicleWhereInput = {
   AND?: Prisma.VehicleWhereInput | Prisma.VehicleWhereInput[]
   OR?: Prisma.VehicleWhereInput[]
   NOT?: Prisma.VehicleWhereInput | Prisma.VehicleWhereInput[]
-  id?: Prisma.IntFilter<"Vehicle"> | number
+  id?: Prisma.UuidFilter<"Vehicle"> | string
   plateNo?: Prisma.StringFilter<"Vehicle"> | string
   ownerCode?: Prisma.StringNullableFilter<"Vehicle"> | string | null
   isInternal?: Prisma.BoolFilter<"Vehicle"> | boolean
@@ -220,7 +186,7 @@ export type VehicleOrderByWithRelationInput = {
 }
 
 export type VehicleWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   plateNo?: string
   AND?: Prisma.VehicleWhereInput | Prisma.VehicleWhereInput[]
   OR?: Prisma.VehicleWhereInput[]
@@ -236,23 +202,22 @@ export type VehicleOrderByWithAggregationInput = {
   ownerCode?: Prisma.SortOrderInput | Prisma.SortOrder
   isInternal?: Prisma.SortOrder
   _count?: Prisma.VehicleCountOrderByAggregateInput
-  _avg?: Prisma.VehicleAvgOrderByAggregateInput
   _max?: Prisma.VehicleMaxOrderByAggregateInput
   _min?: Prisma.VehicleMinOrderByAggregateInput
-  _sum?: Prisma.VehicleSumOrderByAggregateInput
 }
 
 export type VehicleScalarWhereWithAggregatesInput = {
   AND?: Prisma.VehicleScalarWhereWithAggregatesInput | Prisma.VehicleScalarWhereWithAggregatesInput[]
   OR?: Prisma.VehicleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VehicleScalarWhereWithAggregatesInput | Prisma.VehicleScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Vehicle"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"Vehicle"> | string
   plateNo?: Prisma.StringWithAggregatesFilter<"Vehicle"> | string
   ownerCode?: Prisma.StringNullableWithAggregatesFilter<"Vehicle"> | string | null
   isInternal?: Prisma.BoolWithAggregatesFilter<"Vehicle"> | boolean
 }
 
 export type VehicleCreateInput = {
+  id?: string
   plateNo: string
   ownerCode?: string | null
   isInternal?: boolean
@@ -260,7 +225,7 @@ export type VehicleCreateInput = {
 }
 
 export type VehicleUncheckedCreateInput = {
-  id?: number
+  id?: string
   plateNo: string
   ownerCode?: string | null
   isInternal?: boolean
@@ -268,6 +233,7 @@ export type VehicleUncheckedCreateInput = {
 }
 
 export type VehicleUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -275,7 +241,7 @@ export type VehicleUpdateInput = {
 }
 
 export type VehicleUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -283,20 +249,21 @@ export type VehicleUncheckedUpdateInput = {
 }
 
 export type VehicleCreateManyInput = {
-  id?: number
+  id?: string
   plateNo: string
   ownerCode?: string | null
   isInternal?: boolean
 }
 
 export type VehicleUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type VehicleUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -307,10 +274,6 @@ export type VehicleCountOrderByAggregateInput = {
   plateNo?: Prisma.SortOrder
   ownerCode?: Prisma.SortOrder
   isInternal?: Prisma.SortOrder
-}
-
-export type VehicleAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type VehicleMaxOrderByAggregateInput = {
@@ -325,10 +288,6 @@ export type VehicleMinOrderByAggregateInput = {
   plateNo?: Prisma.SortOrder
   ownerCode?: Prisma.SortOrder
   isInternal?: Prisma.SortOrder
-}
-
-export type VehicleSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type VehicleNullableScalarRelationFilter = {
@@ -353,13 +312,14 @@ export type VehicleUpdateOneWithoutWorkOrderItemsNestedInput = {
 }
 
 export type VehicleCreateWithoutWorkOrderItemsInput = {
+  id?: string
   plateNo: string
   ownerCode?: string | null
   isInternal?: boolean
 }
 
 export type VehicleUncheckedCreateWithoutWorkOrderItemsInput = {
-  id?: number
+  id?: string
   plateNo: string
   ownerCode?: string | null
   isInternal?: boolean
@@ -382,13 +342,14 @@ export type VehicleUpdateToOneWithWhereWithoutWorkOrderItemsInput = {
 }
 
 export type VehicleUpdateWithoutWorkOrderItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type VehicleUncheckedUpdateWithoutWorkOrderItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   plateNo?: Prisma.StringFieldUpdateOperationsInput | string
   ownerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isInternal?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -469,7 +430,7 @@ export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     workOrderItems: Prisma.$WorkOrderItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     plateNo: string
     ownerCode: string | null
     isInternal: boolean
@@ -897,7 +858,7 @@ export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Vehicle model
  */
 export interface VehicleFieldRefs {
-  readonly id: Prisma.FieldRef<"Vehicle", 'Int'>
+  readonly id: Prisma.FieldRef<"Vehicle", 'String'>
   readonly plateNo: Prisma.FieldRef<"Vehicle", 'String'>
   readonly ownerCode: Prisma.FieldRef<"Vehicle", 'String'>
   readonly isInternal: Prisma.FieldRef<"Vehicle", 'Boolean'>

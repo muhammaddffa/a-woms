@@ -72,7 +72,11 @@ export const ModelName = {
   AdvanceReturnItem: 'AdvanceReturnItem',
   ApprovalHistory: 'ApprovalHistory',
   Attachment: 'Attachment',
-  AccountingEvent: 'AccountingEvent'
+  AccountingEvent: 'AccountingEvent',
+  WorkflowSetting: 'WorkflowSetting',
+  WorkflowSettingLog: 'WorkflowSettingLog',
+  ContainerPosition: 'ContainerPosition',
+  ContainerPositionLog: 'ContainerPositionLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -164,6 +168,7 @@ export const ChargeTypeScalarFieldEnum = {
   category: 'category',
   appliesTo: 'appliesTo',
   useActualCost: 'useActualCost',
+  billingMode: 'billingMode',
   isTrucking: 'isTrucking',
   isHidden: 'isHidden',
   sortOrder: 'sortOrder',
@@ -190,7 +195,8 @@ export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeo
 export const DriverScalarFieldEnum = {
   id: 'id',
   code: 'code',
-  name: 'name'
+  name: 'name',
+  phone: 'phone'
 } as const
 
 export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
@@ -238,7 +244,13 @@ export const WorkOrderItemScalarFieldEnum = {
   driverId: 'driverId',
   origin: 'origin',
   destination: 'destination',
-  status: 'status'
+  status: 'status',
+  tare: 'tare',
+  actualContainerSize: 'actualContainerSize',
+  stuffingLocation: 'stuffingLocation',
+  currentPositionId: 'currentPositionId',
+  positionNote: 'positionNote',
+  positionUpdatedAt: 'positionUpdatedAt'
 } as const
 
 export type WorkOrderItemScalarFieldEnum = (typeof WorkOrderItemScalarFieldEnum)[keyof typeof WorkOrderItemScalarFieldEnum]
@@ -252,6 +264,8 @@ export const PlannedCostScalarFieldEnum = {
   unitCost: 'unitCost',
   totalCost: 'totalCost',
   note: 'note',
+  bearer: 'bearer',
+  bearerNote: 'bearerNote',
   createdById: 'createdById',
   updatedAt: 'updatedAt'
 } as const
@@ -285,6 +299,7 @@ export const CashAdvanceScalarFieldEnum = {
   transferFee: 'transferFee',
   description: 'description',
   status: 'status',
+  requiredSteps: 'requiredSteps',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -309,8 +324,10 @@ export const CashAdvanceExtraCostScalarFieldEnum = {
   id: 'id',
   cashAdvanceId: 'cashAdvanceId',
   workOrderItemId: 'workOrderItemId',
+  chargeTypeId: 'chargeTypeId',
   description: 'description',
   amount: 'amount',
+  billable: 'billable',
   note: 'note'
 } as const
 
@@ -320,10 +337,12 @@ export type CashAdvanceExtraCostScalarFieldEnum = (typeof CashAdvanceExtraCostSc
 export const AdvanceReturnScalarFieldEnum = {
   id: 'id',
   number: 'number',
+  direction: 'direction',
   returnDate: 'returnDate',
   returnedBy: 'returnedBy',
   cashAccountId: 'cashAccountId',
   status: 'status',
+  note: 'note',
   createdById: 'createdById',
   createdAt: 'createdAt'
 } as const
@@ -362,6 +381,8 @@ export const AttachmentScalarFieldEnum = {
   kind: 'kind',
   storageKey: 'storageKey',
   fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
   uploadedById: 'uploadedById',
   uploadedAt: 'uploadedAt'
 } as const
@@ -382,12 +403,67 @@ export const AccountingEventScalarFieldEnum = {
 export type AccountingEventScalarFieldEnum = (typeof AccountingEventScalarFieldEnum)[keyof typeof AccountingEventScalarFieldEnum]
 
 
+export const WorkflowSettingScalarFieldEnum = {
+  id: 'id',
+  docType: 'docType',
+  step: 'step',
+  isEnabled: 'isEnabled',
+  minAmount: 'minAmount',
+  updatedById: 'updatedById',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkflowSettingScalarFieldEnum = (typeof WorkflowSettingScalarFieldEnum)[keyof typeof WorkflowSettingScalarFieldEnum]
+
+
+export const WorkflowSettingLogScalarFieldEnum = {
+  id: 'id',
+  settingId: 'settingId',
+  oldValue: 'oldValue',
+  newValue: 'newValue',
+  changedById: 'changedById',
+  changedAt: 'changedAt'
+} as const
+
+export type WorkflowSettingLogScalarFieldEnum = (typeof WorkflowSettingLogScalarFieldEnum)[keyof typeof WorkflowSettingLogScalarFieldEnum]
+
+
+export const ContainerPositionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive'
+} as const
+
+export type ContainerPositionScalarFieldEnum = (typeof ContainerPositionScalarFieldEnum)[keyof typeof ContainerPositionScalarFieldEnum]
+
+
+export const ContainerPositionLogScalarFieldEnum = {
+  id: 'id',
+  workOrderItemId: 'workOrderItemId',
+  positionId: 'positionId',
+  note: 'note',
+  actorId: 'actorId',
+  createdAt: 'createdAt'
+} as const
+
+export type ContainerPositionLogScalarFieldEnum = (typeof ContainerPositionLogScalarFieldEnum)[keyof typeof ContainerPositionLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -404,4 +480,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

@@ -127,3 +127,23 @@ export type Attachment = Prisma.AttachmentModel
  * 
  */
 export type AccountingEvent = Prisma.AccountingEventModel
+/**
+ * Model WorkflowSetting
+ * 
+ */
+export type WorkflowSetting = Prisma.WorkflowSettingModel
+/**
+ * Model WorkflowSettingLog
+ * 
+ */
+export type WorkflowSettingLog = Prisma.WorkflowSettingLogModel
+/**
+ * Model ContainerPosition
+ * 
+ */
+export type ContainerPosition = Prisma.ContainerPositionModel
+/**
+ * Model ContainerPositionLog
+ * 
+ */
+export type ContainerPositionLog = Prisma.ContainerPositionLogModel

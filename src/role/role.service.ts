@@ -35,22 +35,17 @@ export class RoleService {
   constructor(private readonly prisma: PrismaService) {}
 
   list() {
-    return this.prisma.role.findMany({
-      select: roleSelect,
-      orderBy: { code: 'asc' },
-    });
+    return this.prisma.role.findMany({ select: roleSelect, orderBy: { code: 'asc' } });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const role = await this.prisma.role.findUnique({
       where: { id },
       select: {
         ...roleSelect,
         permissions: {
           select: {
-            permission: {
-              select: { id: true, code: true, module: true, description: true },
-            },
+            permission: { select: { id: true, code: true, module: true, description: true } },
           },
         },
       },
@@ -66,52 +61,31 @@ export class RoleService {
   }
 
   async create(dto: CreateRoleDto) {
-    if (
-      await this.prisma.role.findUnique({
-        where: { code: dto.code },
-        select: { id: true },
-      })
-    ) {
+    if (await this.prisma.role.findUnique({ where: { code: dto.code }, select: { id: true } })) {
       throw new ConflictException('Kode role sudah dipakai');
     }
     try {
       return await this.prisma.role.create({
-        data: {
-          code: dto.code,
-          name: dto.name,
-          description: dto.description ?? null,
-        },
+        data: { code: dto.code, name: dto.name, description: dto.description ?? null },
         select: roleSelect,
       });
     } catch (e) {
-      if (isUniqueViolation(e))
-        throw new ConflictException('Kode role sudah dipakai');
+      if (isUniqueViolation(e)) throw new ConflictException('Kode role sudah dipakai');
       throw e;
     }
   }
 
-  async update(id: number, dto: UpdateRoleDto) {
-    const role = await this.prisma.role.findUnique({
-      where: { id },
-      select: { isSystem: true },
-    });
+  async update(id: string, dto: UpdateRoleDto) {
+    const role = await this.prisma.role.findUnique({ where: { id }, select: { isSystem: true } });
     if (!role) throw new NotFoundException('Role tidak ditemukan');
     if (role.isSystem && dto.isActive === false) {
       throw new ForbiddenException('Role bawaan tidak dapat dinonaktifkan');
     }
-    return this.prisma.role.update({
-      where: { id },
-      data: dto,
-      select: roleSelect,
-    });
+    return this.prisma.role.update({ where: { id }, data: dto, select: roleSelect });
   }
 
   // Mengganti seluruh isi permission sebuah role.
-  async setPermissions(
-    actor: AuthUser,
-    id: number,
-    dto: SetRolePermissionsDto,
-  ) {
+  async setPermissions(actor: AuthUser, id: string, dto: SetRolePermissionsDto) {
     const role = await this.prisma.role.findUnique({
       where: { id },
       select: {
@@ -122,9 +96,7 @@ export class RoleService {
     });
     if (!role) throw new NotFoundException('Role tidak ditemukan');
     if (role.isSystem) {
-      throw new ForbiddenException(
-        'Role bawaan tidak dapat diubah hak aksesnya',
-      );
+      throw new ForbiddenException('Role bawaan tidak dapat diubah hak aksesnya');
     }
 
     const codes = [...new Set(dto.permissionCodes)];
@@ -135,18 +107,13 @@ export class RoleService {
     if (found.length !== codes.length) {
       const known = new Set(found.map((f) => f.code));
       const unknown = codes.filter((c) => !known.has(c));
-      throw new BadRequestException(
-        `Permission tidak dikenal: ${unknown.join(', ')}`,
-      );
+      throw new BadRequestException(`Permission tidak dikenal: ${unknown.join(', ')}`);
     }
 
     // Hak akses administrasi hanya boleh ditambahkan oleh Super Admin.
     const current = new Set(role.permissions.map((p) => p.permission.code));
     const added = codes.filter((c) => !current.has(c));
-    if (
-      !isSuperAdmin(actor) &&
-      added.some((c) => SENSITIVE_PERMISSION_CODES.includes(c))
-    ) {
+    if (!isSuperAdmin(actor) && added.some((c) => SENSITIVE_PERMISSION_CODES.includes(c))) {
       throw new ForbiddenException(
         'Hanya Super Admin yang dapat memberikan hak akses pengelolaan user/role',
       );
@@ -162,14 +129,13 @@ export class RoleService {
     return this.findOne(id);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const role = await this.prisma.role.findUnique({
       where: { id },
       select: { isSystem: true, _count: { select: { users: true } } },
     });
     if (!role) throw new NotFoundException('Role tidak ditemukan');
-    if (role.isSystem)
-      throw new ForbiddenException('Role bawaan tidak dapat dihapus');
+    if (role.isSystem) throw new ForbiddenException('Role bawaan tidak dapat dihapus');
     if (role._count.users > 0) {
       throw new ConflictException(
         `Role masih dipakai ${role._count.users} user. Lepaskan dari user terlebih dahulu atau nonaktifkan role.`,

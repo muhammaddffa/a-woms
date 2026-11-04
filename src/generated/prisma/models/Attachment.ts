@@ -27,36 +27,36 @@ export type AggregateAttachment = {
 }
 
 export type AttachmentAvgAggregateOutputType = {
-  id: number | null
-  ownerId: number | null
-  uploadedById: number | null
+  sizeBytes: number | null
 }
 
 export type AttachmentSumAggregateOutputType = {
-  id: number | null
-  ownerId: number | null
-  uploadedById: number | null
+  sizeBytes: number | null
 }
 
 export type AttachmentMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   ownerType: $Enums.AttachmentOwnerType | null
-  ownerId: number | null
+  ownerId: string | null
   kind: $Enums.AttachmentKind | null
   storageKey: string | null
   fileName: string | null
-  uploadedById: number | null
+  mimeType: string | null
+  sizeBytes: number | null
+  uploadedById: string | null
   uploadedAt: Date | null
 }
 
 export type AttachmentMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   ownerType: $Enums.AttachmentOwnerType | null
-  ownerId: number | null
+  ownerId: string | null
   kind: $Enums.AttachmentKind | null
   storageKey: string | null
   fileName: string | null
-  uploadedById: number | null
+  mimeType: string | null
+  sizeBytes: number | null
+  uploadedById: string | null
   uploadedAt: Date | null
 }
 
@@ -67,6 +67,8 @@ export type AttachmentCountAggregateOutputType = {
   kind: number
   storageKey: number
   fileName: number
+  mimeType: number
+  sizeBytes: number
   uploadedById: number
   uploadedAt: number
   _all: number
@@ -74,15 +76,11 @@ export type AttachmentCountAggregateOutputType = {
 
 
 export type AttachmentAvgAggregateInputType = {
-  id?: true
-  ownerId?: true
-  uploadedById?: true
+  sizeBytes?: true
 }
 
 export type AttachmentSumAggregateInputType = {
-  id?: true
-  ownerId?: true
-  uploadedById?: true
+  sizeBytes?: true
 }
 
 export type AttachmentMinAggregateInputType = {
@@ -92,6 +90,8 @@ export type AttachmentMinAggregateInputType = {
   kind?: true
   storageKey?: true
   fileName?: true
+  mimeType?: true
+  sizeBytes?: true
   uploadedById?: true
   uploadedAt?: true
 }
@@ -103,6 +103,8 @@ export type AttachmentMaxAggregateInputType = {
   kind?: true
   storageKey?: true
   fileName?: true
+  mimeType?: true
+  sizeBytes?: true
   uploadedById?: true
   uploadedAt?: true
 }
@@ -114,6 +116,8 @@ export type AttachmentCountAggregateInputType = {
   kind?: true
   storageKey?: true
   fileName?: true
+  mimeType?: true
+  sizeBytes?: true
   uploadedById?: true
   uploadedAt?: true
   _all?: true
@@ -206,13 +210,15 @@ export type AttachmentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type AttachmentGroupByOutputType = {
-  id: number
+  id: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName: string | null
-  uploadedById: number | null
+  mimeType: string | null
+  sizeBytes: number | null
+  uploadedById: string | null
   uploadedAt: Date
   _count: AttachmentCountAggregateOutputType | null
   _avg: AttachmentAvgAggregateOutputType | null
@@ -240,13 +246,15 @@ export type AttachmentWhereInput = {
   AND?: Prisma.AttachmentWhereInput | Prisma.AttachmentWhereInput[]
   OR?: Prisma.AttachmentWhereInput[]
   NOT?: Prisma.AttachmentWhereInput | Prisma.AttachmentWhereInput[]
-  id?: Prisma.IntFilter<"Attachment"> | number
+  id?: Prisma.UuidFilter<"Attachment"> | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFilter<"Attachment"> | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFilter<"Attachment"> | number
+  ownerId?: Prisma.UuidFilter<"Attachment"> | string
   kind?: Prisma.EnumAttachmentKindFilter<"Attachment"> | $Enums.AttachmentKind
   storageKey?: Prisma.StringFilter<"Attachment"> | string
   fileName?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  uploadedById?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  mimeType?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  sizeBytes?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  uploadedById?: Prisma.UuidNullableFilter<"Attachment"> | string | null
   uploadedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
   uploadedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -258,22 +266,26 @@ export type AttachmentOrderByWithRelationInput = {
   kind?: Prisma.SortOrder
   storageKey?: Prisma.SortOrder
   fileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  mimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   uploadedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AttachmentWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.AttachmentWhereInput | Prisma.AttachmentWhereInput[]
   OR?: Prisma.AttachmentWhereInput[]
   NOT?: Prisma.AttachmentWhereInput | Prisma.AttachmentWhereInput[]
   ownerType?: Prisma.EnumAttachmentOwnerTypeFilter<"Attachment"> | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFilter<"Attachment"> | number
+  ownerId?: Prisma.UuidFilter<"Attachment"> | string
   kind?: Prisma.EnumAttachmentKindFilter<"Attachment"> | $Enums.AttachmentKind
   storageKey?: Prisma.StringFilter<"Attachment"> | string
   fileName?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  uploadedById?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  mimeType?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  sizeBytes?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  uploadedById?: Prisma.UuidNullableFilter<"Attachment"> | string | null
   uploadedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
   uploadedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
@@ -285,6 +297,8 @@ export type AttachmentOrderByWithAggregationInput = {
   kind?: Prisma.SortOrder
   storageKey?: Prisma.SortOrder
   fileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  mimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   _count?: Prisma.AttachmentCountOrderByAggregateInput
@@ -298,86 +312,105 @@ export type AttachmentScalarWhereWithAggregatesInput = {
   AND?: Prisma.AttachmentScalarWhereWithAggregatesInput | Prisma.AttachmentScalarWhereWithAggregatesInput[]
   OR?: Prisma.AttachmentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AttachmentScalarWhereWithAggregatesInput | Prisma.AttachmentScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Attachment"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"Attachment"> | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeWithAggregatesFilter<"Attachment"> | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntWithAggregatesFilter<"Attachment"> | number
+  ownerId?: Prisma.UuidWithAggregatesFilter<"Attachment"> | string
   kind?: Prisma.EnumAttachmentKindWithAggregatesFilter<"Attachment"> | $Enums.AttachmentKind
   storageKey?: Prisma.StringWithAggregatesFilter<"Attachment"> | string
   fileName?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
-  uploadedById?: Prisma.IntNullableWithAggregatesFilter<"Attachment"> | number | null
+  mimeType?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
+  sizeBytes?: Prisma.IntNullableWithAggregatesFilter<"Attachment"> | number | null
+  uploadedById?: Prisma.UuidNullableWithAggregatesFilter<"Attachment"> | string | null
   uploadedAt?: Prisma.DateTimeWithAggregatesFilter<"Attachment"> | Date | string
 }
 
 export type AttachmentCreateInput = {
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
+  mimeType?: string | null
+  sizeBytes?: number | null
   uploadedAt?: Date | string
   uploadedBy?: Prisma.UserCreateNestedOneWithoutUploadedAttachmentsInput
 }
 
 export type AttachmentUncheckedCreateInput = {
-  id?: number
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
-  uploadedById?: number | null
+  mimeType?: string | null
+  sizeBytes?: number | null
+  uploadedById?: string | null
   uploadedAt?: Date | string
 }
 
 export type AttachmentUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.UserUpdateOneWithoutUploadedAttachmentsNestedInput
 }
 
 export type AttachmentUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  uploadedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AttachmentCreateManyInput = {
-  id?: number
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
-  uploadedById?: number | null
+  mimeType?: string | null
+  sizeBytes?: number | null
+  uploadedById?: string | null
   uploadedAt?: Date | string
 }
 
 export type AttachmentUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AttachmentUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  uploadedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -398,14 +431,14 @@ export type AttachmentCountOrderByAggregateInput = {
   kind?: Prisma.SortOrder
   storageKey?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
 }
 
 export type AttachmentAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
-  uploadedById?: Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrder
 }
 
 export type AttachmentMaxOrderByAggregateInput = {
@@ -415,6 +448,8 @@ export type AttachmentMaxOrderByAggregateInput = {
   kind?: Prisma.SortOrder
   storageKey?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
 }
@@ -426,14 +461,14 @@ export type AttachmentMinOrderByAggregateInput = {
   kind?: Prisma.SortOrder
   storageKey?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrder
   uploadedById?: Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
 }
 
 export type AttachmentSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
-  uploadedById?: Prisma.SortOrder
+  sizeBytes?: Prisma.SortOrder
 }
 
 export type AttachmentCreateNestedManyWithoutUploadedByInput = {
@@ -486,22 +521,35 @@ export type EnumAttachmentKindFieldUpdateOperationsInput = {
   set?: $Enums.AttachmentKind
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AttachmentCreateWithoutUploadedByInput = {
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
+  mimeType?: string | null
+  sizeBytes?: number | null
   uploadedAt?: Date | string
 }
 
 export type AttachmentUncheckedCreateWithoutUploadedByInput = {
-  id?: number
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
+  mimeType?: string | null
+  sizeBytes?: number | null
   uploadedAt?: Date | string
 }
 
@@ -535,52 +583,63 @@ export type AttachmentScalarWhereInput = {
   AND?: Prisma.AttachmentScalarWhereInput | Prisma.AttachmentScalarWhereInput[]
   OR?: Prisma.AttachmentScalarWhereInput[]
   NOT?: Prisma.AttachmentScalarWhereInput | Prisma.AttachmentScalarWhereInput[]
-  id?: Prisma.IntFilter<"Attachment"> | number
+  id?: Prisma.UuidFilter<"Attachment"> | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFilter<"Attachment"> | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFilter<"Attachment"> | number
+  ownerId?: Prisma.UuidFilter<"Attachment"> | string
   kind?: Prisma.EnumAttachmentKindFilter<"Attachment"> | $Enums.AttachmentKind
   storageKey?: Prisma.StringFilter<"Attachment"> | string
   fileName?: Prisma.StringNullableFilter<"Attachment"> | string | null
-  uploadedById?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  mimeType?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  sizeBytes?: Prisma.IntNullableFilter<"Attachment"> | number | null
+  uploadedById?: Prisma.UuidNullableFilter<"Attachment"> | string | null
   uploadedAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
 }
 
 export type AttachmentCreateManyUploadedByInput = {
-  id?: number
+  id?: string
   ownerType: $Enums.AttachmentOwnerType
-  ownerId: number
+  ownerId: string
   kind: $Enums.AttachmentKind
   storageKey: string
   fileName?: string | null
+  mimeType?: string | null
+  sizeBytes?: number | null
   uploadedAt?: Date | string
 }
 
 export type AttachmentUpdateWithoutUploadedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AttachmentUncheckedUpdateWithoutUploadedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AttachmentUncheckedUpdateManyWithoutUploadedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerType?: Prisma.EnumAttachmentOwnerTypeFieldUpdateOperationsInput | $Enums.AttachmentOwnerType
-  ownerId?: Prisma.IntFieldUpdateOperationsInput | number
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
   storageKey?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -593,6 +652,8 @@ export type AttachmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   kind?: boolean
   storageKey?: boolean
   fileName?: boolean
+  mimeType?: boolean
+  sizeBytes?: boolean
   uploadedById?: boolean
   uploadedAt?: boolean
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
@@ -605,6 +666,8 @@ export type AttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   kind?: boolean
   storageKey?: boolean
   fileName?: boolean
+  mimeType?: boolean
+  sizeBytes?: boolean
   uploadedById?: boolean
   uploadedAt?: boolean
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
@@ -617,6 +680,8 @@ export type AttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   kind?: boolean
   storageKey?: boolean
   fileName?: boolean
+  mimeType?: boolean
+  sizeBytes?: boolean
   uploadedById?: boolean
   uploadedAt?: boolean
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
@@ -629,11 +694,13 @@ export type AttachmentSelectScalar = {
   kind?: boolean
   storageKey?: boolean
   fileName?: boolean
+  mimeType?: boolean
+  sizeBytes?: boolean
   uploadedById?: boolean
   uploadedAt?: boolean
 }
 
-export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerType" | "ownerId" | "kind" | "storageKey" | "fileName" | "uploadedById" | "uploadedAt", ExtArgs["result"]["attachment"]>
+export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerType" | "ownerId" | "kind" | "storageKey" | "fileName" | "mimeType" | "sizeBytes" | "uploadedById" | "uploadedAt", ExtArgs["result"]["attachment"]>
 export type AttachmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   uploadedBy?: boolean | Prisma.Attachment$uploadedByArgs<ExtArgs>
 }
@@ -650,13 +717,15 @@ export type $AttachmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     uploadedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     ownerType: $Enums.AttachmentOwnerType
-    ownerId: number
+    ownerId: string
     kind: $Enums.AttachmentKind
     storageKey: string
     fileName: string | null
-    uploadedById: number | null
+    mimeType: string | null
+    sizeBytes: number | null
+    uploadedById: string | null
     uploadedAt: Date
   }, ExtArgs["result"]["attachment"]>
   composites: {}
@@ -1082,13 +1151,15 @@ export interface Prisma__AttachmentClient<T, Null = never, ExtArgs extends runti
  * Fields of the Attachment model
  */
 export interface AttachmentFieldRefs {
-  readonly id: Prisma.FieldRef<"Attachment", 'Int'>
+  readonly id: Prisma.FieldRef<"Attachment", 'String'>
   readonly ownerType: Prisma.FieldRef<"Attachment", 'AttachmentOwnerType'>
-  readonly ownerId: Prisma.FieldRef<"Attachment", 'Int'>
+  readonly ownerId: Prisma.FieldRef<"Attachment", 'String'>
   readonly kind: Prisma.FieldRef<"Attachment", 'AttachmentKind'>
   readonly storageKey: Prisma.FieldRef<"Attachment", 'String'>
   readonly fileName: Prisma.FieldRef<"Attachment", 'String'>
-  readonly uploadedById: Prisma.FieldRef<"Attachment", 'Int'>
+  readonly mimeType: Prisma.FieldRef<"Attachment", 'String'>
+  readonly sizeBytes: Prisma.FieldRef<"Attachment", 'Int'>
+  readonly uploadedById: Prisma.FieldRef<"Attachment", 'String'>
   readonly uploadedAt: Prisma.FieldRef<"Attachment", 'DateTime'>
 }
     

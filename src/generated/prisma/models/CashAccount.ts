@@ -20,28 +20,18 @@ export type CashAccountModel = runtime.Types.Result.DefaultSelection<Prisma.$Cas
 
 export type AggregateCashAccount = {
   _count: CashAccountCountAggregateOutputType | null
-  _avg: CashAccountAvgAggregateOutputType | null
-  _sum: CashAccountSumAggregateOutputType | null
   _min: CashAccountMinAggregateOutputType | null
   _max: CashAccountMaxAggregateOutputType | null
 }
 
-export type CashAccountAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type CashAccountSumAggregateOutputType = {
-  id: number | null
-}
-
 export type CashAccountMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
 }
 
 export type CashAccountMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   code: string | null
   name: string | null
 }
@@ -53,14 +43,6 @@ export type CashAccountCountAggregateOutputType = {
   _all: number
 }
 
-
-export type CashAccountAvgAggregateInputType = {
-  id?: true
-}
-
-export type CashAccountSumAggregateInputType = {
-  id?: true
-}
 
 export type CashAccountMinAggregateInputType = {
   id?: true
@@ -119,18 +101,6 @@ export type CashAccountAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: CashAccountAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: CashAccountSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: CashAccountMinAggregateInputType
@@ -161,19 +131,15 @@ export type CashAccountGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: CashAccountCountAggregateInputType | true
-  _avg?: CashAccountAvgAggregateInputType
-  _sum?: CashAccountSumAggregateInputType
   _min?: CashAccountMinAggregateInputType
   _max?: CashAccountMaxAggregateInputType
 }
 
 export type CashAccountGroupByOutputType = {
-  id: number
+  id: string
   code: string
   name: string
   _count: CashAccountCountAggregateOutputType | null
-  _avg: CashAccountAvgAggregateOutputType | null
-  _sum: CashAccountSumAggregateOutputType | null
   _min: CashAccountMinAggregateOutputType | null
   _max: CashAccountMaxAggregateOutputType | null
 }
@@ -197,7 +163,7 @@ export type CashAccountWhereInput = {
   AND?: Prisma.CashAccountWhereInput | Prisma.CashAccountWhereInput[]
   OR?: Prisma.CashAccountWhereInput[]
   NOT?: Prisma.CashAccountWhereInput | Prisma.CashAccountWhereInput[]
-  id?: Prisma.IntFilter<"CashAccount"> | number
+  id?: Prisma.UuidFilter<"CashAccount"> | string
   code?: Prisma.StringFilter<"CashAccount"> | string
   name?: Prisma.StringFilter<"CashAccount"> | string
   cashAdvances?: Prisma.CashAdvanceListRelationFilter
@@ -213,7 +179,7 @@ export type CashAccountOrderByWithRelationInput = {
 }
 
 export type CashAccountWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   code?: string
   AND?: Prisma.CashAccountWhereInput | Prisma.CashAccountWhereInput[]
   OR?: Prisma.CashAccountWhereInput[]
@@ -228,22 +194,21 @@ export type CashAccountOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   _count?: Prisma.CashAccountCountOrderByAggregateInput
-  _avg?: Prisma.CashAccountAvgOrderByAggregateInput
   _max?: Prisma.CashAccountMaxOrderByAggregateInput
   _min?: Prisma.CashAccountMinOrderByAggregateInput
-  _sum?: Prisma.CashAccountSumOrderByAggregateInput
 }
 
 export type CashAccountScalarWhereWithAggregatesInput = {
   AND?: Prisma.CashAccountScalarWhereWithAggregatesInput | Prisma.CashAccountScalarWhereWithAggregatesInput[]
   OR?: Prisma.CashAccountScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CashAccountScalarWhereWithAggregatesInput | Prisma.CashAccountScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"CashAccount"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"CashAccount"> | string
   code?: Prisma.StringWithAggregatesFilter<"CashAccount"> | string
   name?: Prisma.StringWithAggregatesFilter<"CashAccount"> | string
 }
 
 export type CashAccountCreateInput = {
+  id?: string
   code: string
   name: string
   cashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutCashAccountInput
@@ -251,7 +216,7 @@ export type CashAccountCreateInput = {
 }
 
 export type CashAccountUncheckedCreateInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   cashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutCashAccountInput
@@ -259,6 +224,7 @@ export type CashAccountUncheckedCreateInput = {
 }
 
 export type CashAccountUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cashAdvances?: Prisma.CashAdvanceUpdateManyWithoutCashAccountNestedInput
@@ -266,7 +232,7 @@ export type CashAccountUpdateInput = {
 }
 
 export type CashAccountUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutCashAccountNestedInput
@@ -274,18 +240,19 @@ export type CashAccountUncheckedUpdateInput = {
 }
 
 export type CashAccountCreateManyInput = {
-  id?: number
+  id?: string
   code: string
   name: string
 }
 
 export type CashAccountUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CashAccountUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -294,10 +261,6 @@ export type CashAccountCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
-}
-
-export type CashAccountAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type CashAccountMaxOrderByAggregateInput = {
@@ -310,10 +273,6 @@ export type CashAccountMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
-}
-
-export type CashAccountSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type CashAccountNullableScalarRelationFilter = {
@@ -354,13 +313,14 @@ export type CashAccountUpdateOneWithoutAdvanceReturnsNestedInput = {
 }
 
 export type CashAccountCreateWithoutCashAdvancesInput = {
+  id?: string
   code: string
   name: string
   advanceReturns?: Prisma.AdvanceReturnCreateNestedManyWithoutCashAccountInput
 }
 
 export type CashAccountUncheckedCreateWithoutCashAdvancesInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   advanceReturns?: Prisma.AdvanceReturnUncheckedCreateNestedManyWithoutCashAccountInput
@@ -383,26 +343,28 @@ export type CashAccountUpdateToOneWithWhereWithoutCashAdvancesInput = {
 }
 
 export type CashAccountUpdateWithoutCashAdvancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   advanceReturns?: Prisma.AdvanceReturnUpdateManyWithoutCashAccountNestedInput
 }
 
 export type CashAccountUncheckedUpdateWithoutCashAdvancesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   advanceReturns?: Prisma.AdvanceReturnUncheckedUpdateManyWithoutCashAccountNestedInput
 }
 
 export type CashAccountCreateWithoutAdvanceReturnsInput = {
+  id?: string
   code: string
   name: string
   cashAdvances?: Prisma.CashAdvanceCreateNestedManyWithoutCashAccountInput
 }
 
 export type CashAccountUncheckedCreateWithoutAdvanceReturnsInput = {
-  id?: number
+  id?: string
   code: string
   name: string
   cashAdvances?: Prisma.CashAdvanceUncheckedCreateNestedManyWithoutCashAccountInput
@@ -425,13 +387,14 @@ export type CashAccountUpdateToOneWithWhereWithoutAdvanceReturnsInput = {
 }
 
 export type CashAccountUpdateWithoutAdvanceReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cashAdvances?: Prisma.CashAdvanceUpdateManyWithoutCashAccountNestedInput
 }
 
 export type CashAccountUncheckedUpdateWithoutAdvanceReturnsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   cashAdvances?: Prisma.CashAdvanceUncheckedUpdateManyWithoutCashAccountNestedInput
@@ -520,7 +483,7 @@ export type $CashAccountPayload<ExtArgs extends runtime.Types.Extensions.Interna
     advanceReturns: Prisma.$AdvanceReturnPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     code: string
     name: string
   }, ExtArgs["result"]["cashAccount"]>
@@ -948,7 +911,7 @@ export interface Prisma__CashAccountClient<T, Null = never, ExtArgs extends runt
  * Fields of the CashAccount model
  */
 export interface CashAccountFieldRefs {
-  readonly id: Prisma.FieldRef<"CashAccount", 'Int'>
+  readonly id: Prisma.FieldRef<"CashAccount", 'String'>
   readonly code: Prisma.FieldRef<"CashAccount", 'String'>
   readonly name: Prisma.FieldRef<"CashAccount", 'String'>
 }

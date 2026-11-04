@@ -27,30 +27,24 @@ export type AggregateAdvanceReturnItem = {
 }
 
 export type AdvanceReturnItemAvgAggregateOutputType = {
-  id: number | null
-  advanceReturnId: number | null
-  cashAdvanceId: number | null
   amount: runtime.Decimal | null
 }
 
 export type AdvanceReturnItemSumAggregateOutputType = {
-  id: number | null
-  advanceReturnId: number | null
-  cashAdvanceId: number | null
   amount: runtime.Decimal | null
 }
 
 export type AdvanceReturnItemMinAggregateOutputType = {
-  id: number | null
-  advanceReturnId: number | null
-  cashAdvanceId: number | null
+  id: string | null
+  advanceReturnId: string | null
+  cashAdvanceId: string | null
   amount: runtime.Decimal | null
 }
 
 export type AdvanceReturnItemMaxAggregateOutputType = {
-  id: number | null
-  advanceReturnId: number | null
-  cashAdvanceId: number | null
+  id: string | null
+  advanceReturnId: string | null
+  cashAdvanceId: string | null
   amount: runtime.Decimal | null
 }
 
@@ -64,16 +58,10 @@ export type AdvanceReturnItemCountAggregateOutputType = {
 
 
 export type AdvanceReturnItemAvgAggregateInputType = {
-  id?: true
-  advanceReturnId?: true
-  cashAdvanceId?: true
   amount?: true
 }
 
 export type AdvanceReturnItemSumAggregateInputType = {
-  id?: true
-  advanceReturnId?: true
-  cashAdvanceId?: true
   amount?: true
 }
 
@@ -186,9 +174,9 @@ export type AdvanceReturnItemGroupByArgs<ExtArgs extends runtime.Types.Extension
 }
 
 export type AdvanceReturnItemGroupByOutputType = {
-  id: number
-  advanceReturnId: number
-  cashAdvanceId: number
+  id: string
+  advanceReturnId: string
+  cashAdvanceId: string
   amount: runtime.Decimal
   _count: AdvanceReturnItemCountAggregateOutputType | null
   _avg: AdvanceReturnItemAvgAggregateOutputType | null
@@ -216,9 +204,9 @@ export type AdvanceReturnItemWhereInput = {
   AND?: Prisma.AdvanceReturnItemWhereInput | Prisma.AdvanceReturnItemWhereInput[]
   OR?: Prisma.AdvanceReturnItemWhereInput[]
   NOT?: Prisma.AdvanceReturnItemWhereInput | Prisma.AdvanceReturnItemWhereInput[]
-  id?: Prisma.IntFilter<"AdvanceReturnItem"> | number
-  advanceReturnId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
-  cashAdvanceId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
+  id?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
+  advanceReturnId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
   amount?: Prisma.DecimalFilter<"AdvanceReturnItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn?: Prisma.XOR<Prisma.AdvanceReturnScalarRelationFilter, Prisma.AdvanceReturnWhereInput>
   cashAdvance?: Prisma.XOR<Prisma.CashAdvanceScalarRelationFilter, Prisma.CashAdvanceWhereInput>
@@ -234,13 +222,13 @@ export type AdvanceReturnItemOrderByWithRelationInput = {
 }
 
 export type AdvanceReturnItemWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   advanceReturnId_cashAdvanceId?: Prisma.AdvanceReturnItemAdvanceReturnIdCashAdvanceIdCompoundUniqueInput
   AND?: Prisma.AdvanceReturnItemWhereInput | Prisma.AdvanceReturnItemWhereInput[]
   OR?: Prisma.AdvanceReturnItemWhereInput[]
   NOT?: Prisma.AdvanceReturnItemWhereInput | Prisma.AdvanceReturnItemWhereInput[]
-  advanceReturnId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
-  cashAdvanceId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
+  advanceReturnId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
   amount?: Prisma.DecimalFilter<"AdvanceReturnItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn?: Prisma.XOR<Prisma.AdvanceReturnScalarRelationFilter, Prisma.AdvanceReturnWhereInput>
   cashAdvance?: Prisma.XOR<Prisma.CashAdvanceScalarRelationFilter, Prisma.CashAdvanceWhereInput>
@@ -262,53 +250,56 @@ export type AdvanceReturnItemScalarWhereWithAggregatesInput = {
   AND?: Prisma.AdvanceReturnItemScalarWhereWithAggregatesInput | Prisma.AdvanceReturnItemScalarWhereWithAggregatesInput[]
   OR?: Prisma.AdvanceReturnItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AdvanceReturnItemScalarWhereWithAggregatesInput | Prisma.AdvanceReturnItemScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"AdvanceReturnItem"> | number
-  advanceReturnId?: Prisma.IntWithAggregatesFilter<"AdvanceReturnItem"> | number
-  cashAdvanceId?: Prisma.IntWithAggregatesFilter<"AdvanceReturnItem"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"AdvanceReturnItem"> | string
+  advanceReturnId?: Prisma.UuidWithAggregatesFilter<"AdvanceReturnItem"> | string
+  cashAdvanceId?: Prisma.UuidWithAggregatesFilter<"AdvanceReturnItem"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"AdvanceReturnItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemCreateInput = {
+  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn: Prisma.AdvanceReturnCreateNestedOneWithoutItemsInput
   cashAdvance: Prisma.CashAdvanceCreateNestedOneWithoutReturnItemsInput
 }
 
 export type AdvanceReturnItemUncheckedCreateInput = {
-  id?: number
-  advanceReturnId: number
-  cashAdvanceId: number
+  id?: string
+  advanceReturnId: string
+  cashAdvanceId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn?: Prisma.AdvanceReturnUpdateOneRequiredWithoutItemsNestedInput
   cashAdvance?: Prisma.CashAdvanceUpdateOneRequiredWithoutReturnItemsNestedInput
 }
 
 export type AdvanceReturnItemUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  advanceReturnId?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advanceReturnId?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemCreateManyInput = {
-  id?: number
-  advanceReturnId: number
-  cashAdvanceId: number
+  id?: string
+  advanceReturnId: string
+  cashAdvanceId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  advanceReturnId?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advanceReturnId?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -323,8 +314,8 @@ export type AdvanceReturnItemOrderByRelationAggregateInput = {
 }
 
 export type AdvanceReturnItemAdvanceReturnIdCashAdvanceIdCompoundUniqueInput = {
-  advanceReturnId: number
-  cashAdvanceId: number
+  advanceReturnId: string
+  cashAdvanceId: string
 }
 
 export type AdvanceReturnItemCountOrderByAggregateInput = {
@@ -335,9 +326,6 @@ export type AdvanceReturnItemCountOrderByAggregateInput = {
 }
 
 export type AdvanceReturnItemAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  advanceReturnId?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -356,9 +344,6 @@ export type AdvanceReturnItemMinOrderByAggregateInput = {
 }
 
 export type AdvanceReturnItemSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  advanceReturnId?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -447,13 +432,14 @@ export type AdvanceReturnItemUncheckedUpdateManyWithoutAdvanceReturnNestedInput 
 }
 
 export type AdvanceReturnItemCreateWithoutCashAdvanceInput = {
+  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn: Prisma.AdvanceReturnCreateNestedOneWithoutItemsInput
 }
 
 export type AdvanceReturnItemUncheckedCreateWithoutCashAdvanceInput = {
-  id?: number
-  advanceReturnId: number
+  id?: string
+  advanceReturnId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -487,20 +473,21 @@ export type AdvanceReturnItemScalarWhereInput = {
   AND?: Prisma.AdvanceReturnItemScalarWhereInput | Prisma.AdvanceReturnItemScalarWhereInput[]
   OR?: Prisma.AdvanceReturnItemScalarWhereInput[]
   NOT?: Prisma.AdvanceReturnItemScalarWhereInput | Prisma.AdvanceReturnItemScalarWhereInput[]
-  id?: Prisma.IntFilter<"AdvanceReturnItem"> | number
-  advanceReturnId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
-  cashAdvanceId?: Prisma.IntFilter<"AdvanceReturnItem"> | number
+  id?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
+  advanceReturnId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"AdvanceReturnItem"> | string
   amount?: Prisma.DecimalFilter<"AdvanceReturnItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemCreateWithoutAdvanceReturnInput = {
+  id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   cashAdvance: Prisma.CashAdvanceCreateNestedOneWithoutReturnItemsInput
 }
 
 export type AdvanceReturnItemUncheckedCreateWithoutAdvanceReturnInput = {
-  id?: number
-  cashAdvanceId: number
+  id?: string
+  cashAdvanceId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -531,48 +518,50 @@ export type AdvanceReturnItemUpdateManyWithWhereWithoutAdvanceReturnInput = {
 }
 
 export type AdvanceReturnItemCreateManyCashAdvanceInput = {
-  id?: number
-  advanceReturnId: number
+  id?: string
+  advanceReturnId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUpdateWithoutCashAdvanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   advanceReturn?: Prisma.AdvanceReturnUpdateOneRequiredWithoutItemsNestedInput
 }
 
 export type AdvanceReturnItemUncheckedUpdateWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  advanceReturnId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advanceReturnId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUncheckedUpdateManyWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  advanceReturnId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  advanceReturnId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemCreateManyAdvanceReturnInput = {
-  id?: number
-  cashAdvanceId: number
+  id?: string
+  cashAdvanceId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUpdateWithoutAdvanceReturnInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   cashAdvance?: Prisma.CashAdvanceUpdateOneRequiredWithoutReturnItemsNestedInput
 }
 
 export type AdvanceReturnItemUncheckedUpdateWithoutAdvanceReturnInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type AdvanceReturnItemUncheckedUpdateManyWithoutAdvanceReturnInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -633,9 +622,9 @@ export type $AdvanceReturnItemPayload<ExtArgs extends runtime.Types.Extensions.I
     cashAdvance: Prisma.$CashAdvancePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    advanceReturnId: number
-    cashAdvanceId: number
+    id: string
+    advanceReturnId: string
+    cashAdvanceId: string
     amount: runtime.Decimal
   }, ExtArgs["result"]["advanceReturnItem"]>
   composites: {}
@@ -1062,9 +1051,9 @@ export interface Prisma__AdvanceReturnItemClient<T, Null = never, ExtArgs extend
  * Fields of the AdvanceReturnItem model
  */
 export interface AdvanceReturnItemFieldRefs {
-  readonly id: Prisma.FieldRef<"AdvanceReturnItem", 'Int'>
-  readonly advanceReturnId: Prisma.FieldRef<"AdvanceReturnItem", 'Int'>
-  readonly cashAdvanceId: Prisma.FieldRef<"AdvanceReturnItem", 'Int'>
+  readonly id: Prisma.FieldRef<"AdvanceReturnItem", 'String'>
+  readonly advanceReturnId: Prisma.FieldRef<"AdvanceReturnItem", 'String'>
+  readonly cashAdvanceId: Prisma.FieldRef<"AdvanceReturnItem", 'String'>
   readonly amount: Prisma.FieldRef<"AdvanceReturnItem", 'Decimal'>
 }
     

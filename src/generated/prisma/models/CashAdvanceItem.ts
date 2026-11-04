@@ -27,34 +27,28 @@ export type AggregateCashAdvanceItem = {
 }
 
 export type CashAdvanceItemAvgAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  plannedCostId: number | null
   advanceAmount: runtime.Decimal | null
   actualAmount: runtime.Decimal | null
 }
 
 export type CashAdvanceItemSumAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  plannedCostId: number | null
   advanceAmount: runtime.Decimal | null
   actualAmount: runtime.Decimal | null
 }
 
 export type CashAdvanceItemMinAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  plannedCostId: number | null
+  id: string | null
+  cashAdvanceId: string | null
+  plannedCostId: string | null
   advanceAmount: runtime.Decimal | null
   actualAmount: runtime.Decimal | null
   note: string | null
 }
 
 export type CashAdvanceItemMaxAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  plannedCostId: number | null
+  id: string | null
+  cashAdvanceId: string | null
+  plannedCostId: string | null
   advanceAmount: runtime.Decimal | null
   actualAmount: runtime.Decimal | null
   note: string | null
@@ -72,17 +66,11 @@ export type CashAdvanceItemCountAggregateOutputType = {
 
 
 export type CashAdvanceItemAvgAggregateInputType = {
-  id?: true
-  cashAdvanceId?: true
-  plannedCostId?: true
   advanceAmount?: true
   actualAmount?: true
 }
 
 export type CashAdvanceItemSumAggregateInputType = {
-  id?: true
-  cashAdvanceId?: true
-  plannedCostId?: true
   advanceAmount?: true
   actualAmount?: true
 }
@@ -202,9 +190,9 @@ export type CashAdvanceItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type CashAdvanceItemGroupByOutputType = {
-  id: number
-  cashAdvanceId: number
-  plannedCostId: number
+  id: string
+  cashAdvanceId: string
+  plannedCostId: string
   advanceAmount: runtime.Decimal
   actualAmount: runtime.Decimal | null
   note: string | null
@@ -234,9 +222,9 @@ export type CashAdvanceItemWhereInput = {
   AND?: Prisma.CashAdvanceItemWhereInput | Prisma.CashAdvanceItemWhereInput[]
   OR?: Prisma.CashAdvanceItemWhereInput[]
   NOT?: Prisma.CashAdvanceItemWhereInput | Prisma.CashAdvanceItemWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvanceItem"> | number
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceItem"> | number
-  plannedCostId?: Prisma.IntFilter<"CashAdvanceItem"> | number
+  id?: Prisma.UuidFilter<"CashAdvanceItem"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
+  plannedCostId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
   advanceAmount?: Prisma.DecimalFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.DecimalNullableFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.StringNullableFilter<"CashAdvanceItem"> | string | null
@@ -256,13 +244,13 @@ export type CashAdvanceItemOrderByWithRelationInput = {
 }
 
 export type CashAdvanceItemWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   cashAdvanceId_plannedCostId?: Prisma.CashAdvanceItemCashAdvanceIdPlannedCostIdCompoundUniqueInput
   AND?: Prisma.CashAdvanceItemWhereInput | Prisma.CashAdvanceItemWhereInput[]
   OR?: Prisma.CashAdvanceItemWhereInput[]
   NOT?: Prisma.CashAdvanceItemWhereInput | Prisma.CashAdvanceItemWhereInput[]
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceItem"> | number
-  plannedCostId?: Prisma.IntFilter<"CashAdvanceItem"> | number
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
+  plannedCostId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
   advanceAmount?: Prisma.DecimalFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.DecimalNullableFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.StringNullableFilter<"CashAdvanceItem"> | string | null
@@ -288,15 +276,16 @@ export type CashAdvanceItemScalarWhereWithAggregatesInput = {
   AND?: Prisma.CashAdvanceItemScalarWhereWithAggregatesInput | Prisma.CashAdvanceItemScalarWhereWithAggregatesInput[]
   OR?: Prisma.CashAdvanceItemScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CashAdvanceItemScalarWhereWithAggregatesInput | Prisma.CashAdvanceItemScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"CashAdvanceItem"> | number
-  cashAdvanceId?: Prisma.IntWithAggregatesFilter<"CashAdvanceItem"> | number
-  plannedCostId?: Prisma.IntWithAggregatesFilter<"CashAdvanceItem"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"CashAdvanceItem"> | string
+  cashAdvanceId?: Prisma.UuidWithAggregatesFilter<"CashAdvanceItem"> | string
+  plannedCostId?: Prisma.UuidWithAggregatesFilter<"CashAdvanceItem"> | string
   advanceAmount?: Prisma.DecimalWithAggregatesFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.DecimalNullableWithAggregatesFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.StringNullableWithAggregatesFilter<"CashAdvanceItem"> | string | null
 }
 
 export type CashAdvanceItemCreateInput = {
+  id?: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
@@ -305,15 +294,16 @@ export type CashAdvanceItemCreateInput = {
 }
 
 export type CashAdvanceItemUncheckedCreateInput = {
-  id?: number
-  cashAdvanceId: number
-  plannedCostId: number
+  id?: string
+  cashAdvanceId: string
+  plannedCostId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
 }
 
 export type CashAdvanceItemUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -322,33 +312,34 @@ export type CashAdvanceItemUpdateInput = {
 }
 
 export type CashAdvanceItemUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
-  plannedCostId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedCostId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceItemCreateManyInput = {
-  id?: number
-  cashAdvanceId: number
-  plannedCostId: number
+  id?: string
+  cashAdvanceId: string
+  plannedCostId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
 }
 
 export type CashAdvanceItemUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceItemUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
-  plannedCostId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedCostId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -365,8 +356,8 @@ export type CashAdvanceItemOrderByRelationAggregateInput = {
 }
 
 export type CashAdvanceItemCashAdvanceIdPlannedCostIdCompoundUniqueInput = {
-  cashAdvanceId: number
-  plannedCostId: number
+  cashAdvanceId: string
+  plannedCostId: string
 }
 
 export type CashAdvanceItemCountOrderByAggregateInput = {
@@ -379,9 +370,6 @@ export type CashAdvanceItemCountOrderByAggregateInput = {
 }
 
 export type CashAdvanceItemAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
-  plannedCostId?: Prisma.SortOrder
   advanceAmount?: Prisma.SortOrder
   actualAmount?: Prisma.SortOrder
 }
@@ -405,9 +393,6 @@ export type CashAdvanceItemMinOrderByAggregateInput = {
 }
 
 export type CashAdvanceItemSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
-  plannedCostId?: Prisma.SortOrder
   advanceAmount?: Prisma.SortOrder
   actualAmount?: Prisma.SortOrder
 }
@@ -496,15 +481,8 @@ export type CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceNestedInput = {
   deleteMany?: Prisma.CashAdvanceItemScalarWhereInput | Prisma.CashAdvanceItemScalarWhereInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type CashAdvanceItemCreateWithoutPlannedCostInput = {
+  id?: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
@@ -512,8 +490,8 @@ export type CashAdvanceItemCreateWithoutPlannedCostInput = {
 }
 
 export type CashAdvanceItemUncheckedCreateWithoutPlannedCostInput = {
-  id?: number
-  cashAdvanceId: number
+  id?: string
+  cashAdvanceId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
@@ -549,15 +527,16 @@ export type CashAdvanceItemScalarWhereInput = {
   AND?: Prisma.CashAdvanceItemScalarWhereInput | Prisma.CashAdvanceItemScalarWhereInput[]
   OR?: Prisma.CashAdvanceItemScalarWhereInput[]
   NOT?: Prisma.CashAdvanceItemScalarWhereInput | Prisma.CashAdvanceItemScalarWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvanceItem"> | number
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceItem"> | number
-  plannedCostId?: Prisma.IntFilter<"CashAdvanceItem"> | number
+  id?: Prisma.UuidFilter<"CashAdvanceItem"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
+  plannedCostId?: Prisma.UuidFilter<"CashAdvanceItem"> | string
   advanceAmount?: Prisma.DecimalFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.DecimalNullableFilter<"CashAdvanceItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.StringNullableFilter<"CashAdvanceItem"> | string | null
 }
 
 export type CashAdvanceItemCreateWithoutCashAdvanceInput = {
+  id?: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
@@ -565,8 +544,8 @@ export type CashAdvanceItemCreateWithoutCashAdvanceInput = {
 }
 
 export type CashAdvanceItemUncheckedCreateWithoutCashAdvanceInput = {
-  id?: number
-  plannedCostId: number
+  id?: string
+  plannedCostId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
@@ -599,14 +578,15 @@ export type CashAdvanceItemUpdateManyWithWhereWithoutCashAdvanceInput = {
 }
 
 export type CashAdvanceItemCreateManyPlannedCostInput = {
-  id?: number
-  cashAdvanceId: number
+  id?: string
+  cashAdvanceId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
 }
 
 export type CashAdvanceItemUpdateWithoutPlannedCostInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -614,30 +594,31 @@ export type CashAdvanceItemUpdateWithoutPlannedCostInput = {
 }
 
 export type CashAdvanceItemUncheckedUpdateWithoutPlannedCostInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceItemUncheckedUpdateManyWithoutPlannedCostInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceItemCreateManyCashAdvanceInput = {
-  id?: number
-  plannedCostId: number
+  id?: string
+  plannedCostId: string
   advanceAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: string | null
 }
 
 export type CashAdvanceItemUpdateWithoutCashAdvanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -645,16 +626,16 @@ export type CashAdvanceItemUpdateWithoutCashAdvanceInput = {
 }
 
 export type CashAdvanceItemUncheckedUpdateWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  plannedCostId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedCostId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceItemUncheckedUpdateManyWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  plannedCostId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedCostId?: Prisma.StringFieldUpdateOperationsInput | string
   advanceAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   actualAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -725,9 +706,9 @@ export type $CashAdvanceItemPayload<ExtArgs extends runtime.Types.Extensions.Int
     plannedCost: Prisma.$PlannedCostPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    cashAdvanceId: number
-    plannedCostId: number
+    id: string
+    cashAdvanceId: string
+    plannedCostId: string
     advanceAmount: runtime.Decimal
     actualAmount: runtime.Decimal | null
     note: string | null
@@ -1156,9 +1137,9 @@ export interface Prisma__CashAdvanceItemClient<T, Null = never, ExtArgs extends 
  * Fields of the CashAdvanceItem model
  */
 export interface CashAdvanceItemFieldRefs {
-  readonly id: Prisma.FieldRef<"CashAdvanceItem", 'Int'>
-  readonly cashAdvanceId: Prisma.FieldRef<"CashAdvanceItem", 'Int'>
-  readonly plannedCostId: Prisma.FieldRef<"CashAdvanceItem", 'Int'>
+  readonly id: Prisma.FieldRef<"CashAdvanceItem", 'String'>
+  readonly cashAdvanceId: Prisma.FieldRef<"CashAdvanceItem", 'String'>
+  readonly plannedCostId: Prisma.FieldRef<"CashAdvanceItem", 'String'>
   readonly advanceAmount: Prisma.FieldRef<"CashAdvanceItem", 'Decimal'>
   readonly actualAmount: Prisma.FieldRef<"CashAdvanceItem", 'Decimal'>
   readonly note: Prisma.FieldRef<"CashAdvanceItem", 'String'>

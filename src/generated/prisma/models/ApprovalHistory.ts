@@ -20,42 +20,28 @@ export type ApprovalHistoryModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateApprovalHistory = {
   _count: ApprovalHistoryCountAggregateOutputType | null
-  _avg: ApprovalHistoryAvgAggregateOutputType | null
-  _sum: ApprovalHistorySumAggregateOutputType | null
   _min: ApprovalHistoryMinAggregateOutputType | null
   _max: ApprovalHistoryMaxAggregateOutputType | null
 }
 
-export type ApprovalHistoryAvgAggregateOutputType = {
-  id: number | null
-  docId: number | null
-  actorId: number | null
-}
-
-export type ApprovalHistorySumAggregateOutputType = {
-  id: number | null
-  docId: number | null
-  actorId: number | null
-}
-
 export type ApprovalHistoryMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   docType: $Enums.ApprovalDocType | null
-  docId: number | null
+  docId: string | null
   step: $Enums.ApprovalStep | null
   action: $Enums.ApprovalAction | null
-  actorId: number | null
+  actorId: string | null
   actedAt: Date | null
   note: string | null
 }
 
 export type ApprovalHistoryMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   docType: $Enums.ApprovalDocType | null
-  docId: number | null
+  docId: string | null
   step: $Enums.ApprovalStep | null
   action: $Enums.ApprovalAction | null
-  actorId: number | null
+  actorId: string | null
   actedAt: Date | null
   note: string | null
 }
@@ -72,18 +58,6 @@ export type ApprovalHistoryCountAggregateOutputType = {
   _all: number
 }
 
-
-export type ApprovalHistoryAvgAggregateInputType = {
-  id?: true
-  docId?: true
-  actorId?: true
-}
-
-export type ApprovalHistorySumAggregateInputType = {
-  id?: true
-  docId?: true
-  actorId?: true
-}
 
 export type ApprovalHistoryMinAggregateInputType = {
   id?: true
@@ -157,18 +131,6 @@ export type ApprovalHistoryAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ApprovalHistoryAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ApprovalHistorySumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ApprovalHistoryMinAggregateInputType
@@ -199,24 +161,20 @@ export type ApprovalHistoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: ApprovalHistoryCountAggregateInputType | true
-  _avg?: ApprovalHistoryAvgAggregateInputType
-  _sum?: ApprovalHistorySumAggregateInputType
   _min?: ApprovalHistoryMinAggregateInputType
   _max?: ApprovalHistoryMaxAggregateInputType
 }
 
 export type ApprovalHistoryGroupByOutputType = {
-  id: number
+  id: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
-  actorId: number
+  actorId: string
   actedAt: Date
   note: string | null
   _count: ApprovalHistoryCountAggregateOutputType | null
-  _avg: ApprovalHistoryAvgAggregateOutputType | null
-  _sum: ApprovalHistorySumAggregateOutputType | null
   _min: ApprovalHistoryMinAggregateOutputType | null
   _max: ApprovalHistoryMaxAggregateOutputType | null
 }
@@ -240,12 +198,12 @@ export type ApprovalHistoryWhereInput = {
   AND?: Prisma.ApprovalHistoryWhereInput | Prisma.ApprovalHistoryWhereInput[]
   OR?: Prisma.ApprovalHistoryWhereInput[]
   NOT?: Prisma.ApprovalHistoryWhereInput | Prisma.ApprovalHistoryWhereInput[]
-  id?: Prisma.IntFilter<"ApprovalHistory"> | number
+  id?: Prisma.UuidFilter<"ApprovalHistory"> | string
   docType?: Prisma.EnumApprovalDocTypeFilter<"ApprovalHistory"> | $Enums.ApprovalDocType
-  docId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  docId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   step?: Prisma.EnumApprovalStepFilter<"ApprovalHistory"> | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFilter<"ApprovalHistory"> | $Enums.ApprovalAction
-  actorId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  actorId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   actedAt?: Prisma.DateTimeFilter<"ApprovalHistory"> | Date | string
   note?: Prisma.StringNullableFilter<"ApprovalHistory"> | string | null
   actor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -264,15 +222,15 @@ export type ApprovalHistoryOrderByWithRelationInput = {
 }
 
 export type ApprovalHistoryWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.ApprovalHistoryWhereInput | Prisma.ApprovalHistoryWhereInput[]
   OR?: Prisma.ApprovalHistoryWhereInput[]
   NOT?: Prisma.ApprovalHistoryWhereInput | Prisma.ApprovalHistoryWhereInput[]
   docType?: Prisma.EnumApprovalDocTypeFilter<"ApprovalHistory"> | $Enums.ApprovalDocType
-  docId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  docId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   step?: Prisma.EnumApprovalStepFilter<"ApprovalHistory"> | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFilter<"ApprovalHistory"> | $Enums.ApprovalAction
-  actorId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  actorId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   actedAt?: Prisma.DateTimeFilter<"ApprovalHistory"> | Date | string
   note?: Prisma.StringNullableFilter<"ApprovalHistory"> | string | null
   actor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -288,29 +246,28 @@ export type ApprovalHistoryOrderByWithAggregationInput = {
   actedAt?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ApprovalHistoryCountOrderByAggregateInput
-  _avg?: Prisma.ApprovalHistoryAvgOrderByAggregateInput
   _max?: Prisma.ApprovalHistoryMaxOrderByAggregateInput
   _min?: Prisma.ApprovalHistoryMinOrderByAggregateInput
-  _sum?: Prisma.ApprovalHistorySumOrderByAggregateInput
 }
 
 export type ApprovalHistoryScalarWhereWithAggregatesInput = {
   AND?: Prisma.ApprovalHistoryScalarWhereWithAggregatesInput | Prisma.ApprovalHistoryScalarWhereWithAggregatesInput[]
   OR?: Prisma.ApprovalHistoryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ApprovalHistoryScalarWhereWithAggregatesInput | Prisma.ApprovalHistoryScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"ApprovalHistory"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"ApprovalHistory"> | string
   docType?: Prisma.EnumApprovalDocTypeWithAggregatesFilter<"ApprovalHistory"> | $Enums.ApprovalDocType
-  docId?: Prisma.IntWithAggregatesFilter<"ApprovalHistory"> | number
+  docId?: Prisma.UuidWithAggregatesFilter<"ApprovalHistory"> | string
   step?: Prisma.EnumApprovalStepWithAggregatesFilter<"ApprovalHistory"> | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionWithAggregatesFilter<"ApprovalHistory"> | $Enums.ApprovalAction
-  actorId?: Prisma.IntWithAggregatesFilter<"ApprovalHistory"> | number
+  actorId?: Prisma.UuidWithAggregatesFilter<"ApprovalHistory"> | string
   actedAt?: Prisma.DateTimeWithAggregatesFilter<"ApprovalHistory"> | Date | string
   note?: Prisma.StringNullableWithAggregatesFilter<"ApprovalHistory"> | string | null
 }
 
 export type ApprovalHistoryCreateInput = {
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
   actedAt?: Date | string
@@ -319,19 +276,20 @@ export type ApprovalHistoryCreateInput = {
 }
 
 export type ApprovalHistoryUncheckedCreateInput = {
-  id?: number
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
-  actorId: number
+  actorId: string
   actedAt?: Date | string
   note?: string | null
 }
 
 export type ApprovalHistoryUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,30 +298,31 @@ export type ApprovalHistoryUpdateInput = {
 }
 
 export type ApprovalHistoryUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
-  actorId?: Prisma.IntFieldUpdateOperationsInput | number
+  actorId?: Prisma.StringFieldUpdateOperationsInput | string
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ApprovalHistoryCreateManyInput = {
-  id?: number
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
-  actorId: number
+  actorId: string
   actedAt?: Date | string
   note?: string | null
 }
 
 export type ApprovalHistoryUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,12 +330,12 @@ export type ApprovalHistoryUpdateManyMutationInput = {
 }
 
 export type ApprovalHistoryUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
-  actorId?: Prisma.IntFieldUpdateOperationsInput | number
+  actorId?: Prisma.StringFieldUpdateOperationsInput | string
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -402,12 +361,6 @@ export type ApprovalHistoryCountOrderByAggregateInput = {
   note?: Prisma.SortOrder
 }
 
-export type ApprovalHistoryAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  docId?: Prisma.SortOrder
-  actorId?: Prisma.SortOrder
-}
-
 export type ApprovalHistoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   docType?: Prisma.SortOrder
@@ -428,12 +381,6 @@ export type ApprovalHistoryMinOrderByAggregateInput = {
   actorId?: Prisma.SortOrder
   actedAt?: Prisma.SortOrder
   note?: Prisma.SortOrder
-}
-
-export type ApprovalHistorySumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  docId?: Prisma.SortOrder
-  actorId?: Prisma.SortOrder
 }
 
 export type ApprovalHistoryCreateNestedManyWithoutActorInput = {
@@ -491,8 +438,9 @@ export type EnumApprovalActionFieldUpdateOperationsInput = {
 }
 
 export type ApprovalHistoryCreateWithoutActorInput = {
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
   actedAt?: Date | string
@@ -500,9 +448,9 @@ export type ApprovalHistoryCreateWithoutActorInput = {
 }
 
 export type ApprovalHistoryUncheckedCreateWithoutActorInput = {
-  id?: number
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
   actedAt?: Date | string
@@ -539,20 +487,20 @@ export type ApprovalHistoryScalarWhereInput = {
   AND?: Prisma.ApprovalHistoryScalarWhereInput | Prisma.ApprovalHistoryScalarWhereInput[]
   OR?: Prisma.ApprovalHistoryScalarWhereInput[]
   NOT?: Prisma.ApprovalHistoryScalarWhereInput | Prisma.ApprovalHistoryScalarWhereInput[]
-  id?: Prisma.IntFilter<"ApprovalHistory"> | number
+  id?: Prisma.UuidFilter<"ApprovalHistory"> | string
   docType?: Prisma.EnumApprovalDocTypeFilter<"ApprovalHistory"> | $Enums.ApprovalDocType
-  docId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  docId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   step?: Prisma.EnumApprovalStepFilter<"ApprovalHistory"> | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFilter<"ApprovalHistory"> | $Enums.ApprovalAction
-  actorId?: Prisma.IntFilter<"ApprovalHistory"> | number
+  actorId?: Prisma.UuidFilter<"ApprovalHistory"> | string
   actedAt?: Prisma.DateTimeFilter<"ApprovalHistory"> | Date | string
   note?: Prisma.StringNullableFilter<"ApprovalHistory"> | string | null
 }
 
 export type ApprovalHistoryCreateManyActorInput = {
-  id?: number
+  id?: string
   docType: $Enums.ApprovalDocType
-  docId: number
+  docId: string
   step: $Enums.ApprovalStep
   action: $Enums.ApprovalAction
   actedAt?: Date | string
@@ -560,8 +508,9 @@ export type ApprovalHistoryCreateManyActorInput = {
 }
 
 export type ApprovalHistoryUpdateWithoutActorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,9 +518,9 @@ export type ApprovalHistoryUpdateWithoutActorInput = {
 }
 
 export type ApprovalHistoryUncheckedUpdateWithoutActorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -579,9 +528,9 @@ export type ApprovalHistoryUncheckedUpdateWithoutActorInput = {
 }
 
 export type ApprovalHistoryUncheckedUpdateManyWithoutActorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   docType?: Prisma.EnumApprovalDocTypeFieldUpdateOperationsInput | $Enums.ApprovalDocType
-  docId?: Prisma.IntFieldUpdateOperationsInput | number
+  docId?: Prisma.StringFieldUpdateOperationsInput | string
   step?: Prisma.EnumApprovalStepFieldUpdateOperationsInput | $Enums.ApprovalStep
   action?: Prisma.EnumApprovalActionFieldUpdateOperationsInput | $Enums.ApprovalAction
   actedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,12 +603,12 @@ export type $ApprovalHistoryPayload<ExtArgs extends runtime.Types.Extensions.Int
     actor: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     docType: $Enums.ApprovalDocType
-    docId: number
+    docId: string
     step: $Enums.ApprovalStep
     action: $Enums.ApprovalAction
-    actorId: number
+    actorId: string
     actedAt: Date
     note: string | null
   }, ExtArgs["result"]["approvalHistory"]>
@@ -1086,12 +1035,12 @@ export interface Prisma__ApprovalHistoryClient<T, Null = never, ExtArgs extends 
  * Fields of the ApprovalHistory model
  */
 export interface ApprovalHistoryFieldRefs {
-  readonly id: Prisma.FieldRef<"ApprovalHistory", 'Int'>
+  readonly id: Prisma.FieldRef<"ApprovalHistory", 'String'>
   readonly docType: Prisma.FieldRef<"ApprovalHistory", 'ApprovalDocType'>
-  readonly docId: Prisma.FieldRef<"ApprovalHistory", 'Int'>
+  readonly docId: Prisma.FieldRef<"ApprovalHistory", 'String'>
   readonly step: Prisma.FieldRef<"ApprovalHistory", 'ApprovalStep'>
   readonly action: Prisma.FieldRef<"ApprovalHistory", 'ApprovalAction'>
-  readonly actorId: Prisma.FieldRef<"ApprovalHistory", 'Int'>
+  readonly actorId: Prisma.FieldRef<"ApprovalHistory", 'String'>
   readonly actedAt: Prisma.FieldRef<"ApprovalHistory", 'DateTime'>
   readonly note: Prisma.FieldRef<"ApprovalHistory", 'String'>
 }

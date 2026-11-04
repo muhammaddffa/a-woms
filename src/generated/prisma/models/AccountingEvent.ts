@@ -20,37 +20,25 @@ export type AccountingEventModel = runtime.Types.Result.DefaultSelection<Prisma.
 
 export type AggregateAccountingEvent = {
   _count: AccountingEventCountAggregateOutputType | null
-  _avg: AccountingEventAvgAggregateOutputType | null
-  _sum: AccountingEventSumAggregateOutputType | null
   _min: AccountingEventMinAggregateOutputType | null
   _max: AccountingEventMaxAggregateOutputType | null
 }
 
-export type AccountingEventAvgAggregateOutputType = {
-  id: number | null
-  sourceId: number | null
-}
-
-export type AccountingEventSumAggregateOutputType = {
-  id: number | null
-  sourceId: number | null
-}
-
 export type AccountingEventMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   eventType: string | null
   sourceType: string | null
-  sourceId: number | null
+  sourceId: string | null
   status: $Enums.AccountingEventStatus | null
   createdAt: Date | null
   postedAt: Date | null
 }
 
 export type AccountingEventMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   eventType: string | null
   sourceType: string | null
-  sourceId: number | null
+  sourceId: string | null
   status: $Enums.AccountingEventStatus | null
   createdAt: Date | null
   postedAt: Date | null
@@ -67,16 +55,6 @@ export type AccountingEventCountAggregateOutputType = {
   _all: number
 }
 
-
-export type AccountingEventAvgAggregateInputType = {
-  id?: true
-  sourceId?: true
-}
-
-export type AccountingEventSumAggregateInputType = {
-  id?: true
-  sourceId?: true
-}
 
 export type AccountingEventMinAggregateInputType = {
   id?: true
@@ -147,18 +125,6 @@ export type AccountingEventAggregateArgs<ExtArgs extends runtime.Types.Extension
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: AccountingEventAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: AccountingEventSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: AccountingEventMinAggregateInputType
@@ -189,23 +155,19 @@ export type AccountingEventGroupByArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   _count?: AccountingEventCountAggregateInputType | true
-  _avg?: AccountingEventAvgAggregateInputType
-  _sum?: AccountingEventSumAggregateInputType
   _min?: AccountingEventMinAggregateInputType
   _max?: AccountingEventMaxAggregateInputType
 }
 
 export type AccountingEventGroupByOutputType = {
-  id: number
+  id: string
   eventType: string
   sourceType: string
-  sourceId: number
+  sourceId: string
   status: $Enums.AccountingEventStatus
   createdAt: Date
   postedAt: Date | null
   _count: AccountingEventCountAggregateOutputType | null
-  _avg: AccountingEventAvgAggregateOutputType | null
-  _sum: AccountingEventSumAggregateOutputType | null
   _min: AccountingEventMinAggregateOutputType | null
   _max: AccountingEventMaxAggregateOutputType | null
 }
@@ -229,10 +191,10 @@ export type AccountingEventWhereInput = {
   AND?: Prisma.AccountingEventWhereInput | Prisma.AccountingEventWhereInput[]
   OR?: Prisma.AccountingEventWhereInput[]
   NOT?: Prisma.AccountingEventWhereInput | Prisma.AccountingEventWhereInput[]
-  id?: Prisma.IntFilter<"AccountingEvent"> | number
+  id?: Prisma.UuidFilter<"AccountingEvent"> | string
   eventType?: Prisma.StringFilter<"AccountingEvent"> | string
   sourceType?: Prisma.StringFilter<"AccountingEvent"> | string
-  sourceId?: Prisma.IntFilter<"AccountingEvent"> | number
+  sourceId?: Prisma.UuidFilter<"AccountingEvent"> | string
   status?: Prisma.EnumAccountingEventStatusFilter<"AccountingEvent"> | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFilter<"AccountingEvent"> | Date | string
   postedAt?: Prisma.DateTimeNullableFilter<"AccountingEvent"> | Date | string | null
@@ -249,13 +211,13 @@ export type AccountingEventOrderByWithRelationInput = {
 }
 
 export type AccountingEventWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.AccountingEventWhereInput | Prisma.AccountingEventWhereInput[]
   OR?: Prisma.AccountingEventWhereInput[]
   NOT?: Prisma.AccountingEventWhereInput | Prisma.AccountingEventWhereInput[]
   eventType?: Prisma.StringFilter<"AccountingEvent"> | string
   sourceType?: Prisma.StringFilter<"AccountingEvent"> | string
-  sourceId?: Prisma.IntFilter<"AccountingEvent"> | number
+  sourceId?: Prisma.UuidFilter<"AccountingEvent"> | string
   status?: Prisma.EnumAccountingEventStatusFilter<"AccountingEvent"> | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFilter<"AccountingEvent"> | Date | string
   postedAt?: Prisma.DateTimeNullableFilter<"AccountingEvent"> | Date | string | null
@@ -270,87 +232,88 @@ export type AccountingEventOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   postedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AccountingEventCountOrderByAggregateInput
-  _avg?: Prisma.AccountingEventAvgOrderByAggregateInput
   _max?: Prisma.AccountingEventMaxOrderByAggregateInput
   _min?: Prisma.AccountingEventMinOrderByAggregateInput
-  _sum?: Prisma.AccountingEventSumOrderByAggregateInput
 }
 
 export type AccountingEventScalarWhereWithAggregatesInput = {
   AND?: Prisma.AccountingEventScalarWhereWithAggregatesInput | Prisma.AccountingEventScalarWhereWithAggregatesInput[]
   OR?: Prisma.AccountingEventScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AccountingEventScalarWhereWithAggregatesInput | Prisma.AccountingEventScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"AccountingEvent"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"AccountingEvent"> | string
   eventType?: Prisma.StringWithAggregatesFilter<"AccountingEvent"> | string
   sourceType?: Prisma.StringWithAggregatesFilter<"AccountingEvent"> | string
-  sourceId?: Prisma.IntWithAggregatesFilter<"AccountingEvent"> | number
+  sourceId?: Prisma.UuidWithAggregatesFilter<"AccountingEvent"> | string
   status?: Prisma.EnumAccountingEventStatusWithAggregatesFilter<"AccountingEvent"> | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AccountingEvent"> | Date | string
   postedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AccountingEvent"> | Date | string | null
 }
 
 export type AccountingEventCreateInput = {
+  id?: string
   eventType: string
   sourceType: string
-  sourceId: number
+  sourceId: string
   status?: $Enums.AccountingEventStatus
   createdAt?: Date | string
   postedAt?: Date | string | null
 }
 
 export type AccountingEventUncheckedCreateInput = {
-  id?: number
+  id?: string
   eventType: string
   sourceType: string
-  sourceId: number
+  sourceId: string
   status?: $Enums.AccountingEventStatus
   createdAt?: Date | string
   postedAt?: Date | string | null
 }
 
 export type AccountingEventUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   eventType?: Prisma.StringFieldUpdateOperationsInput | string
   sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAccountingEventStatusFieldUpdateOperationsInput | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AccountingEventUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   eventType?: Prisma.StringFieldUpdateOperationsInput | string
   sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAccountingEventStatusFieldUpdateOperationsInput | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AccountingEventCreateManyInput = {
-  id?: number
+  id?: string
   eventType: string
   sourceType: string
-  sourceId: number
+  sourceId: string
   status?: $Enums.AccountingEventStatus
   createdAt?: Date | string
   postedAt?: Date | string | null
 }
 
 export type AccountingEventUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   eventType?: Prisma.StringFieldUpdateOperationsInput | string
   sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAccountingEventStatusFieldUpdateOperationsInput | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AccountingEventUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   eventType?: Prisma.StringFieldUpdateOperationsInput | string
   sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAccountingEventStatusFieldUpdateOperationsInput | $Enums.AccountingEventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -364,11 +327,6 @@ export type AccountingEventCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   postedAt?: Prisma.SortOrder
-}
-
-export type AccountingEventAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
 }
 
 export type AccountingEventMaxOrderByAggregateInput = {
@@ -391,17 +349,8 @@ export type AccountingEventMinOrderByAggregateInput = {
   postedAt?: Prisma.SortOrder
 }
 
-export type AccountingEventSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  sourceId?: Prisma.SortOrder
-}
-
 export type EnumAccountingEventStatusFieldUpdateOperationsInput = {
   set?: $Enums.AccountingEventStatus
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 
@@ -452,10 +401,10 @@ export type $AccountingEventPayload<ExtArgs extends runtime.Types.Extensions.Int
   name: "AccountingEvent"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     eventType: string
     sourceType: string
-    sourceId: number
+    sourceId: string
     status: $Enums.AccountingEventStatus
     createdAt: Date
     postedAt: Date | null
@@ -882,10 +831,10 @@ export interface Prisma__AccountingEventClient<T, Null = never, ExtArgs extends 
  * Fields of the AccountingEvent model
  */
 export interface AccountingEventFieldRefs {
-  readonly id: Prisma.FieldRef<"AccountingEvent", 'Int'>
+  readonly id: Prisma.FieldRef<"AccountingEvent", 'String'>
   readonly eventType: Prisma.FieldRef<"AccountingEvent", 'String'>
   readonly sourceType: Prisma.FieldRef<"AccountingEvent", 'String'>
-  readonly sourceId: Prisma.FieldRef<"AccountingEvent", 'Int'>
+  readonly sourceId: Prisma.FieldRef<"AccountingEvent", 'String'>
   readonly status: Prisma.FieldRef<"AccountingEvent", 'AccountingEventStatus'>
   readonly createdAt: Prisma.FieldRef<"AccountingEvent", 'DateTime'>
   readonly postedAt: Prisma.FieldRef<"AccountingEvent", 'DateTime'>

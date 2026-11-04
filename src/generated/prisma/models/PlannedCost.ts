@@ -27,46 +27,42 @@ export type AggregatePlannedCost = {
 }
 
 export type PlannedCostAvgAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   totalCost: runtime.Decimal | null
-  createdById: number | null
 }
 
 export type PlannedCostSumAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   totalCost: runtime.Decimal | null
-  createdById: number | null
 }
 
 export type PlannedCostMinAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
+  id: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   totalCost: runtime.Decimal | null
   note: string | null
-  createdById: number | null
+  bearer: $Enums.CostBearer | null
+  bearerNote: string | null
+  createdById: string | null
   updatedAt: Date | null
 }
 
 export type PlannedCostMaxAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
+  id: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   totalCost: runtime.Decimal | null
   note: string | null
-  createdById: number | null
+  bearer: $Enums.CostBearer | null
+  bearerNote: string | null
+  createdById: string | null
   updatedAt: Date | null
 }
 
@@ -78,6 +74,8 @@ export type PlannedCostCountAggregateOutputType = {
   unitCost: number
   totalCost: number
   note: number
+  bearer: number
+  bearerNote: number
   createdById: number
   updatedAt: number
   _all: number
@@ -85,23 +83,15 @@ export type PlannedCostCountAggregateOutputType = {
 
 
 export type PlannedCostAvgAggregateInputType = {
-  id?: true
-  workOrderItemId?: true
-  chargeTypeId?: true
   quantity?: true
   unitCost?: true
   totalCost?: true
-  createdById?: true
 }
 
 export type PlannedCostSumAggregateInputType = {
-  id?: true
-  workOrderItemId?: true
-  chargeTypeId?: true
   quantity?: true
   unitCost?: true
   totalCost?: true
-  createdById?: true
 }
 
 export type PlannedCostMinAggregateInputType = {
@@ -112,6 +102,8 @@ export type PlannedCostMinAggregateInputType = {
   unitCost?: true
   totalCost?: true
   note?: true
+  bearer?: true
+  bearerNote?: true
   createdById?: true
   updatedAt?: true
 }
@@ -124,6 +116,8 @@ export type PlannedCostMaxAggregateInputType = {
   unitCost?: true
   totalCost?: true
   note?: true
+  bearer?: true
+  bearerNote?: true
   createdById?: true
   updatedAt?: true
 }
@@ -136,6 +130,8 @@ export type PlannedCostCountAggregateInputType = {
   unitCost?: true
   totalCost?: true
   note?: true
+  bearer?: true
+  bearerNote?: true
   createdById?: true
   updatedAt?: true
   _all?: true
@@ -228,14 +224,16 @@ export type PlannedCostGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type PlannedCostGroupByOutputType = {
-  id: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity: runtime.Decimal
   unitCost: runtime.Decimal
   totalCost: runtime.Decimal
   note: string | null
-  createdById: number | null
+  bearer: $Enums.CostBearer
+  bearerNote: string | null
+  createdById: string | null
   updatedAt: Date
   _count: PlannedCostCountAggregateOutputType | null
   _avg: PlannedCostAvgAggregateOutputType | null
@@ -263,14 +261,16 @@ export type PlannedCostWhereInput = {
   AND?: Prisma.PlannedCostWhereInput | Prisma.PlannedCostWhereInput[]
   OR?: Prisma.PlannedCostWhereInput[]
   NOT?: Prisma.PlannedCostWhereInput | Prisma.PlannedCostWhereInput[]
-  id?: Prisma.IntFilter<"PlannedCost"> | number
-  workOrderItemId?: Prisma.IntFilter<"PlannedCost"> | number
-  chargeTypeId?: Prisma.IntFilter<"PlannedCost"> | number
+  id?: Prisma.UuidFilter<"PlannedCost"> | string
+  workOrderItemId?: Prisma.UuidFilter<"PlannedCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"PlannedCost"> | string
   quantity?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
-  createdById?: Prisma.IntNullableFilter<"PlannedCost"> | number | null
+  bearer?: Prisma.EnumCostBearerFilter<"PlannedCost"> | $Enums.CostBearer
+  bearerNote?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"PlannedCost"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"PlannedCost"> | Date | string
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
   chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
@@ -286,6 +286,8 @@ export type PlannedCostOrderByWithRelationInput = {
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
+  bearer?: Prisma.SortOrder
+  bearerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   workOrderItem?: Prisma.WorkOrderItemOrderByWithRelationInput
@@ -295,18 +297,20 @@ export type PlannedCostOrderByWithRelationInput = {
 }
 
 export type PlannedCostWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   workOrderItemId_chargeTypeId?: Prisma.PlannedCostWorkOrderItemIdChargeTypeIdCompoundUniqueInput
   AND?: Prisma.PlannedCostWhereInput | Prisma.PlannedCostWhereInput[]
   OR?: Prisma.PlannedCostWhereInput[]
   NOT?: Prisma.PlannedCostWhereInput | Prisma.PlannedCostWhereInput[]
-  workOrderItemId?: Prisma.IntFilter<"PlannedCost"> | number
-  chargeTypeId?: Prisma.IntFilter<"PlannedCost"> | number
+  workOrderItemId?: Prisma.UuidFilter<"PlannedCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"PlannedCost"> | string
   quantity?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
-  createdById?: Prisma.IntNullableFilter<"PlannedCost"> | number | null
+  bearer?: Prisma.EnumCostBearerFilter<"PlannedCost"> | $Enums.CostBearer
+  bearerNote?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"PlannedCost"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"PlannedCost"> | Date | string
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
   chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
@@ -322,6 +326,8 @@ export type PlannedCostOrderByWithAggregationInput = {
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
+  bearer?: Prisma.SortOrder
+  bearerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlannedCostCountOrderByAggregateInput
@@ -335,22 +341,27 @@ export type PlannedCostScalarWhereWithAggregatesInput = {
   AND?: Prisma.PlannedCostScalarWhereWithAggregatesInput | Prisma.PlannedCostScalarWhereWithAggregatesInput[]
   OR?: Prisma.PlannedCostScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PlannedCostScalarWhereWithAggregatesInput | Prisma.PlannedCostScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"PlannedCost"> | number
-  workOrderItemId?: Prisma.IntWithAggregatesFilter<"PlannedCost"> | number
-  chargeTypeId?: Prisma.IntWithAggregatesFilter<"PlannedCost"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"PlannedCost"> | string
+  workOrderItemId?: Prisma.UuidWithAggregatesFilter<"PlannedCost"> | string
+  chargeTypeId?: Prisma.UuidWithAggregatesFilter<"PlannedCost"> | string
   quantity?: Prisma.DecimalWithAggregatesFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalWithAggregatesFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalWithAggregatesFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.StringNullableWithAggregatesFilter<"PlannedCost"> | string | null
-  createdById?: Prisma.IntNullableWithAggregatesFilter<"PlannedCost"> | number | null
+  bearer?: Prisma.EnumCostBearerWithAggregatesFilter<"PlannedCost"> | $Enums.CostBearer
+  bearerNote?: Prisma.StringNullableWithAggregatesFilter<"PlannedCost"> | string | null
+  createdById?: Prisma.UuidNullableWithAggregatesFilter<"PlannedCost"> | string | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PlannedCost"> | Date | string
 }
 
 export type PlannedCostCreateInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutPlannedCostsInput
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutPlannedCostsInput
@@ -359,23 +370,28 @@ export type PlannedCostCreateInput = {
 }
 
 export type PlannedCostUncheckedCreateInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutPlannedCostInput
 }
 
 export type PlannedCostUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutPlannedCostsNestedInput
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutPlannedCostsNestedInput
@@ -384,47 +400,56 @@ export type PlannedCostUpdateInput = {
 }
 
 export type PlannedCostUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutPlannedCostNestedInput
 }
 
 export type PlannedCostCreateManyInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
 }
 
 export type PlannedCostUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlannedCostUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -439,8 +464,8 @@ export type PlannedCostOrderByRelationAggregateInput = {
 }
 
 export type PlannedCostWorkOrderItemIdChargeTypeIdCompoundUniqueInput = {
-  workOrderItemId: number
-  chargeTypeId: number
+  workOrderItemId: string
+  chargeTypeId: string
 }
 
 export type PlannedCostCountOrderByAggregateInput = {
@@ -451,18 +476,16 @@ export type PlannedCostCountOrderByAggregateInput = {
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   note?: Prisma.SortOrder
+  bearer?: Prisma.SortOrder
+  bearerNote?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PlannedCostAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
-  chargeTypeId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type PlannedCostMaxOrderByAggregateInput = {
@@ -473,6 +496,8 @@ export type PlannedCostMaxOrderByAggregateInput = {
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   note?: Prisma.SortOrder
+  bearer?: Prisma.SortOrder
+  bearerNote?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -485,18 +510,16 @@ export type PlannedCostMinOrderByAggregateInput = {
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
   note?: Prisma.SortOrder
+  bearer?: Prisma.SortOrder
+  bearerNote?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PlannedCostSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
-  chargeTypeId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   totalCost?: Prisma.SortOrder
-  createdById?: Prisma.SortOrder
 }
 
 export type PlannedCostScalarRelationFilter = {
@@ -630,6 +653,10 @@ export type PlannedCostUncheckedUpdateManyWithoutWorkOrderItemNestedInput = {
   deleteMany?: Prisma.PlannedCostScalarWhereInput | Prisma.PlannedCostScalarWhereInput[]
 }
 
+export type EnumCostBearerFieldUpdateOperationsInput = {
+  set?: $Enums.CostBearer
+}
+
 export type PlannedCostCreateNestedOneWithoutAdvanceItemsInput = {
   create?: Prisma.XOR<Prisma.PlannedCostCreateWithoutAdvanceItemsInput, Prisma.PlannedCostUncheckedCreateWithoutAdvanceItemsInput>
   connectOrCreate?: Prisma.PlannedCostCreateOrConnectWithoutAdvanceItemsInput
@@ -645,10 +672,13 @@ export type PlannedCostUpdateOneRequiredWithoutAdvanceItemsNestedInput = {
 }
 
 export type PlannedCostCreateWithoutCreatedByInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutPlannedCostsInput
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutPlannedCostsInput
@@ -656,13 +686,15 @@ export type PlannedCostCreateWithoutCreatedByInput = {
 }
 
 export type PlannedCostUncheckedCreateWithoutCreatedByInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutPlannedCostInput
 }
@@ -697,22 +729,27 @@ export type PlannedCostScalarWhereInput = {
   AND?: Prisma.PlannedCostScalarWhereInput | Prisma.PlannedCostScalarWhereInput[]
   OR?: Prisma.PlannedCostScalarWhereInput[]
   NOT?: Prisma.PlannedCostScalarWhereInput | Prisma.PlannedCostScalarWhereInput[]
-  id?: Prisma.IntFilter<"PlannedCost"> | number
-  workOrderItemId?: Prisma.IntFilter<"PlannedCost"> | number
-  chargeTypeId?: Prisma.IntFilter<"PlannedCost"> | number
+  id?: Prisma.UuidFilter<"PlannedCost"> | string
+  workOrderItemId?: Prisma.UuidFilter<"PlannedCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"PlannedCost"> | string
   quantity?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFilter<"PlannedCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
-  createdById?: Prisma.IntNullableFilter<"PlannedCost"> | number | null
+  bearer?: Prisma.EnumCostBearerFilter<"PlannedCost"> | $Enums.CostBearer
+  bearerNote?: Prisma.StringNullableFilter<"PlannedCost"> | string | null
+  createdById?: Prisma.UuidNullableFilter<"PlannedCost"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"PlannedCost"> | Date | string
 }
 
 export type PlannedCostCreateWithoutChargeTypeInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutPlannedCostsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlannedCostsInput
@@ -720,13 +757,15 @@ export type PlannedCostCreateWithoutChargeTypeInput = {
 }
 
 export type PlannedCostUncheckedCreateWithoutChargeTypeInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutPlannedCostInput
 }
@@ -758,10 +797,13 @@ export type PlannedCostUpdateManyWithWhereWithoutChargeTypeInput = {
 }
 
 export type PlannedCostCreateWithoutWorkOrderItemInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutPlannedCostsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedPlannedCostsInput
@@ -769,13 +811,15 @@ export type PlannedCostCreateWithoutWorkOrderItemInput = {
 }
 
 export type PlannedCostUncheckedCreateWithoutWorkOrderItemInput = {
-  id?: number
-  chargeTypeId: number
+  id?: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedCreateNestedManyWithoutPlannedCostInput
 }
@@ -807,10 +851,13 @@ export type PlannedCostUpdateManyWithWhereWithoutWorkOrderItemInput = {
 }
 
 export type PlannedCostCreateWithoutAdvanceItemsInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutPlannedCostsInput
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutPlannedCostsInput
@@ -818,14 +865,16 @@ export type PlannedCostCreateWithoutAdvanceItemsInput = {
 }
 
 export type PlannedCostUncheckedCreateWithoutAdvanceItemsInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
 }
 
@@ -846,10 +895,13 @@ export type PlannedCostUpdateToOneWithWhereWithoutAdvanceItemsInput = {
 }
 
 export type PlannedCostUpdateWithoutAdvanceItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutPlannedCostsNestedInput
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutPlannedCostsNestedInput
@@ -857,33 +909,40 @@ export type PlannedCostUpdateWithoutAdvanceItemsInput = {
 }
 
 export type PlannedCostUncheckedUpdateWithoutAdvanceItemsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlannedCostCreateManyCreatedByInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
   updatedAt?: Date | string
 }
 
 export type PlannedCostUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutPlannedCostsNestedInput
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutPlannedCostsNestedInput
@@ -891,44 +950,53 @@ export type PlannedCostUpdateWithoutCreatedByInput = {
 }
 
 export type PlannedCostUncheckedUpdateWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutPlannedCostNestedInput
 }
 
 export type PlannedCostUncheckedUpdateManyWithoutCreatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlannedCostCreateManyChargeTypeInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
 }
 
 export type PlannedCostUpdateWithoutChargeTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutPlannedCostsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPlannedCostsNestedInput
@@ -936,44 +1004,53 @@ export type PlannedCostUpdateWithoutChargeTypeInput = {
 }
 
 export type PlannedCostUncheckedUpdateWithoutChargeTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutPlannedCostNestedInput
 }
 
 export type PlannedCostUncheckedUpdateManyWithoutChargeTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlannedCostCreateManyWorkOrderItemInput = {
-  id?: number
-  chargeTypeId: number
+  id?: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
-  createdById?: number | null
+  bearer?: $Enums.CostBearer
+  bearerNote?: string | null
+  createdById?: string | null
   updatedAt?: Date | string
 }
 
 export type PlannedCostUpdateWithoutWorkOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutPlannedCostsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedPlannedCostsNestedInput
@@ -981,25 +1058,29 @@ export type PlannedCostUpdateWithoutWorkOrderItemInput = {
 }
 
 export type PlannedCostUncheckedUpdateWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   advanceItems?: Prisma.CashAdvanceItemUncheckedUpdateManyWithoutPlannedCostNestedInput
 }
 
 export type PlannedCostUncheckedUpdateManyWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  bearer?: Prisma.EnumCostBearerFieldUpdateOperationsInput | $Enums.CostBearer
+  bearerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1042,6 +1123,8 @@ export type PlannedCostSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   unitCost?: boolean
   totalCost?: boolean
   note?: boolean
+  bearer?: boolean
+  bearerNote?: boolean
   createdById?: boolean
   updatedAt?: boolean
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
@@ -1059,6 +1142,8 @@ export type PlannedCostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   unitCost?: boolean
   totalCost?: boolean
   note?: boolean
+  bearer?: boolean
+  bearerNote?: boolean
   createdById?: boolean
   updatedAt?: boolean
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
@@ -1074,6 +1159,8 @@ export type PlannedCostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   unitCost?: boolean
   totalCost?: boolean
   note?: boolean
+  bearer?: boolean
+  bearerNote?: boolean
   createdById?: boolean
   updatedAt?: boolean
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
@@ -1089,11 +1176,13 @@ export type PlannedCostSelectScalar = {
   unitCost?: boolean
   totalCost?: boolean
   note?: boolean
+  bearer?: boolean
+  bearerNote?: boolean
   createdById?: boolean
   updatedAt?: boolean
 }
 
-export type PlannedCostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workOrderItemId" | "chargeTypeId" | "quantity" | "unitCost" | "totalCost" | "note" | "createdById" | "updatedAt", ExtArgs["result"]["plannedCost"]>
+export type PlannedCostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workOrderItemId" | "chargeTypeId" | "quantity" | "unitCost" | "totalCost" | "note" | "bearer" | "bearerNote" | "createdById" | "updatedAt", ExtArgs["result"]["plannedCost"]>
 export type PlannedCostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
   chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
@@ -1121,14 +1210,16 @@ export type $PlannedCostPayload<ExtArgs extends runtime.Types.Extensions.Interna
     advanceItems: Prisma.$CashAdvanceItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    workOrderItemId: number
-    chargeTypeId: number
+    id: string
+    workOrderItemId: string
+    chargeTypeId: string
     quantity: runtime.Decimal
     unitCost: runtime.Decimal
     totalCost: runtime.Decimal
     note: string | null
-    createdById: number | null
+    bearer: $Enums.CostBearer
+    bearerNote: string | null
+    createdById: string | null
     updatedAt: Date
   }, ExtArgs["result"]["plannedCost"]>
   composites: {}
@@ -1557,14 +1648,16 @@ export interface Prisma__PlannedCostClient<T, Null = never, ExtArgs extends runt
  * Fields of the PlannedCost model
  */
 export interface PlannedCostFieldRefs {
-  readonly id: Prisma.FieldRef<"PlannedCost", 'Int'>
-  readonly workOrderItemId: Prisma.FieldRef<"PlannedCost", 'Int'>
-  readonly chargeTypeId: Prisma.FieldRef<"PlannedCost", 'Int'>
+  readonly id: Prisma.FieldRef<"PlannedCost", 'String'>
+  readonly workOrderItemId: Prisma.FieldRef<"PlannedCost", 'String'>
+  readonly chargeTypeId: Prisma.FieldRef<"PlannedCost", 'String'>
   readonly quantity: Prisma.FieldRef<"PlannedCost", 'Decimal'>
   readonly unitCost: Prisma.FieldRef<"PlannedCost", 'Decimal'>
   readonly totalCost: Prisma.FieldRef<"PlannedCost", 'Decimal'>
   readonly note: Prisma.FieldRef<"PlannedCost", 'String'>
-  readonly createdById: Prisma.FieldRef<"PlannedCost", 'Int'>
+  readonly bearer: Prisma.FieldRef<"PlannedCost", 'CostBearer'>
+  readonly bearerNote: Prisma.FieldRef<"PlannedCost", 'String'>
+  readonly createdById: Prisma.FieldRef<"PlannedCost", 'String'>
   readonly updatedAt: Prisma.FieldRef<"PlannedCost", 'DateTime'>
 }
     

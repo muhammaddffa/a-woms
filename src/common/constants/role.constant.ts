@@ -14,6 +14,4 @@ export const isSuperAdmin = (user: AuthUser): boolean =>
 
 // Deteksi pelanggaran unique constraint tanpa bergantung pada kelas error Prisma.
 export const isUniqueViolation = (e: unknown): boolean =>
-  typeof e === 'object' &&
-  e !== null &&
-  (e as { code?: string }).code === 'P2002';
+  typeof e === 'object' && e !== null && (e as { code?: string }).code === 'P2002';

@@ -4,11 +4,11 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Put,
 } from '@nestjs/common';
+import { ParseIdPipe } from '../common/pipes/parse-id.pipe.js';
 import { CurrentUser } from '../auth/decorators/current-user.decorator.js';
 import { Permissions } from '../auth/decorators/permissions.decorator.js';
 import type { AuthUser } from '../auth/types/auth.types.js';
@@ -35,7 +35,7 @@ export class RoleController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIdPipe) id: string) {
     return this.roleService.findOne(id);
   }
 
@@ -46,7 +46,7 @@ export class RoleController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIdPipe) id: string,
     @Body(new ZodValidationPipe(updateRoleSchema)) dto: UpdateRoleDto,
   ) {
     return this.roleService.update(id, dto);
@@ -55,15 +55,14 @@ export class RoleController {
   @Put(':id/permissions')
   setPermissions(
     @CurrentUser() actor: AuthUser,
-    @Param('id', ParseIntPipe) id: number,
-    @Body(new ZodValidationPipe(setRolePermissionsSchema))
-    dto: SetRolePermissionsDto,
+    @Param('id', ParseIdPipe) id: string,
+    @Body(new ZodValidationPipe(setRolePermissionsSchema)) dto: SetRolePermissionsDto,
   ) {
     return this.roleService.setPermissions(actor, id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIdPipe) id: string) {
     return this.roleService.remove(id);
   }
 }

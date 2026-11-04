@@ -27,44 +27,36 @@ export type AggregateBillableCharge = {
 }
 
 export type BillableChargeAvgAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
   quantity: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
-  invoiceId: number | null
 }
 
 export type BillableChargeSumAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
   quantity: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
-  invoiceId: number | null
 }
 
 export type BillableChargeMinAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
+  id: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   quantity: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
-  invoiceId: number | null
+  invoiceId: string | null
   note: string | null
 }
 
 export type BillableChargeMaxAggregateOutputType = {
-  id: number | null
-  workOrderItemId: number | null
-  chargeTypeId: number | null
+  id: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   quantity: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   totalPrice: runtime.Decimal | null
-  invoiceId: number | null
+  invoiceId: string | null
   note: string | null
 }
 
@@ -82,23 +74,15 @@ export type BillableChargeCountAggregateOutputType = {
 
 
 export type BillableChargeAvgAggregateInputType = {
-  id?: true
-  workOrderItemId?: true
-  chargeTypeId?: true
   quantity?: true
   unitPrice?: true
   totalPrice?: true
-  invoiceId?: true
 }
 
 export type BillableChargeSumAggregateInputType = {
-  id?: true
-  workOrderItemId?: true
-  chargeTypeId?: true
   quantity?: true
   unitPrice?: true
   totalPrice?: true
-  invoiceId?: true
 }
 
 export type BillableChargeMinAggregateInputType = {
@@ -222,13 +206,13 @@ export type BillableChargeGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type BillableChargeGroupByOutputType = {
-  id: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity: runtime.Decimal
   unitPrice: runtime.Decimal
   totalPrice: runtime.Decimal
-  invoiceId: number | null
+  invoiceId: string | null
   note: string | null
   _count: BillableChargeCountAggregateOutputType | null
   _avg: BillableChargeAvgAggregateOutputType | null
@@ -256,13 +240,13 @@ export type BillableChargeWhereInput = {
   AND?: Prisma.BillableChargeWhereInput | Prisma.BillableChargeWhereInput[]
   OR?: Prisma.BillableChargeWhereInput[]
   NOT?: Prisma.BillableChargeWhereInput | Prisma.BillableChargeWhereInput[]
-  id?: Prisma.IntFilter<"BillableCharge"> | number
-  workOrderItemId?: Prisma.IntFilter<"BillableCharge"> | number
-  chargeTypeId?: Prisma.IntFilter<"BillableCharge"> | number
+  id?: Prisma.UuidFilter<"BillableCharge"> | string
+  workOrderItemId?: Prisma.UuidFilter<"BillableCharge"> | string
+  chargeTypeId?: Prisma.UuidFilter<"BillableCharge"> | string
   quantity?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.IntNullableFilter<"BillableCharge"> | number | null
+  invoiceId?: Prisma.UuidNullableFilter<"BillableCharge"> | string | null
   note?: Prisma.StringNullableFilter<"BillableCharge"> | string | null
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
   chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
@@ -282,17 +266,17 @@ export type BillableChargeOrderByWithRelationInput = {
 }
 
 export type BillableChargeWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   workOrderItemId_chargeTypeId?: Prisma.BillableChargeWorkOrderItemIdChargeTypeIdCompoundUniqueInput
   AND?: Prisma.BillableChargeWhereInput | Prisma.BillableChargeWhereInput[]
   OR?: Prisma.BillableChargeWhereInput[]
   NOT?: Prisma.BillableChargeWhereInput | Prisma.BillableChargeWhereInput[]
-  workOrderItemId?: Prisma.IntFilter<"BillableCharge"> | number
-  chargeTypeId?: Prisma.IntFilter<"BillableCharge"> | number
+  workOrderItemId?: Prisma.UuidFilter<"BillableCharge"> | string
+  chargeTypeId?: Prisma.UuidFilter<"BillableCharge"> | string
   quantity?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.IntNullableFilter<"BillableCharge"> | number | null
+  invoiceId?: Prisma.UuidNullableFilter<"BillableCharge"> | string | null
   note?: Prisma.StringNullableFilter<"BillableCharge"> | string | null
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
   chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
@@ -318,85 +302,88 @@ export type BillableChargeScalarWhereWithAggregatesInput = {
   AND?: Prisma.BillableChargeScalarWhereWithAggregatesInput | Prisma.BillableChargeScalarWhereWithAggregatesInput[]
   OR?: Prisma.BillableChargeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.BillableChargeScalarWhereWithAggregatesInput | Prisma.BillableChargeScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"BillableCharge"> | number
-  workOrderItemId?: Prisma.IntWithAggregatesFilter<"BillableCharge"> | number
-  chargeTypeId?: Prisma.IntWithAggregatesFilter<"BillableCharge"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"BillableCharge"> | string
+  workOrderItemId?: Prisma.UuidWithAggregatesFilter<"BillableCharge"> | string
+  chargeTypeId?: Prisma.UuidWithAggregatesFilter<"BillableCharge"> | string
   quantity?: Prisma.DecimalWithAggregatesFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalWithAggregatesFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalWithAggregatesFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.IntNullableWithAggregatesFilter<"BillableCharge"> | number | null
+  invoiceId?: Prisma.UuidNullableWithAggregatesFilter<"BillableCharge"> | string | null
   note?: Prisma.StringNullableWithAggregatesFilter<"BillableCharge"> | string | null
 }
 
 export type BillableChargeCreateInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutBillableChargesInput
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutBillableChargesInput
 }
 
 export type BillableChargeUncheckedCreateInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
 export type BillableChargeUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutBillableChargesNestedInput
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutBillableChargesNestedInput
 }
 
 export type BillableChargeUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillableChargeCreateManyInput = {
-  id?: number
-  workOrderItemId: number
-  chargeTypeId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
 export type BillableChargeUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillableChargeUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -411,8 +398,8 @@ export type BillableChargeOrderByRelationAggregateInput = {
 }
 
 export type BillableChargeWorkOrderItemIdChargeTypeIdCompoundUniqueInput = {
-  workOrderItemId: number
-  chargeTypeId: number
+  workOrderItemId: string
+  chargeTypeId: string
 }
 
 export type BillableChargeCountOrderByAggregateInput = {
@@ -427,13 +414,9 @@ export type BillableChargeCountOrderByAggregateInput = {
 }
 
 export type BillableChargeAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
-  chargeTypeId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrder
 }
 
 export type BillableChargeMaxOrderByAggregateInput = {
@@ -459,13 +442,9 @@ export type BillableChargeMinOrderByAggregateInput = {
 }
 
 export type BillableChargeSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
-  chargeTypeId?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   totalPrice?: Prisma.SortOrder
-  invoiceId?: Prisma.SortOrder
 }
 
 export type BillableChargeCreateNestedManyWithoutChargeTypeInput = {
@@ -553,21 +532,22 @@ export type BillableChargeUncheckedUpdateManyWithoutWorkOrderItemNestedInput = {
 }
 
 export type BillableChargeCreateWithoutChargeTypeInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutBillableChargesInput
 }
 
 export type BillableChargeUncheckedCreateWithoutChargeTypeInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
@@ -601,32 +581,33 @@ export type BillableChargeScalarWhereInput = {
   AND?: Prisma.BillableChargeScalarWhereInput | Prisma.BillableChargeScalarWhereInput[]
   OR?: Prisma.BillableChargeScalarWhereInput[]
   NOT?: Prisma.BillableChargeScalarWhereInput | Prisma.BillableChargeScalarWhereInput[]
-  id?: Prisma.IntFilter<"BillableCharge"> | number
-  workOrderItemId?: Prisma.IntFilter<"BillableCharge"> | number
-  chargeTypeId?: Prisma.IntFilter<"BillableCharge"> | number
+  id?: Prisma.UuidFilter<"BillableCharge"> | string
+  workOrderItemId?: Prisma.UuidFilter<"BillableCharge"> | string
+  chargeTypeId?: Prisma.UuidFilter<"BillableCharge"> | string
   quantity?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFilter<"BillableCharge"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.IntNullableFilter<"BillableCharge"> | number | null
+  invoiceId?: Prisma.UuidNullableFilter<"BillableCharge"> | string | null
   note?: Prisma.StringNullableFilter<"BillableCharge"> | string | null
 }
 
 export type BillableChargeCreateWithoutWorkOrderItemInput = {
+  id?: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
   chargeType: Prisma.ChargeTypeCreateNestedOneWithoutBillableChargesInput
 }
 
 export type BillableChargeUncheckedCreateWithoutWorkOrderItemInput = {
-  id?: number
-  chargeTypeId: number
+  id?: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
@@ -657,80 +638,82 @@ export type BillableChargeUpdateManyWithWhereWithoutWorkOrderItemInput = {
 }
 
 export type BillableChargeCreateManyChargeTypeInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
 export type BillableChargeUpdateWithoutChargeTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutBillableChargesNestedInput
 }
 
 export type BillableChargeUncheckedUpdateWithoutChargeTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillableChargeUncheckedUpdateManyWithoutChargeTypeInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillableChargeCreateManyWorkOrderItemInput = {
-  id?: number
-  chargeTypeId: number
+  id?: string
+  chargeTypeId: string
   quantity?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: number | null
+  invoiceId?: string | null
   note?: string | null
 }
 
 export type BillableChargeUpdateWithoutWorkOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutBillableChargesNestedInput
 }
 
 export type BillableChargeUncheckedUpdateWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type BillableChargeUncheckedUpdateManyWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeTypeId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  invoiceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  invoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -807,13 +790,13 @@ export type $BillableChargePayload<ExtArgs extends runtime.Types.Extensions.Inte
     chargeType: Prisma.$ChargeTypePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    workOrderItemId: number
-    chargeTypeId: number
+    id: string
+    workOrderItemId: string
+    chargeTypeId: string
     quantity: runtime.Decimal
     unitPrice: runtime.Decimal
     totalPrice: runtime.Decimal
-    invoiceId: number | null
+    invoiceId: string | null
     note: string | null
   }, ExtArgs["result"]["billableCharge"]>
   composites: {}
@@ -1240,13 +1223,13 @@ export interface Prisma__BillableChargeClient<T, Null = never, ExtArgs extends r
  * Fields of the BillableCharge model
  */
 export interface BillableChargeFieldRefs {
-  readonly id: Prisma.FieldRef<"BillableCharge", 'Int'>
-  readonly workOrderItemId: Prisma.FieldRef<"BillableCharge", 'Int'>
-  readonly chargeTypeId: Prisma.FieldRef<"BillableCharge", 'Int'>
+  readonly id: Prisma.FieldRef<"BillableCharge", 'String'>
+  readonly workOrderItemId: Prisma.FieldRef<"BillableCharge", 'String'>
+  readonly chargeTypeId: Prisma.FieldRef<"BillableCharge", 'String'>
   readonly quantity: Prisma.FieldRef<"BillableCharge", 'Decimal'>
   readonly unitPrice: Prisma.FieldRef<"BillableCharge", 'Decimal'>
   readonly totalPrice: Prisma.FieldRef<"BillableCharge", 'Decimal'>
-  readonly invoiceId: Prisma.FieldRef<"BillableCharge", 'Int'>
+  readonly invoiceId: Prisma.FieldRef<"BillableCharge", 'String'>
   readonly note: Prisma.FieldRef<"BillableCharge", 'String'>
 }
     

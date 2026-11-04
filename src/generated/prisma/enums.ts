@@ -54,6 +54,23 @@ export const WorkOrderItemStatus = {
 export type WorkOrderItemStatus = (typeof WorkOrderItemStatus)[keyof typeof WorkOrderItemStatus]
 
 
+export const BillingMode = {
+  FIXED: 'FIXED',
+  AT_COST: 'AT_COST'
+} as const
+
+export type BillingMode = (typeof BillingMode)[keyof typeof BillingMode]
+
+
+export const CostBearer = {
+  COMPANY: 'COMPANY',
+  VENDOR: 'VENDOR',
+  DEDUCT_FROM_VENDOR: 'DEDUCT_FROM_VENDOR'
+} as const
+
+export type CostBearer = (typeof CostBearer)[keyof typeof CostBearer]
+
+
 export const CashAdvanceType = {
   OPERATIONAL: 'OPERATIONAL',
   DRIVER_ALLOWANCE: 'DRIVER_ALLOWANCE'
@@ -67,7 +84,9 @@ export const CashAdvanceStatus = {
   CHECKED: 'CHECKED',
   APPROVED: 'APPROVED',
   PAID: 'PAID',
+  TRANSFER_VERIFIED: 'TRANSFER_VERIFIED',
   REPORT_SUBMITTED: 'REPORT_SUBMITTED',
+  REPORT_CHECKED: 'REPORT_CHECKED',
   REPORT_APPROVED: 'REPORT_APPROVED',
   SETTLED: 'SETTLED',
   REJECTED: 'REJECTED',
@@ -86,6 +105,14 @@ export const AdvanceReturnStatus = {
 export type AdvanceReturnStatus = (typeof AdvanceReturnStatus)[keyof typeof AdvanceReturnStatus]
 
 
+export const AdvanceReturnDirection = {
+  RETURN_TO_COMPANY: 'RETURN_TO_COMPANY',
+  REIMBURSE_STAFF: 'REIMBURSE_STAFF'
+} as const
+
+export type AdvanceReturnDirection = (typeof AdvanceReturnDirection)[keyof typeof AdvanceReturnDirection]
+
+
 export const ApprovalDocType = {
   WORK_ORDER_COST: 'WORK_ORDER_COST',
   CASH_ADVANCE: 'CASH_ADVANCE',
@@ -99,7 +126,9 @@ export const ApprovalStep = {
   CHECK: 'CHECK',
   APPROVE: 'APPROVE',
   PAY: 'PAY',
+  VERIFY_TRANSFER: 'VERIFY_TRANSFER',
   REPORT_SUBMIT: 'REPORT_SUBMIT',
+  REPORT_CHECK: 'REPORT_CHECK',
   REPORT_APPROVE: 'REPORT_APPROVE',
   RECEIVE: 'RECEIVE'
 } as const
@@ -119,6 +148,7 @@ export type ApprovalAction = (typeof ApprovalAction)[keyof typeof ApprovalAction
 export const AttachmentOwnerType = {
   CASH_ADVANCE: 'CASH_ADVANCE',
   CASH_ADVANCE_ITEM: 'CASH_ADVANCE_ITEM',
+  CASH_ADVANCE_EXTRA_COST: 'CASH_ADVANCE_EXTRA_COST',
   ADVANCE_RETURN: 'ADVANCE_RETURN',
   WORK_ORDER_ITEM: 'WORK_ORDER_ITEM'
 } as const
@@ -129,7 +159,8 @@ export type AttachmentOwnerType = (typeof AttachmentOwnerType)[keyof typeof Atta
 export const AttachmentKind = {
   RECEIPT: 'RECEIPT',
   PHOTO: 'PHOTO',
-  PDF: 'PDF'
+  PDF: 'PDF',
+  TRANSFER_PROOF: 'TRANSFER_PROOF'
 } as const
 
 export type AttachmentKind = (typeof AttachmentKind)[keyof typeof AttachmentKind]

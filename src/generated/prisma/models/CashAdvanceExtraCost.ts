@@ -27,34 +27,32 @@ export type AggregateCashAdvanceExtraCost = {
 }
 
 export type CashAdvanceExtraCostAvgAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  workOrderItemId: number | null
   amount: runtime.Decimal | null
 }
 
 export type CashAdvanceExtraCostSumAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  workOrderItemId: number | null
   amount: runtime.Decimal | null
 }
 
 export type CashAdvanceExtraCostMinAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  workOrderItemId: number | null
+  id: string | null
+  cashAdvanceId: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   description: string | null
   amount: runtime.Decimal | null
+  billable: boolean | null
   note: string | null
 }
 
 export type CashAdvanceExtraCostMaxAggregateOutputType = {
-  id: number | null
-  cashAdvanceId: number | null
-  workOrderItemId: number | null
+  id: string | null
+  cashAdvanceId: string | null
+  workOrderItemId: string | null
+  chargeTypeId: string | null
   description: string | null
   amount: runtime.Decimal | null
+  billable: boolean | null
   note: string | null
 }
 
@@ -62,24 +60,20 @@ export type CashAdvanceExtraCostCountAggregateOutputType = {
   id: number
   cashAdvanceId: number
   workOrderItemId: number
+  chargeTypeId: number
   description: number
   amount: number
+  billable: number
   note: number
   _all: number
 }
 
 
 export type CashAdvanceExtraCostAvgAggregateInputType = {
-  id?: true
-  cashAdvanceId?: true
-  workOrderItemId?: true
   amount?: true
 }
 
 export type CashAdvanceExtraCostSumAggregateInputType = {
-  id?: true
-  cashAdvanceId?: true
-  workOrderItemId?: true
   amount?: true
 }
 
@@ -87,8 +81,10 @@ export type CashAdvanceExtraCostMinAggregateInputType = {
   id?: true
   cashAdvanceId?: true
   workOrderItemId?: true
+  chargeTypeId?: true
   description?: true
   amount?: true
+  billable?: true
   note?: true
 }
 
@@ -96,8 +92,10 @@ export type CashAdvanceExtraCostMaxAggregateInputType = {
   id?: true
   cashAdvanceId?: true
   workOrderItemId?: true
+  chargeTypeId?: true
   description?: true
   amount?: true
+  billable?: true
   note?: true
 }
 
@@ -105,8 +103,10 @@ export type CashAdvanceExtraCostCountAggregateInputType = {
   id?: true
   cashAdvanceId?: true
   workOrderItemId?: true
+  chargeTypeId?: true
   description?: true
   amount?: true
+  billable?: true
   note?: true
   _all?: true
 }
@@ -198,11 +198,13 @@ export type CashAdvanceExtraCostGroupByArgs<ExtArgs extends runtime.Types.Extens
 }
 
 export type CashAdvanceExtraCostGroupByOutputType = {
-  id: number
-  cashAdvanceId: number
-  workOrderItemId: number
+  id: string
+  cashAdvanceId: string
+  workOrderItemId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal
+  billable: boolean
   note: string | null
   _count: CashAdvanceExtraCostCountAggregateOutputType | null
   _avg: CashAdvanceExtraCostAvgAggregateOutputType | null
@@ -230,47 +232,58 @@ export type CashAdvanceExtraCostWhereInput = {
   AND?: Prisma.CashAdvanceExtraCostWhereInput | Prisma.CashAdvanceExtraCostWhereInput[]
   OR?: Prisma.CashAdvanceExtraCostWhereInput[]
   NOT?: Prisma.CashAdvanceExtraCostWhereInput | Prisma.CashAdvanceExtraCostWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  workOrderItemId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
+  id?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  workOrderItemId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
   description?: Prisma.StringFilter<"CashAdvanceExtraCost"> | string
   amount?: Prisma.DecimalFilter<"CashAdvanceExtraCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFilter<"CashAdvanceExtraCost"> | boolean
   note?: Prisma.StringNullableFilter<"CashAdvanceExtraCost"> | string | null
   cashAdvance?: Prisma.XOR<Prisma.CashAdvanceScalarRelationFilter, Prisma.CashAdvanceWhereInput>
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
+  chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
 }
 
 export type CashAdvanceExtraCostOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   cashAdvanceId?: Prisma.SortOrder
   workOrderItemId?: Prisma.SortOrder
+  chargeTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  billable?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   cashAdvance?: Prisma.CashAdvanceOrderByWithRelationInput
   workOrderItem?: Prisma.WorkOrderItemOrderByWithRelationInput
+  chargeType?: Prisma.ChargeTypeOrderByWithRelationInput
 }
 
 export type CashAdvanceExtraCostWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.CashAdvanceExtraCostWhereInput | Prisma.CashAdvanceExtraCostWhereInput[]
   OR?: Prisma.CashAdvanceExtraCostWhereInput[]
   NOT?: Prisma.CashAdvanceExtraCostWhereInput | Prisma.CashAdvanceExtraCostWhereInput[]
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  workOrderItemId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  workOrderItemId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
   description?: Prisma.StringFilter<"CashAdvanceExtraCost"> | string
   amount?: Prisma.DecimalFilter<"CashAdvanceExtraCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFilter<"CashAdvanceExtraCost"> | boolean
   note?: Prisma.StringNullableFilter<"CashAdvanceExtraCost"> | string | null
   cashAdvance?: Prisma.XOR<Prisma.CashAdvanceScalarRelationFilter, Prisma.CashAdvanceWhereInput>
   workOrderItem?: Prisma.XOR<Prisma.WorkOrderItemScalarRelationFilter, Prisma.WorkOrderItemWhereInput>
+  chargeType?: Prisma.XOR<Prisma.ChargeTypeScalarRelationFilter, Prisma.ChargeTypeWhereInput>
 }, "id">
 
 export type CashAdvanceExtraCostOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   cashAdvanceId?: Prisma.SortOrder
   workOrderItemId?: Prisma.SortOrder
+  chargeTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  billable?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CashAdvanceExtraCostCountOrderByAggregateInput
   _avg?: Prisma.CashAdvanceExtraCostAvgOrderByAggregateInput
@@ -283,69 +296,87 @@ export type CashAdvanceExtraCostScalarWhereWithAggregatesInput = {
   AND?: Prisma.CashAdvanceExtraCostScalarWhereWithAggregatesInput | Prisma.CashAdvanceExtraCostScalarWhereWithAggregatesInput[]
   OR?: Prisma.CashAdvanceExtraCostScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CashAdvanceExtraCostScalarWhereWithAggregatesInput | Prisma.CashAdvanceExtraCostScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"CashAdvanceExtraCost"> | number
-  cashAdvanceId?: Prisma.IntWithAggregatesFilter<"CashAdvanceExtraCost"> | number
-  workOrderItemId?: Prisma.IntWithAggregatesFilter<"CashAdvanceExtraCost"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"CashAdvanceExtraCost"> | string
+  cashAdvanceId?: Prisma.UuidWithAggregatesFilter<"CashAdvanceExtraCost"> | string
+  workOrderItemId?: Prisma.UuidWithAggregatesFilter<"CashAdvanceExtraCost"> | string
+  chargeTypeId?: Prisma.UuidWithAggregatesFilter<"CashAdvanceExtraCost"> | string
   description?: Prisma.StringWithAggregatesFilter<"CashAdvanceExtraCost"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"CashAdvanceExtraCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolWithAggregatesFilter<"CashAdvanceExtraCost"> | boolean
   note?: Prisma.StringNullableWithAggregatesFilter<"CashAdvanceExtraCost"> | string | null
 }
 
 export type CashAdvanceExtraCostCreateInput = {
+  id?: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
   cashAdvance: Prisma.CashAdvanceCreateNestedOneWithoutExtraCostsInput
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutExtraCostsInput
+  chargeType: Prisma.ChargeTypeCreateNestedOneWithoutExtraCostsInput
 }
 
 export type CashAdvanceExtraCostUncheckedCreateInput = {
-  id?: number
-  cashAdvanceId: number
-  workOrderItemId: number
+  id?: string
+  cashAdvanceId: string
+  workOrderItemId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
 export type CashAdvanceExtraCostUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashAdvance?: Prisma.CashAdvanceUpdateOneRequiredWithoutExtraCostsNestedInput
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutExtraCostsNestedInput
+  chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutExtraCostsNestedInput
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceExtraCostCreateManyInput = {
-  id?: number
-  cashAdvanceId: number
-  workOrderItemId: number
+  id?: string
+  cashAdvanceId: string
+  workOrderItemId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
 export type CashAdvanceExtraCostUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -363,15 +394,14 @@ export type CashAdvanceExtraCostCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cashAdvanceId?: Prisma.SortOrder
   workOrderItemId?: Prisma.SortOrder
+  chargeTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  billable?: Prisma.SortOrder
   note?: Prisma.SortOrder
 }
 
 export type CashAdvanceExtraCostAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
 }
 
@@ -379,8 +409,10 @@ export type CashAdvanceExtraCostMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cashAdvanceId?: Prisma.SortOrder
   workOrderItemId?: Prisma.SortOrder
+  chargeTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  billable?: Prisma.SortOrder
   note?: Prisma.SortOrder
 }
 
@@ -388,16 +420,57 @@ export type CashAdvanceExtraCostMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cashAdvanceId?: Prisma.SortOrder
   workOrderItemId?: Prisma.SortOrder
+  chargeTypeId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  billable?: Prisma.SortOrder
   note?: Prisma.SortOrder
 }
 
 export type CashAdvanceExtraCostSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  cashAdvanceId?: Prisma.SortOrder
-  workOrderItemId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+}
+
+export type CashAdvanceExtraCostCreateNestedManyWithoutChargeTypeInput = {
+  create?: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput> | Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput[] | Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput[]
+  connectOrCreate?: Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput[]
+  createMany?: Prisma.CashAdvanceExtraCostCreateManyChargeTypeInputEnvelope
+  connect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+}
+
+export type CashAdvanceExtraCostUncheckedCreateNestedManyWithoutChargeTypeInput = {
+  create?: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput> | Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput[] | Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput[]
+  connectOrCreate?: Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput[]
+  createMany?: Prisma.CashAdvanceExtraCostCreateManyChargeTypeInputEnvelope
+  connect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+}
+
+export type CashAdvanceExtraCostUpdateManyWithoutChargeTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput> | Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput[] | Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput[]
+  connectOrCreate?: Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput[]
+  upsert?: Prisma.CashAdvanceExtraCostUpsertWithWhereUniqueWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpsertWithWhereUniqueWithoutChargeTypeInput[]
+  createMany?: Prisma.CashAdvanceExtraCostCreateManyChargeTypeInputEnvelope
+  set?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  disconnect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  delete?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  connect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  update?: Prisma.CashAdvanceExtraCostUpdateWithWhereUniqueWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpdateWithWhereUniqueWithoutChargeTypeInput[]
+  updateMany?: Prisma.CashAdvanceExtraCostUpdateManyWithWhereWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpdateManyWithWhereWithoutChargeTypeInput[]
+  deleteMany?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
+}
+
+export type CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput> | Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput[] | Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput[]
+  connectOrCreate?: Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput[]
+  upsert?: Prisma.CashAdvanceExtraCostUpsertWithWhereUniqueWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpsertWithWhereUniqueWithoutChargeTypeInput[]
+  createMany?: Prisma.CashAdvanceExtraCostCreateManyChargeTypeInputEnvelope
+  set?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  disconnect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  delete?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  connect?: Prisma.CashAdvanceExtraCostWhereUniqueInput | Prisma.CashAdvanceExtraCostWhereUniqueInput[]
+  update?: Prisma.CashAdvanceExtraCostUpdateWithWhereUniqueWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpdateWithWhereUniqueWithoutChargeTypeInput[]
+  updateMany?: Prisma.CashAdvanceExtraCostUpdateManyWithWhereWithoutChargeTypeInput | Prisma.CashAdvanceExtraCostUpdateManyWithWhereWithoutChargeTypeInput[]
+  deleteMany?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
 }
 
 export type CashAdvanceExtraCostCreateNestedManyWithoutWorkOrderItemInput = {
@@ -484,18 +557,83 @@ export type CashAdvanceExtraCostUncheckedUpdateManyWithoutCashAdvanceNestedInput
   deleteMany?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
 }
 
-export type CashAdvanceExtraCostCreateWithoutWorkOrderItemInput = {
+export type CashAdvanceExtraCostCreateWithoutChargeTypeInput = {
+  id?: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
   cashAdvance: Prisma.CashAdvanceCreateNestedOneWithoutExtraCostsInput
+  workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutExtraCostsInput
+}
+
+export type CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput = {
+  id?: string
+  cashAdvanceId: string
+  workOrderItemId: string
+  description: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
+  note?: string | null
+}
+
+export type CashAdvanceExtraCostCreateOrConnectWithoutChargeTypeInput = {
+  where: Prisma.CashAdvanceExtraCostWhereUniqueInput
+  create: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput>
+}
+
+export type CashAdvanceExtraCostCreateManyChargeTypeInputEnvelope = {
+  data: Prisma.CashAdvanceExtraCostCreateManyChargeTypeInput | Prisma.CashAdvanceExtraCostCreateManyChargeTypeInput[]
+  skipDuplicates?: boolean
+}
+
+export type CashAdvanceExtraCostUpsertWithWhereUniqueWithoutChargeTypeInput = {
+  where: Prisma.CashAdvanceExtraCostWhereUniqueInput
+  update: Prisma.XOR<Prisma.CashAdvanceExtraCostUpdateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedUpdateWithoutChargeTypeInput>
+  create: Prisma.XOR<Prisma.CashAdvanceExtraCostCreateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedCreateWithoutChargeTypeInput>
+}
+
+export type CashAdvanceExtraCostUpdateWithWhereUniqueWithoutChargeTypeInput = {
+  where: Prisma.CashAdvanceExtraCostWhereUniqueInput
+  data: Prisma.XOR<Prisma.CashAdvanceExtraCostUpdateWithoutChargeTypeInput, Prisma.CashAdvanceExtraCostUncheckedUpdateWithoutChargeTypeInput>
+}
+
+export type CashAdvanceExtraCostUpdateManyWithWhereWithoutChargeTypeInput = {
+  where: Prisma.CashAdvanceExtraCostScalarWhereInput
+  data: Prisma.XOR<Prisma.CashAdvanceExtraCostUpdateManyMutationInput, Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeInput>
+}
+
+export type CashAdvanceExtraCostScalarWhereInput = {
+  AND?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
+  OR?: Prisma.CashAdvanceExtraCostScalarWhereInput[]
+  NOT?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
+  id?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  cashAdvanceId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  workOrderItemId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  chargeTypeId?: Prisma.UuidFilter<"CashAdvanceExtraCost"> | string
+  description?: Prisma.StringFilter<"CashAdvanceExtraCost"> | string
+  amount?: Prisma.DecimalFilter<"CashAdvanceExtraCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFilter<"CashAdvanceExtraCost"> | boolean
+  note?: Prisma.StringNullableFilter<"CashAdvanceExtraCost"> | string | null
+}
+
+export type CashAdvanceExtraCostCreateWithoutWorkOrderItemInput = {
+  id?: string
+  description: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
+  note?: string | null
+  cashAdvance: Prisma.CashAdvanceCreateNestedOneWithoutExtraCostsInput
+  chargeType: Prisma.ChargeTypeCreateNestedOneWithoutExtraCostsInput
 }
 
 export type CashAdvanceExtraCostUncheckedCreateWithoutWorkOrderItemInput = {
-  id?: number
-  cashAdvanceId: number
+  id?: string
+  cashAdvanceId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
@@ -525,30 +663,23 @@ export type CashAdvanceExtraCostUpdateManyWithWhereWithoutWorkOrderItemInput = {
   data: Prisma.XOR<Prisma.CashAdvanceExtraCostUpdateManyMutationInput, Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutWorkOrderItemInput>
 }
 
-export type CashAdvanceExtraCostScalarWhereInput = {
-  AND?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
-  OR?: Prisma.CashAdvanceExtraCostScalarWhereInput[]
-  NOT?: Prisma.CashAdvanceExtraCostScalarWhereInput | Prisma.CashAdvanceExtraCostScalarWhereInput[]
-  id?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  cashAdvanceId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  workOrderItemId?: Prisma.IntFilter<"CashAdvanceExtraCost"> | number
-  description?: Prisma.StringFilter<"CashAdvanceExtraCost"> | string
-  amount?: Prisma.DecimalFilter<"CashAdvanceExtraCost"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  note?: Prisma.StringNullableFilter<"CashAdvanceExtraCost"> | string | null
-}
-
 export type CashAdvanceExtraCostCreateWithoutCashAdvanceInput = {
+  id?: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
   workOrderItem: Prisma.WorkOrderItemCreateNestedOneWithoutExtraCostsInput
+  chargeType: Prisma.ChargeTypeCreateNestedOneWithoutExtraCostsInput
 }
 
 export type CashAdvanceExtraCostUncheckedCreateWithoutCashAdvanceInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
@@ -578,65 +709,123 @@ export type CashAdvanceExtraCostUpdateManyWithWhereWithoutCashAdvanceInput = {
   data: Prisma.XOR<Prisma.CashAdvanceExtraCostUpdateManyMutationInput, Prisma.CashAdvanceExtraCostUncheckedUpdateManyWithoutCashAdvanceInput>
 }
 
-export type CashAdvanceExtraCostCreateManyWorkOrderItemInput = {
-  id?: number
-  cashAdvanceId: number
+export type CashAdvanceExtraCostCreateManyChargeTypeInput = {
+  id?: string
+  cashAdvanceId: string
+  workOrderItemId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
+  note?: string | null
+}
+
+export type CashAdvanceExtraCostUpdateWithoutChargeTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashAdvance?: Prisma.CashAdvanceUpdateOneRequiredWithoutExtraCostsNestedInput
+  workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutExtraCostsNestedInput
+}
+
+export type CashAdvanceExtraCostUncheckedUpdateWithoutChargeTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CashAdvanceExtraCostUncheckedUpdateManyWithoutChargeTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CashAdvanceExtraCostCreateManyWorkOrderItemInput = {
+  id?: string
+  cashAdvanceId: string
+  chargeTypeId: string
+  description: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
 export type CashAdvanceExtraCostUpdateWithoutWorkOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cashAdvance?: Prisma.CashAdvanceUpdateOneRequiredWithoutExtraCostsNestedInput
+  chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutExtraCostsNestedInput
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateManyWithoutWorkOrderItemInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  cashAdvanceId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAdvanceId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceExtraCostCreateManyCashAdvanceInput = {
-  id?: number
-  workOrderItemId: number
+  id?: string
+  workOrderItemId: string
+  chargeTypeId: string
   description: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: boolean
   note?: string | null
 }
 
 export type CashAdvanceExtraCostUpdateWithoutCashAdvanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workOrderItem?: Prisma.WorkOrderItemUpdateOneRequiredWithoutExtraCostsNestedInput
+  chargeType?: Prisma.ChargeTypeUpdateOneRequiredWithoutExtraCostsNestedInput
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CashAdvanceExtraCostUncheckedUpdateManyWithoutCashAdvanceInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  workOrderItemId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workOrderItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  chargeTypeId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -646,56 +835,70 @@ export type CashAdvanceExtraCostSelect<ExtArgs extends runtime.Types.Extensions.
   id?: boolean
   cashAdvanceId?: boolean
   workOrderItemId?: boolean
+  chargeTypeId?: boolean
   description?: boolean
   amount?: boolean
+  billable?: boolean
   note?: boolean
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cashAdvanceExtraCost"]>
 
 export type CashAdvanceExtraCostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cashAdvanceId?: boolean
   workOrderItemId?: boolean
+  chargeTypeId?: boolean
   description?: boolean
   amount?: boolean
+  billable?: boolean
   note?: boolean
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cashAdvanceExtraCost"]>
 
 export type CashAdvanceExtraCostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cashAdvanceId?: boolean
   workOrderItemId?: boolean
+  chargeTypeId?: boolean
   description?: boolean
   amount?: boolean
+  billable?: boolean
   note?: boolean
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cashAdvanceExtraCost"]>
 
 export type CashAdvanceExtraCostSelectScalar = {
   id?: boolean
   cashAdvanceId?: boolean
   workOrderItemId?: boolean
+  chargeTypeId?: boolean
   description?: boolean
   amount?: boolean
+  billable?: boolean
   note?: boolean
 }
 
-export type CashAdvanceExtraCostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cashAdvanceId" | "workOrderItemId" | "description" | "amount" | "note", ExtArgs["result"]["cashAdvanceExtraCost"]>
+export type CashAdvanceExtraCostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cashAdvanceId" | "workOrderItemId" | "chargeTypeId" | "description" | "amount" | "billable" | "note", ExtArgs["result"]["cashAdvanceExtraCost"]>
 export type CashAdvanceExtraCostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }
 export type CashAdvanceExtraCostIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }
 export type CashAdvanceExtraCostIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cashAdvance?: boolean | Prisma.CashAdvanceDefaultArgs<ExtArgs>
   workOrderItem?: boolean | Prisma.WorkOrderItemDefaultArgs<ExtArgs>
+  chargeType?: boolean | Prisma.ChargeTypeDefaultArgs<ExtArgs>
 }
 
 export type $CashAdvanceExtraCostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -703,13 +906,16 @@ export type $CashAdvanceExtraCostPayload<ExtArgs extends runtime.Types.Extension
   objects: {
     cashAdvance: Prisma.$CashAdvancePayload<ExtArgs>
     workOrderItem: Prisma.$WorkOrderItemPayload<ExtArgs>
+    chargeType: Prisma.$ChargeTypePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    cashAdvanceId: number
-    workOrderItemId: number
+    id: string
+    cashAdvanceId: string
+    workOrderItemId: string
+    chargeTypeId: string
     description: string
     amount: runtime.Decimal
+    billable: boolean
     note: string | null
   }, ExtArgs["result"]["cashAdvanceExtraCost"]>
   composites: {}
@@ -1107,6 +1313,7 @@ export interface Prisma__CashAdvanceExtraCostClient<T, Null = never, ExtArgs ext
   readonly [Symbol.toStringTag]: "PrismaPromise"
   cashAdvance<T extends Prisma.CashAdvanceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CashAdvanceDefaultArgs<ExtArgs>>): Prisma.Prisma__CashAdvanceClient<runtime.Types.Result.GetResult<Prisma.$CashAdvancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   workOrderItem<T extends Prisma.WorkOrderItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkOrderItemDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkOrderItemClient<runtime.Types.Result.GetResult<Prisma.$WorkOrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  chargeType<T extends Prisma.ChargeTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChargeTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__ChargeTypeClient<runtime.Types.Result.GetResult<Prisma.$ChargeTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1136,11 +1343,13 @@ export interface Prisma__CashAdvanceExtraCostClient<T, Null = never, ExtArgs ext
  * Fields of the CashAdvanceExtraCost model
  */
 export interface CashAdvanceExtraCostFieldRefs {
-  readonly id: Prisma.FieldRef<"CashAdvanceExtraCost", 'Int'>
-  readonly cashAdvanceId: Prisma.FieldRef<"CashAdvanceExtraCost", 'Int'>
-  readonly workOrderItemId: Prisma.FieldRef<"CashAdvanceExtraCost", 'Int'>
+  readonly id: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
+  readonly cashAdvanceId: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
+  readonly workOrderItemId: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
+  readonly chargeTypeId: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
   readonly description: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
   readonly amount: Prisma.FieldRef<"CashAdvanceExtraCost", 'Decimal'>
+  readonly billable: Prisma.FieldRef<"CashAdvanceExtraCost", 'Boolean'>
   readonly note: Prisma.FieldRef<"CashAdvanceExtraCost", 'String'>
 }
     
